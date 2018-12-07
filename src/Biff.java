@@ -5,6 +5,7 @@ public class Biff {
     private int _case;
     private Joueur joueur;
     //MODIFICATION
+    //ENCORE UN MODIFICATION
 
     public void activer(Joueur j){
         this.joueur = j;
