@@ -18,6 +18,7 @@ public class JoueurGraph extends JPanel {
         JLabel label = new JLabel();
         label.setText(j.getName());
         JTextArea ressource = new JTextArea();
+        //
         ressource.setBorder(marge);
         ressource.setEditable(false);
         ressource.setText(j.toString());
