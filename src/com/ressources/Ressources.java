@@ -1,4 +1,4 @@
-package test.ressources;
+package com.ressources;
 
 public enum Ressources {
     ble,

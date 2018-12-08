@@ -1,4 +1,4 @@
-package cartes;
+package com.cartes;
 
 public class Robot implements Cartes {
 

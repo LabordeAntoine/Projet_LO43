@@ -1,7 +1,7 @@
 package com.construction;
 
-import test.ressources.CaseRessources;
-import test.ressources.Ressources;
+import com.ressources.CaseRessources;
+import com.ressources.Ressources;
 
 import java.util.ArrayList;
 

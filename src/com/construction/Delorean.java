@@ -1,7 +1,7 @@
 package com.construction;
 
-import test.ressources.ListeRessources;
-import test.ressources.Ressources;
+import com.ressources.ListeRessources;
+import com.ressources.Ressources;
 
 public class Delorean extends Construction {
 

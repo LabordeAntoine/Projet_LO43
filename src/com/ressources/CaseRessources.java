@@ -1,4 +1,4 @@
-package test.ressources;
+package com.ressources;
 
 public class CaseRessources {
     private Ressources r;

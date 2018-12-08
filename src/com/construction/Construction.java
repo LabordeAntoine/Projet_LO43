@@ -1,6 +1,6 @@
 package com.construction;
 
-import test.ressources.ListeRessources;
+import com.ressources.ListeRessources;
 
 public abstract class Construction {
 
