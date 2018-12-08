@@ -1,3 +1,7 @@
+package graphique;
+
+import test.ressources.Ressources;
+import joueur.Joueur;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 

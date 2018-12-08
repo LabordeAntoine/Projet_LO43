@@ -1,14 +1,16 @@
+package graphique;
+import joueur.Joueur;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class Fenetre extends JFrame {
 
-    private Joueur j1 = new Joueur ("j1");
-    private Joueur j2 = new Joueur ("j2");
-    private Joueur j3 = new Joueur ("j3");
-    private Joueur j4 = new Joueur ("j4");
+    private Joueur j1 = new Joueur("j1");
+    private Joueur j2 = new Joueur("j2");
+    private Joueur j3 = new Joueur("j3");
+    private Joueur j4 = new Joueur("j4");
 
     public Fenetre(Joueur j)
     {

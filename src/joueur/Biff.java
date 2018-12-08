@@ -1,3 +1,6 @@
+package joueur;
+
+
 import java.util.ArrayList;
 
 public class Biff {
@@ -13,11 +16,11 @@ public class Biff {
         this.joueur = j;
         deplacer();
         volerRessource();
-        //modifierNombreDeCartes(ArrayList<Joueur> listeDeJoueurs);
+        //modifierNombreDeCartes(ArrayList<joueur.Joueur> listeDeJoueurs);
     }
 
     private void deplacer(){
-        this._case = Entree.entrerNombreUtilisateur(1, 10,"Entrez la nouvelle position du Biff");
+        this._case = Entree.entrerNombreUtilisateur(1, 10,"Entrez la nouvelle position du joueur.Biff");
     }
 
     private void interrompreRessources(){

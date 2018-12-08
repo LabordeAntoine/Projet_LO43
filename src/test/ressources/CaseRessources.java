@@ -1,3 +1,5 @@
+package test.ressources;
+
 public class CaseRessources {
     private Ressources r;
     private int nombre;

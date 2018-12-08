@@ -1,3 +1,5 @@
+package joueur;
+
 import java.util.Scanner;
 
 public class Entree {

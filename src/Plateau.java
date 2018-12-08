@@ -1,3 +1,5 @@
+import joueur.Joueur;
+
 public class Plateau {
 
     private int annee;

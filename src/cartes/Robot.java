@@ -1,6 +1,8 @@
+package cartes;
+
 public class Robot implements Cartes {
 
-    Robot(){}
+    public Robot(){}
 
     public void action(){
         System.out.println("Joue Robot");

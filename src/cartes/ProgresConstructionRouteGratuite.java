@@ -1,6 +1,8 @@
+package cartes;
+
 public class ProgresConstructionRouteGratuite implements Cartes {
 
-    ProgresConstructionRouteGratuite(){}
+    public ProgresConstructionRouteGratuite(){}
 
     public void action() { System.out.println("Joue ConstructionRouteGratuite"); }
 

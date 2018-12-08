@@ -1,6 +1,8 @@
+package cartes;
+
 public class PointDeVictoire implements Cartes {
 
-    PointDeVictoire(){}
+    public PointDeVictoire(){}
 
     public void action() {
         System.out.println("Joue PdV");

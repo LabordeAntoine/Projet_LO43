@@ -1,3 +1,6 @@
+import graphique.Fenetre;
+import joueur.Joueur;
+import test.ressources.Ressources;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +21,7 @@ public class Main {
         j.ajouterRessources(Ressources.bois);
 
         j.ajouterRessources(Ressources.fer);
-        //j.ajouterRessources(Ressources.fer);
+        //j.ajouterRessources(test.ressources.Ressources.fer);
 
         j1.ajouterRessources(Ressources.bois);
         j1.ajouterRessources(Ressources.bois);
@@ -40,7 +43,7 @@ public class Main {
 
 
         System.out.println(" ------------------------------");
-        //j.echangeBanque(Ressources.bois, Ressources.fer, 1);
+        //j.echangeBanque(test.ressources.Ressources.bois, test.ressources.Ressources.fer, 1);
         //j.afficherRessource();
 
 		/*j.piocherCarte();
