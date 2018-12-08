@@ -1,6 +1,5 @@
 package com.joueur;
 
-import cartes.*;
 import com.cartes.*;
 import com.construction.Construction;
 import com.construction.ConvertisseurTemporel;
