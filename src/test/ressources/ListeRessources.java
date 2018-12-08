@@ -1,3 +1,5 @@
+package test.ressources;
+
 import java.util.ArrayList;
 
 public class ListeRessources extends ArrayList<CaseRessources>{
