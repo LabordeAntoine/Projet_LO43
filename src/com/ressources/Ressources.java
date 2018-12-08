@@ -1,10 +1,10 @@
 package com.ressources;
 
 public enum Ressources {
-    ble,
-    bois,
-    fer,
-    laine,
-    minerai,
-    argile,
+    BLE,
+    BOIS,
+    FER,
+    LAINE,
+    MINERAI,
+    ARGILE,
 }

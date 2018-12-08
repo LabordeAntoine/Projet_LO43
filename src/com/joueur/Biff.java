@@ -7,9 +7,6 @@ public class Biff {
 
     private int _case;
     private Joueur joueur;
-    //MODIFICATION
-    //ENCORE UNE MODIFICATION
-    //ENCORE UNE AUTRE MODIFICATION
 
 
     public void activer(Joueur j){

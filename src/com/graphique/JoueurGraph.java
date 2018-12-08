@@ -29,7 +29,7 @@ public class JoueurGraph extends JPanel {
         JButton bouton = new JButton("Test");
         bouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                j.ajouterRessources(Ressources.ble);
+                j.ajouterRessources(Ressources.BLE);
                 ressource.setText(j.toStringRessources());
             }
         });

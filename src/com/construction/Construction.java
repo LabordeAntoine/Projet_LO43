@@ -1,23 +1,16 @@
 package com.construction;
 
+import com.SimpleException;
 import com.ressources.ListeRessources;
 
-public abstract class Construction {
+abstract class Construction {
 
-    protected int nombre;
-    protected ListeRessources lr = new ListeRessources();
+    ListeRessources prix = new ListeRessources();
 
-    public Construction()
-    {
-        this.nombre =0;
-    }
-
-    public void creer(ListeRessources lrj)
-    {
-        if(lrj.assezDeRessources(this.lr)) {
-            System.out.println("Creation possible");
-        }
+    void creer(ListeRessources lr) throws SimpleException {
+        if(lr.assezDeRessources(this.prix))
+            lr.supprimerRessources(this.prix);
         else
-            System.out.println("Tu peux pas créer");
+            throw new SimpleException("Pas assez de ressources pour creer " + this.getClass().getSimpleName());
     }
 }

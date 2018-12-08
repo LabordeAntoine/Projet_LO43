@@ -1,11 +1,7 @@
 package com.joueur;
 
 import com.cartes.*;
-import com.construction.Construction;
-import com.construction.ConvertisseurTemporel;
-import com.construction.Delorean;
-import com.construction.Route;
-import com.ressources.CaseRessources;
+import com.construction.*;
 import com.ressources.ListeRessources;
 import com.ressources.Ressources;
 
@@ -17,10 +13,10 @@ public class Joueur {
 
     private String nom;
     private int pointVictoire;
-    private ListeRessources lr = new ListeRessources();
+    private ListeRessources listeRessources = new ListeRessources();
+    private ListeConstructions listeConstructions = new ListeConstructions();
     private ArrayList<Cartes> c = new ArrayList<Cartes>();
 
-    private ArrayList<Construction> listConstruction = new ArrayList<Construction>();
 
     /**
      *
@@ -29,82 +25,87 @@ public class Joueur {
     public Joueur(String n) {
         this.nom = n;
         this.pointVictoire = 0;
-        this.listConstruction.add(new Delorean());
-        this.listConstruction.add(new ConvertisseurTemporel());
-        this.listConstruction.add(new Route());
     }
-
     public String getName()
     {
         return this.nom;
     }
-    public int getNombreDeRoutes(){
-
-        int nombre = 0;
-        for (Construction c : listConstruction){
-            if(c instanceof Route){
-                nombre++;
-            }
-        }
-        return nombre;
-    }
-
-    public void ajouterRessources(Ressources r){ this.lr.ajouterRessources(r);}
-    public void ajouterRessources(Ressources r, int nombre){this.lr.ajouterRessources(r,nombre);}
-    public void supprimerRessources(Ressources r){this.lr.supprimerRessources(r);}
-    public void supprimerRessources(Ressources r, int nombre){this.lr.supprimerRessources(r,nombre);}
-    public void afficherRessource(){this.lr.afficherRessource();}
-    public String toStringRessources() {return this.lr.toString();}
 
 
-    public void creerConvertisseurTemporel()
-    {
-        ConvertisseurTemporel ct = new ConvertisseurTemporel();
-        ct.creer(lr);
-    }
-    public void creerDelorean()
-    {
-        Construction delorean = new Delorean();
-        delorean.creer(lr);
-    }
 
-    public boolean testerAssezRessource(Ressources r, int nombre)
-    {
-        for(CaseRessources cr : lr)
-        {
-            if(cr.equals(new CaseRessources(r)))
-                if(cr.getNombre() >= nombre)
-                    return true;
-        }
-        return false;
-    }
+    //RESSOURCES
+    public ListeRessources getListeRessources() { return listeRessources; }
 
-    public void echangeJoueur(Joueur j, Ressources r1, Ressources r2, int nombre1, int nombre2)//1 joueur appelé pour échange, 2 joueur appelant à l'échange
-    {
-        if(j.testerAssezRessource(r1, nombre1) && this.testerAssezRessource(r2, nombre2))
-        {
-            j.supprimerRessources(r1, nombre1);
-            j.ajouterRessources(r2, nombre2);
-            this.supprimerRessources(r2, nombre2);
-            this.ajouterRessources(r1, nombre1);
-        }
-        else
-        {
-            System.out.println("Echange impossible !");
-        }
-    }
+    public void ajouterRessources(Ressources r){ this.listeRessources.ajouterRessources(r); }
+    public void ajouterRessources(Ressources r, int nombre){ this.listeRessources.ajouterRessources(r,nombre); }
+    public void ajouterRessources(ListeRessources lr){ this.listeRessources.ajouterRessources(lr); }
 
-    public void echangeBanque(Ressources r1, Ressources r2, int nombre1)
-    {
-        if(this.testerAssezRessource(r1, nombre1*4))
-        {
-            this.supprimerRessources(r1, nombre1*4);
-            this.ajouterRessources(r2,nombre1);
+    public void supprimerRessources(Ressources r){ this.listeRessources.supprimerRessources(r); }
+    public void supprimerRessources(Ressources r, int nombre){ this.listeRessources.supprimerRessources(r,nombre); }
+    public void supprimerRessources(ListeRessources lr){ listeRessources.supprimerRessources(lr); }
+
+    public boolean assezDeRessources(ListeRessources lr){ return this.listeRessources.assezDeRessources(lr); }
+
+    public void afficherRessource(){ System.out.println(this.getName()); this.listeRessources.afficherRessource(); }
+    public String toStringRessources(){ return this.listeRessources.toString(); }
+
+
+
+
+    //CONSTRUCTIONS
+    public void creerRoute(){ this.listeConstructions.construireRoute(this.listeRessources); }
+    public void creerConvertisseurTemporel() { this.listeConstructions.construireConvertisseursTemporels(this.listeRessources); }
+    public void creerDelorean() { this.listeConstructions.construireDelorean(this.listeRessources); }
+
+    public int getNombreDeRoutes(){ return this.listeConstructions.getNombreDeRoutes(); }
+    public String toStringConstructions(){ return this.listeConstructions.toString(); }
+
+
+
+
+    //COMMERCE
+    /**
+     *
+     * @param lr Ressources que l'appelant va donner
+     * @param j2 Joueur appelee
+     * @param lrj2 Ressources que l'appelant va recevoir
+     */
+    public void echangeJoueur(ListeRessources lr, Joueur j2,  ListeRessources lrj2){
+
+        if (this == j2) {
+            System.out.println("Fait pas le malin, pq tu change avec toi meme??");
+            return;
         }
 
+        if (this.assezDeRessources(lr) && j2.assezDeRessources(lrj2)){
+
+            j2.ajouterRessources(lr);
+            this.supprimerRessources(lr);
+
+            this.ajouterRessources(lrj2);
+            j2.supprimerRessources(lrj2);
+
+        } else {
+            System.out.println("Erreur \"echangeJoueur(ListeRessources lr, Joueur j2,  ListeRessources lrj2)\", pas assez de ressources");
+        }
+    }
+    public void echangeBanque(ListeRessources lrDonnee, ListeRessources lrRecevoir){
+
+        //A VOIR : coeff d'echange
+
+        if (this.assezDeRessources(lrDonnee)){
+
+            this.supprimerRessources(lrDonnee);
+            this.ajouterRessources(lrRecevoir);
+
+        } else {
+            System.out.println("Exception \"echangeBanque(ListeRessources lrDonnee, ListeRessources lrRecevoir)\", pas assez de ressources");
+        }
 
     }
 
+
+    //CARTES
     public void piocherCarte() {
 
         int resultat;
@@ -180,6 +181,6 @@ public class Joueur {
     }
 
     public int nombreDeRessources() {
-        return lr.size();
+        return listeRessources.size();
     }
 }

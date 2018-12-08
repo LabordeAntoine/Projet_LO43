@@ -1,18 +1,15 @@
 package com.construction;
 
+import com.SimpleException;
 import com.ressources.ListeRessources;
 import com.ressources.Ressources;
 
-public class Delorean extends Construction {
+class Delorean extends Construction {
 
-
-    public Delorean() {
-        super.lr.ajouterRessources(Ressources.bois, 3);
-        super.lr.ajouterRessources(Ressources.fer, 2);
-    }
-
-    public void creer(ListeRessources lr)
-    {
+    Delorean(ListeRessources lr) throws SimpleException {
+        super.prix.ajouterRessources(Ressources.ARGILE, 3);
+        super.prix.ajouterRessources(Ressources.FER, 2);
         super.creer(lr);
     }
+
 }
