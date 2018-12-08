@@ -1,4 +1,4 @@
-import joueur.Joueur;
+import com.joueur.Joueur;
 
 public class Plateau {
 
