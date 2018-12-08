@@ -20,19 +20,20 @@ public class JoueurGraph extends JPanel {
         JTextArea ressource = new JTextArea();
         ressource.setBorder(marge);
         ressource.setEditable(false);
-        ressource.setText(j.toString());
+        ressource.setText(j.toStringRessources());
 
         JButton bouton = new JButton("Test");
         bouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 j.ajouterRessources(Ressources.ble);
-                ressource.setText(j.toString());
+                ressource.setText(j.toStringRessources());
             }
         });
 
-        this.add(bouton);
+
         this.add(label);
         this.add(ressource);
+        this.add(bouton);
     }
 
 

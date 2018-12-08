@@ -44,7 +44,7 @@ public class Joueur {
     public void supprimerRessources(Ressources r){this.lr.supprimerRessources(r);}
     public void supprimerRessources(Ressources r, int nombre){this.lr.supprimerRessources(r,nombre);}
     public void afficherRessource(){this.lr.afficherRessource();}
-    public String toString() {return this.lr.toString();}
+    public String toStringRessources() {return this.lr.toString();}
 
 
     public void creerConvertisseurTemporel()

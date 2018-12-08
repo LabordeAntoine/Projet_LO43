@@ -6,6 +6,9 @@ public class ListeRessources extends ArrayList<CaseRessources>{
         add(new CaseRessources(Ressources.ble));
         add(new CaseRessources(Ressources.bois));
         add(new CaseRessources(Ressources.fer));
+        add(new CaseRessources(Ressources.minerai));
+        add(new CaseRessources(Ressources.laine));
+        add(new CaseRessources(Ressources.argile));
     }
 
     public void ajouterRessources(Ressources r)

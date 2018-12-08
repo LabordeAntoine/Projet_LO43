@@ -2,5 +2,8 @@
 public enum Ressources {
     ble,
     bois,
-    fer;
+    fer,
+    laine,
+    minerai,
+    argile,
 }
