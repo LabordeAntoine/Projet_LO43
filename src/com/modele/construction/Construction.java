@@ -6,6 +6,11 @@ abstract class Construction {
 
     ListeRessources prix = new ListeRessources();
 
+    /**
+     * Creer une construction a partir des ressources du joueur
+     * @param lr Liste de ressources posédée
+     * @throws SimpleException
+     */
     void creer(ListeRessources lr) throws SimpleException {
         if(lr.assezDeRessources(this.prix))
             lr.supprimerRessources(this.prix);

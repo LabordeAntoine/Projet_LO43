@@ -13,6 +13,10 @@ public class Plateau {
     private Biff biff;
     private int positionBiff;
 
+    /**
+     * Constructeur de la classe Plateau
+     * @param annee Annee du plateau de jeu
+     */
     public Plateau(int annee) {
         int nombreCases = 7;
 
@@ -26,11 +30,20 @@ public class Plateau {
         deplacerBiff(n);
     }
 
+    /**
+     * Permet de deplacer le Biff
+     * @param p position a laquelle on veut le deplacer
+     */
     public void deplacerBiff(int p){
         biff = Biff.getInstance(tableauCases[p]);
         this.positionBiff = p;
     }
 
+    /**
+     * Permet d'activer le Biff
+     * @param j Le joueur controlant le Biff
+     * @param tableauJoueurs Tableau des joueurs
+     */
     public void activerBiff(Joueur j, Joueur[] tableauJoueurs){
         int nouvellePositionBiff = 5; //Il faut recuperer la nouvelle position ou l'on veut placer
         deplacerBiff(nouvellePositionBiff);

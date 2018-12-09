@@ -10,16 +10,27 @@ public class ListeConstructions extends ArrayList<Construction> {
     private int nombreDeDelorean;
     private int nombreDeConvertisseursTemporels;
 
+    /**
+     * Constructeur de la classe ListeConstruction
+     */
     public ListeConstructions() {
         this.nombreDeRoutes = 0;
         this.nombreDeDelorean = 0;
         this.nombreDeConvertisseursTemporels = 0;
     }
 
+    /**
+     * Permet d'obtenir le nombre de routes
+     * @return int Nombre de routes
+     */
     public int getNombreDeRoutes() {
         return nombreDeRoutes;
     }
 
+    /**
+     * Permet de construire une route
+     * @param lr Liste de ressources du joueur
+     */
     public void construireRoute(ListeRessources lr){
         int max = 15;
 
@@ -42,7 +53,11 @@ public class ListeConstructions extends ArrayList<Construction> {
         }
 
     }
-    
+
+    /**
+     * Permet de construire une Delorean
+     * @param lr Liste de ressources du joueur
+     */
     public void construireDelorean(ListeRessources lr){
         int max = 5;
 
@@ -67,7 +82,10 @@ public class ListeConstructions extends ArrayList<Construction> {
     }
 
 
-
+    /**
+     * Permet de construire un convertisseur temporel
+     * @param lr Liste de ressources du joueur
+     */
     public void construireConvertisseursTemporels(ListeRessources lr){
         int max = 5;
 
@@ -92,6 +110,10 @@ public class ListeConstructions extends ArrayList<Construction> {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String toString(){
 
         String resultat = "";

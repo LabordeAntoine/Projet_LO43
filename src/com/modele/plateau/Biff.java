@@ -22,9 +22,14 @@ public class Biff {
         return instanceUnique;
     }
 
+    /**
+     * Permet d'obtenir la position du Biff
+     * @return La case sur laquelle le Biff se trouve
+     */
     public Case getPosition(){
         return uneCase;
     }
+
 
     public void activer(Joueur j, Joueur[] tableauJoueurs){
         this.joueur = j;
@@ -35,6 +40,9 @@ public class Biff {
         this.tableauJoueurs = null;
     }
 
+    /**
+     * Permet de de supprimer la moitier des ressources d'un joueur
+     */
     private void modifierNombreDeCartes(){
 
         for (Joueur j : tableauJoueurs) {
@@ -49,6 +57,9 @@ public class Biff {
         }
     }
 
+    /**
+     * Permet de voler une ressource à un joueur
+     */
     private void volerUneRessource(){
         int joueurVolee = 2; //Il faut recuperer le Joueur qui se fait voler
         Ressources ressourcesAVoler = Ressources.BLE; //Il faut recuperer la ressource a voler

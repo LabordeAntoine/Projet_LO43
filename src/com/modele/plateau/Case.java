@@ -9,16 +9,30 @@ public class Case {
     private int numero;
     private Ressources ressource;
 
+    /**
+     * Constructeur de la classe Case
+     */
     public Case() {
         this.numero = nombreRandom(1, 5);
         this.ressource = ressourceRandom();
     }
 
+    /**
+     * Permet d'obtenir un nombre aleatoire entre 2 bornes
+     * @param min nombre minimum
+     * @param max nombre maximum
+     * @return nombre aleatoire
+     */
     private int nombreRandom(int min, int max){
         Random rand = new Random();
         int n = rand.nextInt(max) + min;
         return n;
     } //Fait partie du constructeur
+
+    /**
+     * Permet d'obtenir une ressource aleatoire
+     * @return Ressouces aleatoire
+     */
     private Ressources ressourceRandom(){
         int max = Ressources.values().length;
         Random rand = new Random();
@@ -27,7 +41,16 @@ public class Case {
     } //Fait partie du constructeur
 
 
+    /**
+     * Permet d'obtenir un numero de case
+     * @return numero
+     */
     public int getNumero() { return numero; }
+
+    /**
+     *  Permet d'obtenir le numero et la ressource de cases
+     * @return les numeros et ressources des cases
+     */
     public String toString(){
         String s = "";
         s += this.numero + " " + this.ressource;

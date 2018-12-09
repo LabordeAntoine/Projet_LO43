@@ -19,7 +19,7 @@ public class Joueur {
 
 
     /**
-     *
+     * Constructeur de la classe joueur
      * @param n nom du joueur
      */
     public Joueur(String n) {
@@ -66,7 +66,7 @@ public class Joueur {
 
     //COMMERCE
     /**
-     *
+     * Echanger des ressources entre joueurs
      * @param lr Ressources que l'appelant va donner
      * @param j2 Joueur appelee
      * @param lrj2 Ressources que l'appelant va recevoir
@@ -90,6 +90,12 @@ public class Joueur {
             System.out.println("Erreur \"echangeJoueur(ListeRessources lr, Joueur j2,  ListeRessources lrj2)\", pas assez de ressources");
         }
     }
+
+    /**
+     * Echange de ressources entre un joueur et le jeu
+     * @param lrDonnee Ressource(s) que l'on echange
+     * @param lrRecevoir Ressource(s) que l'on recoit
+     */
     public void echangeBanque(ListeRessources lrDonnee, ListeRessources lrRecevoir){
 
         //A VOIR : coeff d'echange
@@ -107,6 +113,10 @@ public class Joueur {
 
 
     //CARTES
+
+    /**
+     * Permet au joueur de piocher une carte
+     */
     public void piocherCarte() {
 
         int resultat;
@@ -136,6 +146,9 @@ public class Joueur {
 
     }
 
+    /**
+     * Permet au joueur de jouer une de ses cartes
+     */
     public void jouerCarte() {
 
         if(c.size()>0) {
@@ -171,6 +184,10 @@ public class Joueur {
 
     }
 
+    /**
+     * Permet de generer un nombre aleatoire entre 1 et 4
+     * @return Le resultat du tirage aleatoire
+     */
     protected int resultatAleatoire() {
 
         return 1 + (int) (Math.random() * (5 - 1));
