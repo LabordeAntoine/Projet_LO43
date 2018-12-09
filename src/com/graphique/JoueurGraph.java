@@ -17,7 +17,8 @@ public class JoueurGraph extends JPanel {
         this.setLayout(new GridLayout(2,1));
         this.setSize(new Dimension(60,20));
         this.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.black));
-
+        this.setBounds(0,0,600,400);
+        this.setOpaque(false);
         this.setPreferredSize(new Dimension(250,250));
         JLabel label = new JLabel();
         label.setText(j.getName());

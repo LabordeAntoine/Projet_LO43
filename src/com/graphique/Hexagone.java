@@ -8,7 +8,7 @@ public class Hexagone extends JPanel {
 
 
     public Hexagone() {
-        //this.setBounds(50,50,800,700);
+        this.setBounds(0,0,800,700);
         //this.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.black));
         this.setPreferredSize(new Dimension(800,700));
         this.setSize(new Dimension(800,700));

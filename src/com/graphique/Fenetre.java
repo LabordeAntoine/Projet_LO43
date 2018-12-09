@@ -33,10 +33,14 @@ public class Fenetre extends JFrame {
         FlowLayout fl = new FlowLayout();
         fl.setVgap(0);
         JPanel panCentre = new JPanel(fl);
-        panCentre.add(new Hexagone());
+        //panCentre.add(new Hexagone());
+
+        JLayeredPane panCentre1 = new JLayeredPane();
+        panCentre1.add(new Hexagone(),new Integer(1));
+        panCentre1.add(new Grille(), new Integer(2));
 
         this.getContentPane().add(panDroite,BorderLayout.EAST);
-        this.getContentPane().add(panCentre, BorderLayout.CENTER);
+        this.getContentPane().add(panCentre1, BorderLayout.CENTER);
         this.getContentPane().add(panGauche, BorderLayout.WEST);
 
         this.setVisible(true);

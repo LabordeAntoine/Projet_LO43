@@ -2,6 +2,8 @@ import com.modele.GameController;
 import com.modele.ressources.Ressources;
 import com.modele.joueur.Joueur;
 
+import com.graphique.Fenetre;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -30,8 +32,8 @@ public class Main {
 
         j.afficherRessource();
         System.out.println(" ------------------------------");
-        //Fenetre F = new Fenetre(j);
-        //F.setVisiBLE(true);
+        Fenetre F = new Fenetre(j);
+        F.setVisible(true);
 
 
         System.out.println(" ------------------------------");
