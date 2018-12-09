@@ -1,9 +1,9 @@
-package com.joueur;
+package com.modele.joueur;
 
-import com.cartes.*;
-import com.construction.*;
-import com.ressources.ListeRessources;
-import com.ressources.Ressources;
+import com.modele.cartes.*;
+import com.modele.construction.*;
+import com.modele.ressources.ListeRessources;
+import com.modele.ressources.Ressources;
 
 
 import java.util.ArrayList;
@@ -34,8 +34,6 @@ public class Joueur {
 
 
     //RESSOURCES
-    public ListeRessources getListeRessources() { return listeRessources; }
-
     public void ajouterRessources(Ressources r){ this.listeRessources.ajouterRessources(r); }
     public void ajouterRessources(Ressources r, int nombre){ this.listeRessources.ajouterRessources(r,nombre); }
     public void ajouterRessources(ListeRessources lr){ this.listeRessources.ajouterRessources(lr); }
@@ -45,6 +43,9 @@ public class Joueur {
     public void supprimerRessources(ListeRessources lr){ listeRessources.supprimerRessources(lr); }
 
     public boolean assezDeRessources(ListeRessources lr){ return this.listeRessources.assezDeRessources(lr); }
+    public boolean assezDeRessources(Ressources r){ return this.listeRessources.assezDeRessources(r); }
+
+    public int nombreDeRessources() { return listeRessources.nombreDeRessources(); }
 
     public void afficherRessource(){ System.out.println(this.getName()); this.listeRessources.afficherRessource(); }
     public String toStringRessources(){ return this.listeRessources.toString(); }
@@ -176,11 +177,7 @@ public class Joueur {
     }
 
     public void appelerBiff(){
-        Biff biff = new Biff();
-        biff.activer(this);
-    }
-
-    public int nombreDeRessources() {
-        return listeRessources.size();
+        //Biff biff = Biff.getInstance();
+        //biff.activer(this);
     }
 }

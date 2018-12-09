@@ -1,5 +1,5 @@
 package com.graphique;
-import com.joueur.Joueur;
+import com.modele.joueur.Joueur;
 
 import javax.swing.*;
 import java.awt.*;

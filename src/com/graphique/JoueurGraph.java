@@ -1,7 +1,7 @@
 package com.graphique;
 
-import com.ressources.Ressources;
-import com.joueur.Joueur;
+import com.modele.ressources.Ressources;
+import com.modele.joueur.Joueur;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 

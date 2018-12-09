@@ -1,4 +1,4 @@
-package com.ressources;
+package com.modele.ressources;
 
 import java.util.ArrayList;
 
@@ -78,6 +78,18 @@ public class ListeRessources extends ArrayList<ListeRessources.Paire_RessourceNo
             }
         }
         return true;
+    }
+    public boolean assezDeRessources(Ressources r){
+        ListeRessources temp = new ListeRessources();
+        temp.ajouterRessources(r);
+        return assezDeRessources(temp);
+    }
+    public int nombreDeRessources(){
+        int resultat = 0;
+        for (Paire_RessourceNombre p : this){
+            resultat += p.nombre;
+        }
+        return resultat;
     }
     public void afficherRessource() {
         for(Paire_RessourceNombre cr : this)

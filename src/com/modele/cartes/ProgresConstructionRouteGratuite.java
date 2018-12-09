@@ -1,4 +1,4 @@
-package com.cartes;
+package com.modele.cartes;
 
 public class ProgresConstructionRouteGratuite implements Cartes {
 

@@ -1,4 +1,4 @@
-package com.ressources;
+package com.modele.ressources;
 
 public enum Ressources {
     BLE,

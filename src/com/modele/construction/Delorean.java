@@ -1,8 +1,7 @@
-package com.construction;
+package com.modele.construction;
 
-import com.SimpleException;
-import com.ressources.ListeRessources;
-import com.ressources.Ressources;
+import com.modele.ressources.ListeRessources;
+import com.modele.ressources.Ressources;
 
 class Delorean extends Construction {
 

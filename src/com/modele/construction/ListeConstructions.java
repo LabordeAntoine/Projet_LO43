@@ -1,7 +1,6 @@
-package com.construction;
+package com.modele.construction;
 
-import com.SimpleException;
-import com.ressources.ListeRessources;
+import com.modele.ressources.ListeRessources;
 
 import java.util.ArrayList;
 
