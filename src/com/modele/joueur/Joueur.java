@@ -15,7 +15,7 @@ public class Joueur {
     private int pointVictoire;
     private ListeRessources listeRessources = new ListeRessources();
     private ListeConstructions listeConstructions = new ListeConstructions();
-    private ArrayList<Cartes> c = new ArrayList<Cartes>();
+    private ArrayList<Cartes> c = new ArrayList<>();
 
 
     /**
@@ -26,12 +26,27 @@ public class Joueur {
         this.nom = n;
         this.pointVictoire = 0;
     }
+
     public String getName()
     {
         return this.nom;
     }
 
 
+    //POINTS DE VICTOIRE
+
+    /**
+     * Permet d'ajouter un point de victoire au joueur
+     */
+    public void ajouterPDV(){
+        this.pointVictoire++;
+    }
+
+    /**
+     * Permet d'obtenir le nombre de points de victoire du joueur
+     * @return Le nombre de points de victoire
+     */
+    public int getPointVictoire(){return this.pointVictoire;}
 
     //RESSOURCES
     public void ajouterRessources(Ressources r){ this.listeRessources.ajouterRessources(r); }
@@ -159,7 +174,7 @@ public class Joueur {
             int cmp = 0;
 
             for (int i = 0; i < temp.size(); i++) {
-                System.out.println("Tapez " + cmp + " pour jouer la carte " + temp.get(cmp).getClass().getName());
+                System.out.println("Tapez " + cmp + " pour jouer la carte " + temp.get(cmp).getClass().getSimpleName());
                 cmp++;
             }
 
@@ -173,7 +188,7 @@ public class Joueur {
             }
 
             if (rep >= 0) {
-                this.c.get(rep).action();
+                this.c.get(rep).action(this);
                 this.c.remove(rep);
             } else
                 System.out.println("PB");
