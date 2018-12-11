@@ -16,6 +16,7 @@ public class Hexagone extends JPanel {
 
         super.paintComponent(g1);
         Graphics2D g = (Graphics2D)g1;
+        Graphics2D gtest = (Graphics2D) g1;
 
         g.setColor(Color.CYAN);
         g.setStroke(new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
@@ -27,6 +28,9 @@ public class Hexagone extends JPanel {
         g.drawPolygon(positionHexX(200), positionHexY(100), 6);
         g.drawPolygon(positionHexX(0),positionHexY(200), 6);
 
+       /* gtest.setColor(Color.RED);
+        gtest.fillOval(445,245,15,15);*/
+
         g.setColor(Color.CYAN);
         g.drawString("1", 400, 150);
         g.drawString("2", 200, 250);
@@ -36,6 +40,7 @@ public class Hexagone extends JPanel {
         g.drawString("6", 600, 250);
         g.drawString("7", 400, 350);
     }
+
 
     public int[] positionHexX(int ad){
         int x[] = {450, 350, 250, 350, 450, 550};

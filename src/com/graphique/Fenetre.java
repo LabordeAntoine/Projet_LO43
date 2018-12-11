@@ -37,7 +37,7 @@ public class Fenetre extends JFrame {
 
         JLayeredPane panCentre1 = new JLayeredPane();
         panCentre1.add(new Hexagone(),new Integer(1));
-        //panCentre1.add(new Grille(), new Integer(2));
+        panCentre1.add(new pointGraph(), new Integer(2));
 
         this.getContentPane().add(panDroite,BorderLayout.EAST);
         this.getContentPane().add(panCentre1, BorderLayout.CENTER);
