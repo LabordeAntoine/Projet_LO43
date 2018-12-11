@@ -1,3 +1,4 @@
+import com.graphique.FenetreLancement;
 import com.modele.GameController;
 import com.modele.ressources.Ressources;
 import com.modele.joueur.Joueur;
@@ -32,7 +33,7 @@ public class Main {
 
         j.afficherRessource();
         System.out.println(" ------------------------------");
-        Fenetre F = new Fenetre(j);
+        FenetreLancement F = new FenetreLancement();
         F.setVisible(true);
 
 
