@@ -32,12 +32,16 @@ public class Main {
         j1.ajouterRessources(Ressources.BOIS);
 
         j.afficherRessource();
+
+
         System.out.println(" ------------------------------");
         FenetreLancement F = new FenetreLancement();
         F.setVisible(true);
 
 
         System.out.println(" ------------------------------");
+
+
 
         GameController gc = new GameController();
         System.out.println(gc.toString());

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class JoueurGraph extends JPanel {
 
-    public JoueurGraph(Joueur j){
+    public JoueurGraph(Joueur j, Color Couleur){
         EmptyBorder marge = new EmptyBorder(10,10,10,10);
 
         this.setLayout(new GridLayout(2,1));
@@ -22,6 +22,7 @@ public class JoueurGraph extends JPanel {
         this.setPreferredSize(new Dimension(250,250));
         JLabel label = new JLabel();
         label.setText(j.getName());
+        label.setForeground(Couleur);
         JTextArea ressource = new JTextArea();
         ressource.setBorder(marge);
         ressource.setEditable(false);
