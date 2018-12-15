@@ -10,7 +10,7 @@ public class Main {
 
         FenetreLancement F = new FenetreLancement();
         F.setVisible(true);
-        
+
         System.out.println(" ------------------------------");
 
         GameController gc = new GameController();

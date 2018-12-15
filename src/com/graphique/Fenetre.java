@@ -19,12 +19,12 @@ public class Fenetre extends JFrame {
 
 
         JPanel panDroite = new JPanel(new GridLayout(2,1));
-        panDroite.add(new JoueurGraph(j1,Color.RED));
-        panDroite.add(new JoueurGraph(j2,Color.BLUE));
+        panDroite.add(new JoueurGraph(j1,Color.RED,1));
+        panDroite.add(new JoueurGraph(j2,Color.BLUE,2));
 
         JPanel panGauche = new JPanel(new GridLayout(2,1));
-        panGauche.add(new JoueurGraph(j3,Color.green));
-        panGauche.add(new JoueurGraph(j4,Color.magenta));
+        panGauche.add(new JoueurGraph(j3,Color.green,3));
+        panGauche.add(new JoueurGraph(j4,Color.magenta,4));
 
         FlowLayout fl = new FlowLayout();
         fl.setVgap(0);
