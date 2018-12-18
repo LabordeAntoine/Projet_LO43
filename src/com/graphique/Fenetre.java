@@ -18,7 +18,6 @@ public class Fenetre extends JFrame {
         this.setResizable(false);
         this.setLayout(new BorderLayout());
 
-
         JPanel panDroite = new JPanel(new GridLayout(2,1));
         panDroite.add(new JoueurGraph(j1,Color.RED,1));
         panDroite.add(new JoueurGraph(j2,Color.BLUE,2));
@@ -27,11 +26,8 @@ public class Fenetre extends JFrame {
         panGauche.add(new JoueurGraph(j3,Color.green,3));
         panGauche.add(new JoueurGraph(j4,Color.magenta,4));
 
-        JLayeredPane panCentre1 = new JLayeredPane();
-        panCentre1.add(new Plateau(),new Integer(1));
-
         this.getContentPane().add(panDroite,BorderLayout.EAST);
-        this.getContentPane().add(panCentre1, BorderLayout.CENTER);
+        this.getContentPane().add(new Plateau(), BorderLayout.CENTER);
         this.getContentPane().add(panGauche, BorderLayout.WEST);
 
         this.setVisible(true);

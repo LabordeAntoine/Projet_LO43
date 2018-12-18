@@ -20,8 +20,8 @@ public class Main {
 
         System.out.println(" ------------------------------");
 
-        GameController gc = new GameController();
-        System.out.println(gc.toString());
+        /*GameController gc = new GameController();
+        System.out.println(gc.toString());*/
 
 
     }
