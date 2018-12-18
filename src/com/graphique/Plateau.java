@@ -35,13 +35,19 @@ public class Plateau extends JPanel {
 
     private void initList()
     {
-          Hexagone h1 =  new Hexagone(new Point(400,300),100,0);
-        Hexagone h2 =  new Hexagone(new Point(400,127),100,0);
-         Hexagone h3 =  new Hexagone(new Point(250,213),100,0);
-        Hexagone h4 =  new Hexagone(new Point(550,213),100,0);
-        listHex.add(h1);
-        listHex.add(h2);
-        listHex.add(h3);
-        listHex.add(h4);
+          Point centre = new Point(400,300);
+          Hexagone h1 =  new Hexagone(centre,100,0);
+          int []x = h1.getX();
+          int []y = h1.getY();
+
+        for(int i = 0; i<6;i++)
+        {
+            int x_new = (int)(x[i] - 100*Math.cos(2*Math.PI/6+(Math.PI+i*Math.PI/3)));
+            int y_new = (int)(y[i] - 100*Math.sin(2*Math.PI/6+(Math.PI+i*Math.PI/3)));
+            Hexagone h =  new Hexagone(new Point(x_new,y_new),100,Math.PI+i*Math.PI/3);
+            listHex.add(h);
+        }
+
+
     }
 }
