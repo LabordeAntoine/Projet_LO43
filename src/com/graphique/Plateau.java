@@ -2,12 +2,16 @@ package com.graphique;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 
-public class Plateau extends JPanel {
+public class Plateau extends JPanel implements MouseListener {
 
     private ArrayList<Hexagone> listHex = new ArrayList<>();
+    private ArrayList<Ellipse2D.Double> listEllipse = new ArrayList<>();
 
     public Plateau() {
 
@@ -16,6 +20,7 @@ public class Plateau extends JPanel {
         this.setSize(new Dimension(800,700));
         this.setBackground(Color.black);
         initList(new Point(400,300), 100);
+        addMouseListener(this);
     }
 
     public void paintComponent(Graphics g){
@@ -25,10 +30,11 @@ public class Plateau extends JPanel {
         for(Hexagone h : listHex){
             g2.setColor(Color.green);
             g2.drawPolygon(h.getX(),h.getY(),6);
-            for(int i = 0; i<6 ; i++) {
-                g2.setColor(Color.red);
-                g2.fillOval(h.getX(i) - 15, h.getY(i) - 15, 30, 30);
-            }
+        }
+
+        g2.setColor(Color.red);
+        for (Ellipse2D.Double e : this.listEllipse){
+            g2.fill(e);
         }
 
     }
@@ -48,6 +54,43 @@ public class Plateau extends JPanel {
             listHex.add(h);
         }
 
+        //Ellipses
+        for(Hexagone h : listHex){
+            for(int i = 0; i<6 ; i++) {
+                this.listEllipse.add(new Ellipse2D.Double(h.getX(i) - 15, h.getY(i) - 15, 30, 30));
+            }
+        }
+
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        for(int i = 0; i < this.listEllipse.size(); i++){
+            if(this.listEllipse.get(i).contains(e.getX(), e.getY())){
+                this.listEllipse.remove(i);
+                repaint();
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }
