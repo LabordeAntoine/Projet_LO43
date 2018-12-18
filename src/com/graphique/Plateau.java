@@ -15,5 +15,13 @@ public class Plateau extends JPanel {
         this.setSize(new Dimension(800,700));
         this.setBackground(Color.white);
     }
-    
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g;
+
+        g2.setColor(Color.black);
+        g.fillPolygon(h1.getX(),h1.getY(),6);
+
+    }
 }
