@@ -3,6 +3,7 @@ import com.modele.joueur.Joueur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 
 public class Fenetre extends JFrame {
@@ -26,14 +27,8 @@ public class Fenetre extends JFrame {
         panGauche.add(new JoueurGraph(j3,Color.green,3));
         panGauche.add(new JoueurGraph(j4,Color.magenta,4));
 
-        FlowLayout fl = new FlowLayout();
-        fl.setVgap(0);
-        JPanel panCentre = new JPanel(fl);
-        //panCentre.add(new Hexagone());
-
         JLayeredPane panCentre1 = new JLayeredPane();
-        panCentre1.add(new Hexagone(),new Integer(1));
-        panCentre1.add(new pointGraph(), new Integer(2));
+        panCentre1.add(new Plateau(),new Integer(1));
 
         this.getContentPane().add(panDroite,BorderLayout.EAST);
         this.getContentPane().add(panCentre1, BorderLayout.CENTER);
