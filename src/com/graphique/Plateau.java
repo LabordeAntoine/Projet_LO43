@@ -15,7 +15,7 @@ public class Plateau extends JPanel {
         this.setPreferredSize(new Dimension(800,700));
         this.setSize(new Dimension(800,700));
         this.setBackground(Color.black);
-        initList();
+        initList(new Point(400,300), 100);
     }
 
     public void paintComponent(Graphics g){
@@ -33,10 +33,10 @@ public class Plateau extends JPanel {
 
     }
 
-    private void initList()
+    private void initList(Point centre, int rayon)
     {
-          Point centre = new Point(400,300);
-          Hexagone h1 =  new Hexagone(centre,100,0);
+
+          Hexagone h1 =  new Hexagone(centre,rayon,0);
           int []x = h1.getX();
           int []y = h1.getY();
 
