@@ -302,14 +302,14 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
 
-    public ListeRessources genererRessources(Joueur joueur){ return genererRessources(joueur.getListeConstructions()); }
-    public ListeRessources genererRessources(ListeConstructions listeConstructions){
+    public ListeRessources genererRessources(Joueur joueur, int resultatDe){ return genererRessources(joueur.getListeConstructions(), resultatDe); }
+    public ListeRessources genererRessources(ListeConstructions listeConstructions, int resultatDe){
         ListeRessources listeRessources = new ListeRessources();
         int marge = 5;
         for (Construction construction : listeConstructions){
             Point2D.Double position = construction.getPosition();
             for (Hexagone h : this.listeHexagones){
-                if (h.intersects(position.getX() - marge/2, position.getY() - marge/2, marge, marge)){
+                if (h.intersects(position.getX() - marge/2, position.getY() - marge/2, marge, marge) && h.getNombre() == resultatDe){
                     System.out.println("touche l'hexagone " + h.getNombre());
                     listeRessources.ajouterRessources(h.getRessources());
                 }

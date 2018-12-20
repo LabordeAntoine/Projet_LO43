@@ -93,10 +93,13 @@ public class ListeConstructions extends ArrayList<Construction> {
 
         StringBuilder resultat = new StringBuilder();
 
-        for (Construction c : this){
-            resultat.append(c.getClass().getSimpleName()).append("\n");
+        if(this.isEmpty()){
+            resultat.append("La liste de construction est vide");
+        } else {
+            for (Construction c : this){
+                resultat.append(c.getClass().getSimpleName()).append("\n");
+            }
         }
-
         return resultat.toString();
     }
 
