@@ -15,6 +15,7 @@ public class Case {
     public Case() {
         this.numero = nombreRandom(1, 5);
         this.ressource = ressourceRandom();
+        System.out.println("numero" + numero + "Ressources " + ressource);
     }
 
     /**
@@ -46,6 +47,8 @@ public class Case {
      * @return numero
      */
     public int getNumero() { return numero; }
+
+    public Ressources getRessource(){return this.ressource;}
 
     /**
      *  Permet d'obtenir le numero et la ressource de cases

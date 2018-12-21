@@ -10,10 +10,10 @@ public class Main {
 
         /*FenetreLancement F = new FenetreLancement();
         F.setVisible(true);*/
-        Joueur j1 = new Joueur("aa");
-        Joueur j2 = new Joueur("aa");
-        Joueur j3 = new Joueur("aa");
-        Joueur j4 = new Joueur("aa");
+        Joueur j1 = new Joueur("Antoine ");
+        Joueur j2 = new Joueur("Ewan");
+        Joueur j3 = new Joueur("Yosef");
+        Joueur j4 = new Joueur("TEST");
 
         Fenetre f= new Fenetre(j1,j2,j3,j4);
         f.setVisible(true);

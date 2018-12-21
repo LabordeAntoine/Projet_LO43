@@ -6,5 +6,6 @@ public enum Ressources {
     FER,
     LAINE,
     MINERAI,
-    ARGILE,
+    ARGILE;
+
 }

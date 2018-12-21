@@ -13,19 +13,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-public class Plateau extends JPanel implements MouseListener {
+public class PlateauGraph extends JPanel implements MouseListener {
 
     private ArrayList<Hexagone> listHex = new ArrayList<>();
     private ArrayList<Ellipse2D.Double> listEllipse = new ArrayList<>();
     private ArrayList<Ellipse2D.Double> listEllipseUtilise = new ArrayList<>();
-
     private ArrayList<Line2D.Double> listArrete =  new ArrayList<>();
+
 
     private boolean cDelorean = false;
     private boolean cArrete = false;
 
-    public Plateau() {
+    public PlateauGraph() {
 
         this.setBounds(0,0,800,700);
         this.setLayout(new BorderLayout());
@@ -33,43 +32,25 @@ public class Plateau extends JPanel implements MouseListener {
         this.setSize(new Dimension(800,700));
         this.setBackground(Color.black);
         initList(new Point(400,300), 100);
-
         this.add(setPan(),BorderLayout.SOUTH);
         addMouseListener(this);
     }
 
-    public JPanel setPan(){
-        JButton bDelorean = new JButton("CLiquez-ici pour placer une Delorean");
-        bDelorean.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                cDelorean = true;
-                cArrete = false;
-                repaint();
-            }
-        });
-
-        JButton bArrete = new JButton("CLiquez-ici pour placer une Route");
-        bArrete.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                cArrete = true;
-                cDelorean = false;
-                repaint();
-            }
-        });
-
-        JPanel p1 = new JPanel();
-        p1.setPreferredSize(new Dimension(800,200));
-        p1.add(bDelorean);
-        p1.add(bArrete);
-        return p1;
-    }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
         for(Hexagone h : listHex){
-            g2.setColor(Color.green);
+            g2.setColor(Color.CYAN);
             g2.drawPolygon(h.getX(),h.getY(),6);
+            g2.drawString(""+h.getNombre(),h.getXCentre(),h.getYCentre()-50);
+            try {
+                Image img = ImageIO.read(new File(""+h.getRessources()+".jpg"));
+                g.drawImage(img, (int)h.getXCentre()-40, (int)h.getYCentre()-40, 70,70, this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         if(cDelorean){
@@ -90,7 +71,6 @@ public class Plateau extends JPanel implements MouseListener {
         for(Ellipse2D.Double ell : this.listEllipseUtilise){
             try {
                 Image img = ImageIO.read(new File("Delorean.png"));
-                //Pour une image de fond
                 g.drawImage(img, (int)ell.getX()-15, (int)ell.getY()-15, 70,70, this);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -108,7 +88,7 @@ public class Plateau extends JPanel implements MouseListener {
           Hexagone h1 =  new Hexagone(centre,rayon,0);
           int []x = h1.getX();
           int []y = h1.getY();
-
+          listHex.add(h1);
         for(int i = 0; i<6;i++)
         {
             int x_new = (int)(x[i] - 100*Math.cos(2*Math.PI/6+(Math.PI+i*Math.PI/3)));
@@ -133,8 +113,36 @@ public class Plateau extends JPanel implements MouseListener {
                 listArrete.add(l);
             }
         }
+    }
 
+    public JPanel setPan(){
+        JButton bDelorean = new JButton("CLiquez-ici pour placer une Delorean");
+        bDelorean.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                cDelorean = true;
+                cArrete = false;
+                repaint();
+            }
+        });
 
+        JButton bArrete = new JButton("CLiquez-ici pour placer une Route");
+        bArrete.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                cArrete = true;
+                cDelorean = false;
+                repaint();
+            }
+        });
+
+        JLabel lab = new JLabel(new ImageIcon("dice1.jpg"));
+
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BorderLayout());
+        p1.setPreferredSize(new Dimension(800,200));
+        p1.add(bDelorean,BorderLayout.EAST);
+        p1.add(bArrete, BorderLayout.WEST);
+        p1.add(lab, BorderLayout.CENTER);
+        return p1;
     }
 
     private boolean testDoublon(Ellipse2D.Double ell){

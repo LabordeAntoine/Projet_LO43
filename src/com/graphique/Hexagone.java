@@ -1,10 +1,15 @@
 package com.graphique;
 
+import com.modele.plateau.Case;
+import com.modele.ressources.Ressources;
+
+
 import java.awt.*;
 
 public class Hexagone{
 
     private Point centre;
+    private Case case1 = new Case();
     private double rayon;
     private double angle;
     private int[] x;
@@ -58,5 +63,11 @@ public class Hexagone{
         for(int i = 0; i<6;i++)
             System.out.println("x:"+x[i]+"y:"+y[i]);
     }
+
+    public Ressources getRessources(){return case1.getRessource();}
+    public int getNombre (){return case1.getNumero();}
+    public int getXCentre(){return (int)centre.getX();}
+    public int getYCentre(){return (int)centre.getY();}
+
 
 }
