@@ -1,5 +1,6 @@
 package com.graphique;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlateauGraph extends JPanel implements MouseListener {
 
@@ -31,7 +33,7 @@ public class PlateauGraph extends JPanel implements MouseListener {
         this.setPreferredSize(new Dimension(800,700));
         this.setSize(new Dimension(800,700));
         this.setBackground(Color.black);
-        initList(new Point(400,300), 100);
+        initList(new Point(400,300), 50, 3);
         this.add(setPan(),BorderLayout.SOUTH);
         addMouseListener(this);
     }
@@ -82,19 +84,27 @@ public class PlateauGraph extends JPanel implements MouseListener {
     /*
     * Initialise la liste d'Hexagone, de points et d'arrêtes
      */
-    private void initList(Point centre, int rayon)
+    private void initList(Point centre, int rayon, int tours)
     {
 
-          Hexagone h1 =  new Hexagone(centre,rayon,0);
-          int []x = h1.getX();
-          int []y = h1.getY();
-          listHex.add(h1);
-        for(int i = 0; i<6;i++)
-        {
-            int x_new = (int)(x[i] - 100*Math.cos(2*Math.PI/6+(Math.PI+i*Math.PI/3)));
-            int y_new = (int)(y[i] - 100*Math.sin(2*Math.PI/6+(Math.PI+i*Math.PI/3)));
-            Hexagone h =  new Hexagone(new Point(x_new,y_new),100,Math.PI+i*Math.PI/3);
-            listHex.add(h);
+        Hexagone h1 =  new Hexagone(centre,rayon,0);
+        listHex.add(h1);
+
+        ArrayList<Point> listePositionsHexagones = new ArrayList<>();
+
+        for(int i = 1; i < tours; i++){
+            int rayonTemp = rayon * 2;
+            Hexagone hexagoneTemp = new Hexagone(centre,Math.cos(Math.PI/6)*rayonTemp*i,Math.PI/2);
+            listePositionsHexagones.addAll(Arrays.asList(hexagoneTemp.getPoints()));
+            for(int j = 0; j < 5; j++){
+                listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[j], hexagoneTemp.getPoints()[j + 1], i)));
+            }
+            listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[5], hexagoneTemp.getPoints()[0], i)));
+        }
+
+
+        for (Point p : listePositionsHexagones){
+            this.listHex.add(new Hexagone(p,rayon,0));
         }
 
         //Ellipses
@@ -106,9 +116,9 @@ public class PlateauGraph extends JPanel implements MouseListener {
             }
         }
 
+
         for(Hexagone h : listHex){
-            for(int i = 0; i<5 ; i++)
-            {
+            for(int i = 0; i<5 ; i++) {
                 Line2D.Double l = new Line2D.Double(h.getX(i),h.getY(i),h.getX(i+1),h.getY(i+1));
                 listArrete.add(l);
             }
@@ -116,7 +126,7 @@ public class PlateauGraph extends JPanel implements MouseListener {
     }
 
     public JPanel setPan(){
-        JButton bDelorean = new JButton("CLiquez-ici pour placer une Delorean");
+        JButton bDelorean = new JButton("Cliquez-ici pour placer une Delorean");
         bDelorean.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 cDelorean = true;
@@ -125,7 +135,7 @@ public class PlateauGraph extends JPanel implements MouseListener {
             }
         });
 
-        JButton bArrete = new JButton("CLiquez-ici pour placer une Route");
+        JButton bArrete = new JButton("Cliquez-ici pour placer une Route");
         bArrete.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 cArrete = true;
@@ -155,15 +165,6 @@ public class PlateauGraph extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(cDelorean){
-            for(int i = 0; i < this.listEllipse.size(); i++){
-                if(this.listEllipse.get(i).contains(e.getX(), e.getY())){
-                    this.listEllipseUtilise.add(this.listEllipse.get(i));
-                    this.listEllipse.remove(i);
-                    repaint();
-                }
-            }
-        }
 
     }
 
@@ -174,6 +175,31 @@ public class PlateauGraph extends JPanel implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        if(cDelorean){
+            for(int i = 0; i < this.listEllipse.size(); i++){
+                if(this.listEllipse.get(i).contains(e.getX(), e.getY())){
+                    this.listEllipseUtilise.add(this.listEllipse.get(i));
+                    this.listEllipse.remove(i);
+                    repaint();
+                }
+            }
+        }
+        if(cArrete){
+            int HIT_BOX_SIZE = 10;
+            int boxX = e.getX() - HIT_BOX_SIZE / 2;
+            int boxY = e.getY() - HIT_BOX_SIZE / 2;
+
+            int width = HIT_BOX_SIZE;
+            int height = HIT_BOX_SIZE;
+
+            for(int i = 0; i < this.listArrete.size(); i++){
+                if(this.listArrete.get(i).intersects(boxX, boxY, width, height)){
+                    System.out.println("ici");
+                    this.listArrete.remove(i);
+                    repaint();
+                }
+            }
+        }
 
     }
 

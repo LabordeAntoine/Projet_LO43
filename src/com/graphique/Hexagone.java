@@ -51,6 +51,13 @@ public class Hexagone{
         return this.y;
     }
 
+    public Point[] getPoints(){
+        Point listePoints[] = new Point[6];
+        for(int i = 0; i < 6; i++)
+            listePoints[i] = new Point(this.x[i], this.y[i]);
+        return listePoints;
+    }
+
     public int getX(int index){
         return this.x[index];
     }
