@@ -1,4 +1,4 @@
-package com.graphique;
+package com.graphique.fenetre_principale;
 
 import com.modele.plateau.Case;
 import com.modele.ressources.Ressources;
@@ -15,6 +15,13 @@ public class Hexagone{
     private int[] x;
     private int[] y;
 
+    /**
+     * Cette classe est ce qui permet a notre plateau d'avoir des hexagones, elle represente un seul et unique hexagone
+     * Elle contient un liste de tout les Points de tout les sommets
+     * @param centre Le centre de l'hexagone
+     * @param rayon Le rayon ou la taille de l'hexagone
+     * @param angle Un angle si on veut le tourner
+     */
     public Hexagone(Point centre, double rayon,double angle)
     {
         this.centre = centre;
@@ -24,7 +31,16 @@ public class Hexagone{
         this.y = computeY(this.centre,this.rayon,this.angle);
     }
 
-    private int [] computeX(Point centre, double rayon,double angle){
+    /**
+     * Constructeur sans le parametre "angle", l'angle est a 0 par defaut
+     * @param centre
+     * @param rayon
+     */
+    public Hexagone(Point centre, double rayon) {
+        this(centre, rayon, 0);
+    }
+
+    private int [] computeX(Point centre, double rayon, double angle){
 
         int[] cX = new int[6];
         for(int i =0; i <6; i++)
@@ -69,6 +85,10 @@ public class Hexagone{
     {
         for(int i = 0; i<6;i++)
             System.out.println("x:"+x[i]+"y:"+y[i]);
+    }
+
+    public double getRayon() {
+        return rayon;
     }
 
     public Ressources getRessources(){return case1.getRessource();}

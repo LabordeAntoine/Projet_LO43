@@ -1,4 +1,4 @@
-package com.graphique;
+package com.graphique.fenetre_principale;
 
 import com.modele.ressources.Ressources;
 import com.modele.joueur.Joueur;
@@ -9,9 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class JoueurGraph extends JPanel {
+public class JoueurIndividuelPanel extends JPanel {
 
-    public JoueurGraph(Joueur j, Color couleur, int nb){
+    public JoueurIndividuelPanel(Joueur j, Color couleur, int nb){
         EmptyBorder marge = new EmptyBorder(10,10,10,10);
 
         this.setLayout(new GridLayout(2,1));

@@ -1,4 +1,4 @@
-package com.graphique;
+package com.graphique.fenetre_principale;
 
 import java.awt.*;
 
@@ -26,4 +26,5 @@ public class CalculPoint {
         }
         return new Point[0];
     }
+
 }

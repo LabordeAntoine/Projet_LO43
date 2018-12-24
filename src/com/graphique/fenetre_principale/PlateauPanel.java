@@ -1,76 +1,90 @@
-package com.graphique;
+package com.graphique.fenetre_principale;
 
+
+import com.modele.joueur.Joueur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PlateauGraph extends JPanel implements MouseListener {
+public class PlateauPanel extends JPanel implements MouseListener, ComponentListener {
 
     private ArrayList<Hexagone> listHex = new ArrayList<>();
     private ArrayList<Ellipse2D.Double> listEllipse = new ArrayList<>();
-    private ArrayList<Ellipse2D.Double> listEllipseUtilise = new ArrayList<>();
+    private ArrayList<Ellipse2D.Double> listDeloreanes = new ArrayList<>();
     private ArrayList<Line2D.Double> listArrete =  new ArrayList<>();
+    private ArrayList<Line2D.Double> listeRoutes =  new ArrayList<>();
+    
 
 
     private boolean cDelorean = false;
     private boolean cArrete = false;
 
-    public PlateauGraph() {
-
-        this.setBounds(0,0,800,700);
+    public PlateauPanel(Joueur[] listeJoueurs) {
+        //this.setBounds(0,0,800,700);
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,700));
-        this.setSize(new Dimension(800,700));
+        //this.setSize(new Dimension(800,700));
         this.setBackground(Color.black);
-        initList(new Point(400,300), 50, 3);
+        System.out.println("" + (int)getSize().getWidth()/2 + (int)getSize().getHeight()/2);
         this.add(setPan(),BorderLayout.SOUTH);
         addMouseListener(this);
+        addComponentListener(this);
+        initialiserListeHexagones(new Point(400,350), 100, 2);
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+    public void paintComponent(Graphics g2){
+        super.paintComponent(g2);
+        Graphics2D g = (Graphics2D)g2;
+
+        //On dessine tous les hexagones
+        dessinerHexagones(g);
+
+        //On dessine les boutons
+        if (cArrete) dessinerBoutonsRoutes(g);
+        if (cDelorean) dessinerBoutonsVilles(g);
+
+        //On dessine toutes les constructions
+        dessinerRoutes(g);
+        dessinerDeloreanes(g);
+
+    }
+    
+    private void dessinerHexagones(Graphics2D g){
 
         for(Hexagone h : listHex){
-            g2.setColor(Color.CYAN);
-            g2.drawPolygon(h.getX(),h.getY(),6);
-            g2.drawString(""+h.getNombre(),h.getXCentre(),h.getYCentre()-50);
-            try {
+
+            //Dessine les hexagones
+            g.setColor(Color.CYAN);
+            g.drawPolygon(h.getX(),h.getY(),6);
+
+            //Dessine les nombres
+
+            g.setColor(Color.CYAN);
+            g.drawString(""+h.getNombre(),h.getXCentre(),h.getYCentre());
+
+            //Dessine les images du fond
+            /*try {
                 Image img = ImageIO.read(new File(""+h.getRessources()+".jpg"));
                 g.drawImage(img, (int)h.getXCentre()-40, (int)h.getYCentre()-40, 70,70, this);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
         }
+    }
 
-        if(cDelorean){
-            g2.setColor(Color.red);
-            for (Ellipse2D.Double e : this.listEllipse){
-                g2.fill(e);
-            }
-        }
-
-        if(cArrete){
-            g2.setColor(Color.blue);
-            for(Line2D.Double l : this.listArrete){
-                g2.setStroke(new BasicStroke(5));
-                g2.draw(l);
-            }
-        }
-
-        for(Ellipse2D.Double ell : this.listEllipseUtilise){
+    private void dessinerDeloreanes(Graphics2D g){
+        for(Ellipse2D.Double ell : this.listDeloreanes){
             try {
                 Image img = ImageIO.read(new File("Delorean.png"));
                 g.drawImage(img, (int)ell.getX()-15, (int)ell.getY()-15, 70,70, this);
@@ -78,16 +92,83 @@ public class PlateauGraph extends JPanel implements MouseListener {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    private void dessinerBoutonsVilles(Graphics2D g){
+        g.setColor(Color.red);
+        for (Ellipse2D.Double e : this.listEllipse){
+            g.fill(e);
+        }
 
     }
 
-    /*
-    * Initialise la liste d'Hexagone, de points et d'arrêtes
+    private void dessinerBoutonsRoutes(Graphics2D g){
+        g.setColor(Color.blue);
+        for(Line2D.Double l : this.listArrete){
+            g.setStroke(new BasicStroke(5));
+            g.draw(l);
+        }
+    }
+    
+    private void dessinerRoutes(Graphics2D g){
+
+
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File("Route.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (Line2D route : this.listeRoutes){
+
+            AffineTransform at = new AffineTransform();
+
+            if(route.getX2() < route.getX1()){
+                Line2D temp = route;
+                route.setLine(temp.getP2(), temp.getP1());
+            }
+
+
+            // 4. translate it to the center of the component
+            //at.translate(getWidth() / 2, getHeight() / 2);
+            at.translate(route.getX1(), route.getY1());
+
+            // 3. do the actual rotation
+            double y = route.getY2() - route.getY1();
+            double x = route.getX2() - route.getX1();
+
+            if(Math.atan2(y, x) > 0){
+                System.out.println(Math.atan2(y, x));
+                at.rotate(Math.PI/3);
+            } else if (Math.atan2(y, x) < 0){
+                at.rotate(-Math.PI/3);
+            } else if (Math.atan2(y, x) == 0){
+                at.rotate(0);
+            }
+
+            // 2. just a scale because this image is big
+            at.scale(0.48, 0.5);
+
+            // 1. translate the object so that you rotate it around the
+            //    center (easier :))
+            at.translate(0, -image.getHeight()/2);
+
+            // draw the image
+            g.drawImage(image, at, null);
+        }
+    }
+
+    /**
+     * Initialise la liste d'Hexagone, de points et d'arrêtes
+     * @param centre
+     * @param rayon
+     * @param tours
      */
-    private void initList(Point centre, int rayon, int tours)
+    private void initialiserListeHexagones(Point centre, int rayon, int tours)
     {
 
-        Hexagone h1 =  new Hexagone(centre,rayon,0);
+        Hexagone h1 =  new Hexagone(centre,rayon);
         listHex.add(h1);
 
         ArrayList<Point> listePositionsHexagones = new ArrayList<>();
@@ -102,9 +183,8 @@ public class PlateauGraph extends JPanel implements MouseListener {
             listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[5], hexagoneTemp.getPoints()[0], i)));
         }
 
-
         for (Point p : listePositionsHexagones){
-            this.listHex.add(new Hexagone(p,rayon,0));
+            this.listHex.add(new Hexagone(p,rayon));
         }
 
         //Ellipses
@@ -163,6 +243,18 @@ public class PlateauGraph extends JPanel implements MouseListener {
         return false;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -178,12 +270,13 @@ public class PlateauGraph extends JPanel implements MouseListener {
         if(cDelorean){
             for(int i = 0; i < this.listEllipse.size(); i++){
                 if(this.listEllipse.get(i).contains(e.getX(), e.getY())){
-                    this.listEllipseUtilise.add(this.listEllipse.get(i));
+                    this.listDeloreanes.add(this.listEllipse.get(i));
                     this.listEllipse.remove(i);
                     repaint();
                 }
             }
         }
+
         if(cArrete){
             int HIT_BOX_SIZE = 10;
             int boxX = e.getX() - HIT_BOX_SIZE / 2;
@@ -194,7 +287,7 @@ public class PlateauGraph extends JPanel implements MouseListener {
 
             for(int i = 0; i < this.listArrete.size(); i++){
                 if(this.listArrete.get(i).intersects(boxX, boxY, width, height)){
-                    System.out.println("ici");
+                    this.listeRoutes.add(this.listArrete.get(i));
                     this.listArrete.remove(i);
                     repaint();
                 }
@@ -210,6 +303,29 @@ public class PlateauGraph extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        System.out.println(e.paramString());
+        System.out.println(getSize().getHeight());
+        System.out.println("resized");
+        repaint();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
 
     }
 }
