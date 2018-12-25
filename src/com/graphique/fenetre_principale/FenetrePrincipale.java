@@ -8,8 +8,7 @@ import java.awt.*;
 public class FenetrePrincipale extends JFrame {
 
 
-    public FenetrePrincipale(Joueur j1, Joueur j2, Joueur j3, Joueur j4)
-    {
+    public FenetrePrincipale(Joueur j1, Joueur j2, Joueur j3, Joueur j4) {
         //Permet a "componentResized" de ne pas etre appele trop de fois
         Toolkit.getDefaultToolkit().setDynamicLayout( false );
         this.setTitle("Back to Catane");

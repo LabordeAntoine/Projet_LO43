@@ -69,9 +69,11 @@ public class Joueur {
 
 
     //CONSTRUCTIONS
-    public void creerRoute(){ this.listeConstructions.construireRoute(this.listeRessources); }
-    public void creerConvertisseurTemporel() { this.listeConstructions.construireConvertisseursTemporels(this.listeRessources); }
-    public void creerDelorean() { this.listeConstructions.construireDelorean(this.listeRessources); }
+    public Route creerRoute() throws RessourcesInsuffisantesException, NombreLimiteException { return this.listeConstructions.construireRoute(this.listeRessources); }
+    public ConvertisseurTemporel creerConvertisseurTemporel() throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireConvertisseursTemporels(this.listeRessources); }
+    public Delorean creerDelorean() throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireDelorean(this.listeRessources); }
+
+    public ListeConstructions getListeConstructions() { return listeConstructions; }
 
     public int getNombreDeRoutes(){ return this.listeConstructions.getNombreDeRoutes(); }
     public String toStringConstructions(){ return this.listeConstructions.toString(); }
@@ -164,7 +166,7 @@ public class Joueur {
     /**
      * Permet au joueur de jouer une de ses cartes
      */
-    public void jouerCarte() {
+    public void jouerCarte() throws RessourcesInsuffisantesException, NombreLimiteException {
 
         if(c.size()>0) {
 

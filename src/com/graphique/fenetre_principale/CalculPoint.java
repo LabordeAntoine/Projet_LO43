@@ -4,13 +4,13 @@ import java.awt.*;
 
 public class CalculPoint {
 
-    public static Point mutiplier(Point p, int n){ return new Point((int)p.getX() * n, (int)p.getY() * n); }
+    public static Point mutiplier(Point p, int n){ return new Point((int)Math.round(p.getX()) * n, (int)Math.round(p.getY() * n)); }
 
-    public static Point divise(Point p, int n){ return new Point((int)p.getX() / n, (int)p.getY() / n); }
+    public static Point divise(Point p, int n){ return new Point((int)Math.round(p.getX()) / n, (int)Math.round(p.getY()) / n); }
 
-    public static Point additionner(Point  p1, Point p2){ return new Point((int)p1.getX() + (int)p2.getX(), (int)p1.getY() + (int)p2.getY()); }
+    public static Point additionner(Point  p1, Point p2){ return new Point((int)Math.round(p1.getX()) + (int)Math.round(p2.getX()), (int)Math.round(p1.getY()) + (int)Math.round(p2.getY())); }
 
-    public static Point soustraire(Point p1, Point p2){ return new Point((int)p1.getX() - (int)p2.getX(), (int)p1.getY() - (int)p2.getY()); }
+    public static Point soustraire(Point p1, Point p2){ return new Point((int)Math.round(p1.getX()) - (int)Math.round(p2.getX()), (int)Math.round(p1.getY()) - (int)Math.round(p2.getY())); }
 
     public static Point[] split(Point p1, Point p2, int n){
 

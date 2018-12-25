@@ -31,52 +31,35 @@ public class ListeConstructions extends ArrayList<Construction> {
      * Permet de construire une route
      * @param lr Liste de ressources du joueur
      */
-    public void construireRoute(ListeRessources lr){
-        int max = 15;
+    public Route construireRoute(ListeRessources lr) throws RessourcesInsuffisantesException, NombreLimiteException {
+        final int max = 15;
 
         if (this.nombreDeRoutes < max){
             Route route;
-
-
-            try {
-
-                route = new Route(lr);
-                add(route);
-                this.nombreDeRoutes++;
-
-            } catch (SimpleException e) {
-                System.out.println(e.getMessage());
-            }
-
+            route = new Route(lr); // Throws RessourcesInsuffisantesException
+            add(route);
+            this.nombreDeRoutes++;
+            return route;
         } else {
-            System.out.println("Exception \"construireRoute()\", max atteint");
+            throw new NombreLimiteException("Route", max);
         }
-
     }
 
     /**
      * Permet de construire une Delorean
      * @param lr Liste de ressources du joueur
      */
-    public void construireDelorean(ListeRessources lr){
+    public Delorean construireDelorean(ListeRessources lr) throws RessourcesInsuffisantesException, NombreLimiteException {
         int max = 5;
 
         if (this.nombreDeDelorean < max){
             Delorean delorean;
-
-
-            try {
-
-                delorean = new Delorean(lr);
-                add(delorean);
-                this.nombreDeDelorean++;
-
-            } catch (SimpleException e) {
-                System.out.println(e.getMessage());
-            }
-
+            delorean = new Delorean(lr);
+            add(delorean);
+            this.nombreDeDelorean++;
+            return delorean;
         } else {
-            System.out.println("Exception \"construireDelorean()\", max atteint");
+            throw new NombreLimiteException("Delorean", max);
         }
 
     }
@@ -86,26 +69,17 @@ public class ListeConstructions extends ArrayList<Construction> {
      * Permet de construire un convertisseur temporel
      * @param lr Liste de ressources du joueur
      */
-    public void construireConvertisseursTemporels(ListeRessources lr){
+    public ConvertisseurTemporel construireConvertisseursTemporels(ListeRessources lr) throws RessourcesInsuffisantesException, NombreLimiteException {
         int max = 5;
 
         if (this.nombreDeConvertisseursTemporels < max){
             ConvertisseurTemporel convertisseurTemporel;
-
-
-            try {
-
-                convertisseurTemporel = new ConvertisseurTemporel(lr);
-                add(convertisseurTemporel);
-                this.nombreDeConvertisseursTemporels++;
-
-            } catch (SimpleException e) {
-                System.out.println(e.getMessage());
-            }
-
-
+            convertisseurTemporel = new ConvertisseurTemporel(lr);
+            add(convertisseurTemporel);
+            this.nombreDeConvertisseursTemporels++;
+            return convertisseurTemporel;
         } else {
-            System.out.println("Exception \"construireConvertisseursTemporels()\", max atteint");
+            throw new NombreLimiteException("Convetisseur Temporel", max);
         }
 
     }

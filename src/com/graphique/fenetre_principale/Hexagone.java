@@ -27,8 +27,8 @@ public class Hexagone{
         this.centre = centre;
         this.rayon = rayon;
         this.angle = angle;
-        this.x = computeX(this.centre, this.rayon,this.angle);
-        this.y = computeY(this.centre,this.rayon,this.angle);
+        this.x = computeX();
+        this.y = computeY();
     }
 
     /**
@@ -40,22 +40,22 @@ public class Hexagone{
         this(centre, rayon, 0);
     }
 
-    private int [] computeX(Point centre, double rayon, double angle){
+    private int [] computeX(){
 
         int[] cX = new int[6];
         for(int i =0; i <6; i++)
         {
-            cX[i] = (int)(centre.getX() + rayon * Math.cos(2*i*Math.PI/6+angle));
+            cX[i] = (int)Math.round((centre.getX() + rayon * Math.cos(2*i*Math.PI/6+angle)));
         }
         return cX;
     }
 
-   private int [] computeY(Point centre, double ray,double angle){
+   private int [] computeY(){
 
         int[] cY = new int[6];
         for(int i =0; i <6; i++)
         {
-            cY[i] = (int)(centre.getY()+ ray * Math.sin(2*i*Math.PI/6+angle));
+            cY[i] = (int)Math.round((centre.getY() + rayon * Math.sin(2*i*Math.PI/6+angle)));
         }
         return cY;
     }
@@ -93,8 +93,8 @@ public class Hexagone{
 
     public Ressources getRessources(){return case1.getRessource();}
     public int getNombre (){return case1.getNumero();}
-    public int getXCentre(){return (int)centre.getX();}
-    public int getYCentre(){return (int)centre.getY();}
+    public int getXCentre(){return (int)Math.round(centre.getX());}
+    public int getYCentre(){return (int)Math.round(centre.getY());}
 
 
 }

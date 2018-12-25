@@ -1,20 +1,25 @@
 package com.graphique.fenetre_principale;
 
 
+import com.modele.construction.NombreLimiteException;
+import com.modele.construction.RessourcesInsuffisantesException;
+import com.modele.construction.Route;
 import com.modele.joueur.Joueur;
+import com.modele.construction.Construction;
+import com.modele.ressources.Ressources;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlateauPanel extends JPanel implements MouseListener, ComponentListener {
 
@@ -23,23 +28,32 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
     private ArrayList<Ellipse2D.Double> listDeloreanes = new ArrayList<>();
     private ArrayList<Line2D.Double> listArrete =  new ArrayList<>();
     private ArrayList<Line2D.Double> listeRoutes =  new ArrayList<>();
+    private HashMap<Point, Construction> listeDePoints = new HashMap<>();
+    private Joueur joueurActif;
+    private Placement placement;
     
 
-
-    private boolean cDelorean = false;
-    private boolean cArrete = false;
-
     public PlateauPanel(Joueur[] listeJoueurs) {
-        //this.setBounds(0,0,800,700);
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,700));
-        //this.setSize(new Dimension(800,700));
         this.setBackground(Color.black);
         System.out.println("" + (int)getSize().getWidth()/2 + (int)getSize().getHeight()/2);
         this.add(setPan(),BorderLayout.SOUTH);
         addMouseListener(this);
         addComponentListener(this);
         initialiserListeHexagones(new Point(400,350), 100, 2);
+
+        this.joueurActif = listeJoueurs[0];
+        this.joueurActif.ajouterRessources(Ressources.BLE, 50);
+        this.joueurActif.ajouterRessources(Ressources.BOIS, 50);
+        this.joueurActif.ajouterRessources(Ressources.FER, 50);
+        this.joueurActif.ajouterRessources(Ressources.ARGILE, 50);
+        this.placement = Placement.VIDE;
+
+    }
+
+    public void setJoueurActif(Joueur joueurActif) {
+        this.joueurActif = joueurActif;
     }
 
     public void paintComponent(Graphics g2){
@@ -50,8 +64,13 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
         dessinerHexagones(g);
 
         //On dessine les boutons
-        if (cArrete) dessinerBoutonsRoutes(g);
-        if (cDelorean) dessinerBoutonsVilles(g);
+
+        switch (this.placement){
+            case ROUTE: dessinerBoutonsRoutes(g); break;
+            case DELOREAN: dessinerBoutonsVilles(g); break;
+            case CONVERTISSEUR_TEMPOREL: dessinerBoutonsVilles(g); break;
+            default: System.out.println("Erreur boutons"); break;
+        }
 
         //On dessine toutes les constructions
         dessinerRoutes(g);
@@ -87,7 +106,7 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
         for(Ellipse2D.Double ell : this.listDeloreanes){
             try {
                 Image img = ImageIO.read(new File("Delorean.png"));
-                g.drawImage(img, (int)ell.getX()-15, (int)ell.getY()-15, 70,70, this);
+                g.drawImage(img, (int)Math.round(ell.getX())-15, (int)Math.round(ell.getY())-15, 70,70, this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -113,60 +132,33 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
     
     private void dessinerRoutes(Graphics2D g){
 
+        float test[] = new float[] { 25.0f, 25.0f };
+        Stroke strokeDefaut = g.getStroke();
 
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File("Route.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (Line2D route : this.listeRoutes){
+        for(Line2D.Double l : this.listeRoutes){
+            g.setStroke(new BasicStroke(15));
+            g.setColor(Color.GRAY);
+            g.drawLine((int)Math.round(l.getX1()), (int)Math.round(l.getY1()), (int)Math.round(l.getX2()), (int)Math.round(l.getY2()));
+            g.setStroke(new BasicStroke(5,
+                    BasicStroke.CAP_SQUARE,    // End cap
+                    BasicStroke.JOIN_MITER,    // Join style
+                    10.0f,                     // Miter limit
+                    test, // Dash pattern
+                    0.0f));
 
-            AffineTransform at = new AffineTransform();
-
-            if(route.getX2() < route.getX1()){
-                Line2D temp = route;
-                route.setLine(temp.getP2(), temp.getP1());
-            }
-
-
-            // 4. translate it to the center of the component
-            //at.translate(getWidth() / 2, getHeight() / 2);
-            at.translate(route.getX1(), route.getY1());
-
-            // 3. do the actual rotation
-            double y = route.getY2() - route.getY1();
-            double x = route.getX2() - route.getX1();
-
-            if(Math.atan2(y, x) > 0){
-                System.out.println(Math.atan2(y, x));
-                at.rotate(Math.PI/3);
-            } else if (Math.atan2(y, x) < 0){
-                at.rotate(-Math.PI/3);
-            } else if (Math.atan2(y, x) == 0){
-                at.rotate(0);
-            }
-
-            // 2. just a scale because this image is big
-            at.scale(0.48, 0.5);
-
-            // 1. translate the object so that you rotate it around the
-            //    center (easier :))
-            at.translate(0, -image.getHeight()/2);
-
-            // draw the image
-            g.drawImage(image, at, null);
+            g.setColor(Color.BLACK);
+            g.drawLine((int)Math.round(l.getX1()), (int)Math.round(l.getY1()), (int)Math.round(l.getX2()), (int)Math.round(l.getY2()));
+            g.setStroke(strokeDefaut);
         }
     }
 
     /**
      * Initialise la liste d'Hexagone, de points et d'arrêtes
-     * @param centre
-     * @param rayon
-     * @param tours
+     * @param centre Centre des hexagones et donc du plateau
+     * @param rayon Rayon de tous les hexagones
+     * @param tours Combien il y a d'hexagones autour de l'hexagone du centre
      */
-    private void initialiserListeHexagones(Point centre, int rayon, int tours)
-    {
+    private void initialiserListeHexagones(Point centre, int rayon, int tours) {
 
         Hexagone h1 =  new Hexagone(centre,rayon);
         listHex.add(h1);
@@ -175,25 +167,34 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
 
         for(int i = 1; i < tours; i++){
             int rayonTemp = rayon * 2;
-            Hexagone hexagoneTemp = new Hexagone(centre,Math.cos(Math.PI/6)*rayonTemp*i,Math.PI/2);
-            listePositionsHexagones.addAll(Arrays.asList(hexagoneTemp.getPoints()));
+            Hexagone hexagoneTemp = new Hexagone(centre,Math.cos(Math.PI/6)*rayonTemp*i,Math.PI/2); //Hexagone temp
+            listePositionsHexagones.addAll(Arrays.asList(hexagoneTemp.getPoints())); //On ajoute tous les  points de hexagone temp a la listePositionHexagones
+
             for(int j = 0; j < 5; j++){
-                listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[j], hexagoneTemp.getPoints()[j + 1], i)));
+                listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[j], hexagoneTemp.getPoints()[j + 1], i))); //On partage le chasque cote de l'hexagone en plusieurs parties
             }
-            listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[5], hexagoneTemp.getPoints()[0], i)));
+            listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[5], hexagoneTemp.getPoints()[0], i))); //On partage le dernier coté
         }
 
         for (Point p : listePositionsHexagones){
-            this.listHex.add(new Hexagone(p,rayon));
+            this.listHex.add(new Hexagone(p,rayon)); //Pour chaque point dans la listeHexagoneTemp on cree un nouvel hexagone
         }
 
         //Ellipses
         for(Hexagone h : listHex){
             for(int i = 0; i<6 ; i++) {
-                Ellipse2D.Double e = new Ellipse2D.Double(h.getX(i)-15, h.getY(i)-15,30,30);
+                Point p = new Point(h.getX(i), h.getY(i));
+                if (testDoublon(p))
+                    this.listeDePoints.put(p, null);
+                /*Ellipse2D.Double e = new Ellipse2D.Double(h.getX(i)-15, h.getY(i)-15,30,30);
                 if(!testDoublon(e))
-                    this.listEllipse.add(e);
+                    this.listEllipse.add(e);*/
             }
+        }
+
+        for (Map.Entry<Point, Construction> m : this.listeDePoints.entrySet()){
+            Ellipse2D.Double e = new Ellipse2D.Double(m.getKey().getX()-15, m.getKey().getY()-15, 30 ,30);
+            this.listEllipse.add(e);
         }
 
 
@@ -205,12 +206,21 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
         }
     }
 
+    private boolean testDoublon(Point p){
+        int marge = 1;
+        for (Map.Entry<Point, Construction> m : this.listeDePoints.entrySet()){
+            if (p.getX() >= (m.getKey().getX()-marge) && p.getX() <= (m.getKey().getX()+marge) && p.getY() >= (m.getKey().getY()-marge) && p.getY()<=(m.getKey().getY()+marge))
+                return false;
+        }
+        return true;
+    }
+
+
     public JPanel setPan(){
         JButton bDelorean = new JButton("Cliquez-ici pour placer une Delorean");
         bDelorean.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                cDelorean = true;
-                cArrete = false;
+                placement = Placement.DELOREAN;
                 repaint();
             }
         });
@@ -218,8 +228,7 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
         JButton bArrete = new JButton("Cliquez-ici pour placer une Route");
         bArrete.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                cArrete = true;
-                cDelorean = false;
+                placement = Placement.ROUTE;
                 repaint();
             }
         });
@@ -235,21 +244,15 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
         return p1;
     }
 
-    private boolean testDoublon(Ellipse2D.Double ell){
-        for(Ellipse2D.Double e : this.listEllipse)
-            if (ell.getX()>= (e.getX()-10) && ell.getX() <= (e.getX()+10) && ell.getY() >= (e.getY()-10) && ell.getY()<=(e.getY()+10)) {
-                return true;
-            }
-        return false;
+
+
+
+
+
+
+    private Point ellipseToPoint(Ellipse2D e){
+        return new Point((int)Math.round(e.getX()), (int)Math.round(e.getY()));
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -267,27 +270,45 @@ public class PlateauPanel extends JPanel implements MouseListener, ComponentList
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(cDelorean){
+        if(this.placement == Placement.DELOREAN){
             for(int i = 0; i < this.listEllipse.size(); i++){
                 if(this.listEllipse.get(i).contains(e.getX(), e.getY())){
-                    this.listDeloreanes.add(this.listEllipse.get(i));
-                    this.listEllipse.remove(i);
+                    System.out.println(this.joueurActif.getListeConstructions());
+
+                    try {
+                        this.listeDePoints.put(ellipseToPoint(this.listEllipse.get(i)), this.joueurActif.creerDelorean());
+                        this.listDeloreanes.add(this.listEllipse.get(i));
+                        this.listEllipse.remove(i);
+                    } catch (Exception e1) {
+                        System.out.println(e1.getMessage());
+                    }
+
                     repaint();
                 }
             }
         }
 
-        if(cArrete){
+        if(this.placement == Placement.ROUTE){
             int HIT_BOX_SIZE = 10;
+
             int boxX = e.getX() - HIT_BOX_SIZE / 2;
             int boxY = e.getY() - HIT_BOX_SIZE / 2;
 
-            int width = HIT_BOX_SIZE;
-            int height = HIT_BOX_SIZE;
-
             for(int i = 0; i < this.listArrete.size(); i++){
-                if(this.listArrete.get(i).intersects(boxX, boxY, width, height)){
+                if(this.listArrete.get(i).intersects(boxX, boxY, HIT_BOX_SIZE, HIT_BOX_SIZE)){
                     this.listeRoutes.add(this.listArrete.get(i));
+
+                    try {
+                        Route route = this.joueurActif.creerRoute();
+
+                        this.listeDePoints.put(new Point((int)Math.round(this.listArrete.get(i).getX1()), (int)Math.round(this.listArrete.get(i).getY1())), route);
+                        this.listeDePoints.put(new Point((int)Math.round(this.listArrete.get(i).getX2()), (int)Math.round(this.listArrete.get(i).getY2())), route);
+
+                        this.listeRoutes.add(this.listArrete.get(i));
+
+                    } catch (RessourcesInsuffisantesException | NombreLimiteException e1) {
+                        e1.printStackTrace();
+                    }
                     this.listArrete.remove(i);
                     repaint();
                 }

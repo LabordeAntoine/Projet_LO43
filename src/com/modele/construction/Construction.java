@@ -2,19 +2,19 @@ package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;
 
-abstract class Construction {
+public abstract class Construction {
 
     ListeRessources prix = new ListeRessources();
 
     /**
      * Creer une construction a partir des ressources du joueur
      * @param lr Liste de ressources posédée
-     * @throws SimpleException
+     * @throws RessourcesInsuffisantesException
      */
-    void creer(ListeRessources lr) throws SimpleException {
+    void creer(ListeRessources lr) throws RessourcesInsuffisantesException {
         if(lr.assezDeRessources(this.prix))
             lr.supprimerRessources(this.prix);
         else
-            throw new SimpleException("Pas assez de ressources pour creer " + this.getClass().getSimpleName());
+            throw new RessourcesInsuffisantesException("Pas assez de ressources pour creer " + this.getClass().getSimpleName());
     }
 }
