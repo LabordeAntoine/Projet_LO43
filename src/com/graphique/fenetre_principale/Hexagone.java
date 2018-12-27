@@ -5,15 +5,16 @@ import com.modele.ressources.Ressources;
 
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
-public class Hexagone{
+public class Hexagone extends Polygon {
 
-    private Point centre;
+    private Point2D.Double centre;
     private Case case1 = new Case();
     private double rayon;
     private double angle;
-    private int[] x;
-    private int[] y;
+    private double [] x;
+    private double [] y;
 
     /**
      * Cette classe est ce qui permet a notre plateau d'avoir des hexagones, elle represente un seul et unique hexagone
@@ -22,62 +23,75 @@ public class Hexagone{
      * @param rayon Le rayon ou la taille de l'hexagone
      * @param angle Un angle si on veut le tourner
      */
-    public Hexagone(Point centre, double rayon,double angle)
+    public Hexagone(Point2D.Double centre, double rayon,double angle)
     {
+        super();
         this.centre = centre;
         this.rayon = rayon;
         this.angle = angle;
         this.x = computeX();
         this.y = computeY();
+        this.npoints = 6;
+        this.xpoints = this.getX();
+        this.ypoints = this.getY();
     }
+
 
     /**
      * Constructeur sans le parametre "angle", l'angle est a 0 par defaut
      * @param centre
      * @param rayon
      */
-    public Hexagone(Point centre, double rayon) {
+    public Hexagone(Point2D.Double centre, double rayon) {
         this(centre, rayon, 0);
     }
 
-    private int [] computeX(){
+    private double [] computeX(){
 
-        int[] cX = new int[6];
+        double [] cX = new double[6];
         for(int i =0; i <6; i++)
         {
-            cX[i] = (int)Math.round((centre.getX() + rayon * Math.cos(2*i*Math.PI/6+angle)));
+            cX[i] = ((centre.getX() + rayon * Math.cos(2*i*Math.PI/6+angle)));
         }
         return cX;
     }
 
-   private int [] computeY(){
+   private double [] computeY(){
 
-        int[] cY = new int[6];
+       double[] cY = new double[6];
         for(int i =0; i <6; i++)
         {
-            cY[i] = (int)Math.round((centre.getY() + rayon * Math.sin(2*i*Math.PI/6+angle)));
+            cY[i] = ((centre.getY() + rayon * Math.sin(2*i*Math.PI/6+angle)));
         }
         return cY;
     }
 
     public int[] getX(){
-        return this.x;
+        int [] resultat = new int[this.x.length];
+        for (int i = 0; i < this.x.length; i++){
+            resultat[i] = (int)Math.round(this.x[i]);
+        }
+        return resultat;
     }
     public int[] getY(){
-        return this.y;
+        int [] resultat = new int[this.y.length];
+        for (int i = 0; i < this.y.length; i++){
+            resultat[i] = (int)Math.round(this.y[i]);
+        }
+        return resultat;
     }
 
-    public Point[] getPoints(){
-        Point listePoints[] = new Point[6];
+    public Point2D.Double[] getPoints(){
+        Point2D.Double listePoints[] = new Point2D.Double[6];
         for(int i = 0; i < 6; i++)
-            listePoints[i] = new Point(this.x[i], this.y[i]);
+            listePoints[i] = new Point2D.Double(this.x[i], this.y[i]);
         return listePoints;
     }
 
-    public int getX(int index){
+    public double getX(int index){
         return this.x[index];
     }
-    public int getY(int index){
+    public double getY(int index){
         return this.y[index];
     }
 
@@ -93,8 +107,8 @@ public class Hexagone{
 
     public Ressources getRessources(){return case1.getRessource();}
     public int getNombre (){return case1.getNumero();}
-    public int getXCentre(){return (int)Math.round(centre.getX());}
-    public int getYCentre(){return (int)Math.round(centre.getY());}
+    public double getXCentre(){return (centre.getX());}
+    public double getYCentre(){return (centre.getY());}
 
 
 }

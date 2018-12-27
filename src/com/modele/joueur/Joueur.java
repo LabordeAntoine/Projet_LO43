@@ -27,10 +27,7 @@ public class Joueur {
         this.pointVictoire = 0;
     }
 
-    public String getName()
-    {
-        return this.nom;
-    }
+    public String getName() { return this.nom; }
 
 
     //POINTS DE VICTOIRE

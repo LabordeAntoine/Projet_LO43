@@ -3,6 +3,8 @@ import com.graphique.fenetre_principale.FenetrePrincipale;
 import com.modele.joueur.Joueur;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,8 @@ public class Main {
         //F1.setVisible(true);
         //F.setVisible(true);
         //FenetreJoueurs F2 = new FenetreJoueurs();
+        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("swing.aatext", "true");
         Joueur j1 = new Joueur("Antoine ");
         Joueur j2 = new Joueur("Ewan");
         Joueur j3 = new Joueur("Yosef");
@@ -21,10 +25,10 @@ public class Main {
 
         new FenetrePrincipale(j1,j2,j3,j4);
 
-        HashMap<Point, String> test = new HashMap<>();
-        test.put(new Point(20, 20), "value");
-        test.put(new Point(20, 20), "other value");
-        for (Map.Entry<Point, String> e : test.entrySet()){
+        HashMap<Point2D.Double, String> test = new HashMap<>();
+        test.put(new Point2D.Double(20, 20), "value");
+        test.put(new Point2D.Double(20, 20), "other value");
+        for (Map.Entry<Point2D.Double, String> e : test.entrySet()){
             System.out.println(e.getKey());
         }
 
