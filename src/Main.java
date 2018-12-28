@@ -1,5 +1,6 @@
 import com.graphique.fenetre_lancement.FenetreLancement;
 import com.graphique.fenetre_principale.FenetrePrincipale;
+import com.graphique.fenetre_principale.plateau.PlateauException;
 import com.modele.joueur.Joueur;
 
 import java.awt.*;
@@ -18,12 +19,16 @@ public class Main {
         //FenetreJoueurs F2 = new FenetreJoueurs();
         System.setProperty("awt.useSystemAAFontSettings","on");
         System.setProperty("swing.aatext", "true");
-        Joueur j1 = new Joueur("Antoine ");
-        Joueur j2 = new Joueur("Ewan");
-        Joueur j3 = new Joueur("Yosef");
-        Joueur j4 = new Joueur("TEST");
+        Joueur j1 = new Joueur("Antoine ", Color.MAGENTA);
+        Joueur j2 = new Joueur("Ewan", Color.MAGENTA);
+        Joueur j3 = new Joueur("Yosef", Color.MAGENTA);
+        Joueur j4 = new Joueur("TEST", Color.MAGENTA);
 
-        new FenetrePrincipale(j1,j2,j3,j4);
+        try {
+            new FenetrePrincipale(j1,j2,j3,j4);
+        } catch (PlateauException e) {
+            e.printStackTrace();
+        }
 
         HashMap<Point2D.Double, String> test = new HashMap<>();
         test.put(new Point2D.Double(20, 20), "value");

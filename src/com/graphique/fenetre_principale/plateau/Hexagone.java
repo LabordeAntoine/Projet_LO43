@@ -1,4 +1,4 @@
-package com.graphique.fenetre_principale;
+package com.graphique.fenetre_principale.plateau;
 
 import com.modele.plateau.Case;
 import com.modele.ressources.Ressources;
@@ -10,7 +10,7 @@ import java.awt.geom.Point2D;
 public class Hexagone extends Polygon {
 
     private Point2D.Double centre;
-    private Case case1 = new Case();
+    private Case uneCase = new Case();
     private double rayon;
     private double angle;
     private double [] x;
@@ -38,7 +38,7 @@ public class Hexagone extends Polygon {
 
 
     /**
-     * Constructeur sans le parametre "angle", l'angle est a 0 par defaut
+     * Constructeur sans le parametre "angle", l'angle est à 0 par defaut
      * @param centre
      * @param rayon
      */
@@ -46,8 +46,9 @@ public class Hexagone extends Polygon {
         this(centre, rayon, 0);
     }
 
-    private double [] computeX(){
 
+
+    private double [] computeX(){
         double [] cX = new double[6];
         for(int i =0; i <6; i++)
         {
@@ -55,8 +56,7 @@ public class Hexagone extends Polygon {
         }
         return cX;
     }
-
-   private double [] computeY(){
+    private double [] computeY(){
 
        double[] cY = new double[6];
         for(int i =0; i <6; i++)
@@ -65,6 +65,8 @@ public class Hexagone extends Polygon {
         }
         return cY;
     }
+
+
 
     public int[] getX(){
         int [] resultat = new int[this.x.length];
@@ -81,6 +83,8 @@ public class Hexagone extends Polygon {
         return resultat;
     }
 
+
+
     public Point2D.Double[] getPoints(){
         Point2D.Double listePoints[] = new Point2D.Double[6];
         for(int i = 0; i < 6; i++)
@@ -95,18 +99,10 @@ public class Hexagone extends Polygon {
         return this.y[index];
     }
 
-    public void affiche()
-    {
-        for(int i = 0; i<6;i++)
-            System.out.println("x:"+x[i]+"y:"+y[i]);
-    }
+    public double getRayon() { return rayon; }
 
-    public double getRayon() {
-        return rayon;
-    }
-
-    public Ressources getRessources(){return case1.getRessource();}
-    public int getNombre (){return case1.getNumero();}
+    public Ressources getRessources(){return uneCase.getRessource();}
+    public int getNombre (){return uneCase.getNumero();}
     public double getXCentre(){return (centre.getX());}
     public double getYCentre(){return (centre.getY());}
 

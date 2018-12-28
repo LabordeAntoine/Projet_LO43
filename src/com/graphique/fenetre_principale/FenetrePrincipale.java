@@ -1,4 +1,7 @@
 package com.graphique.fenetre_principale;
+import com.graphique.fenetre_principale.plateau.Placement;
+import com.graphique.fenetre_principale.plateau.PlateauException;
+import com.graphique.fenetre_principale.plateau.PlateauPanel;
 import com.modele.joueur.Joueur;
 
 import javax.swing.*;
@@ -10,6 +13,7 @@ import java.awt.event.ActionListener;
 public class FenetrePrincipale extends JFrame implements ActionListener {
 
     private PlateauPanel plateauPanel;
+    private Joueur [] listeJoueurs;
 
     /**
      * C'est la classe de la fenetre principale du jeu
@@ -19,7 +23,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
      * @param j3
      * @param j4
      */
-    public FenetrePrincipale(Joueur j1, Joueur j2, Joueur j3, Joueur j4)  {
+    public FenetrePrincipale(Joueur j1, Joueur j2, Joueur j3, Joueur j4) throws PlateauException {
 
         //Permet a "componentResized" de ne pas etre appele trop de fois
         Toolkit.getDefaultToolkit().setDynamicLayout( false );
@@ -28,16 +32,16 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         this.setLayout(new BorderLayout());
 
         JPanel panDroite = new JPanel(new GridLayout(2,1));
-        panDroite.add(new JoueurIndividuelPanel(j1,Color.RED,1));
-        panDroite.add(new JoueurIndividuelPanel(j2,Color.BLUE,2));
+        panDroite.add(new JoueurIndividuelPanel(j1,1));
+        panDroite.add(new JoueurIndividuelPanel(j2,2));
 
         JPanel panGauche = new JPanel(new GridLayout(2,1));
-        panGauche.add(new JoueurIndividuelPanel(j3,Color.green,3));
-        panGauche.add(new JoueurIndividuelPanel(j4,Color.magenta,4));
+        panGauche.add(new JoueurIndividuelPanel(j3,3));
+        panGauche.add(new JoueurIndividuelPanel(j4,4));
 
-        Joueur [] listeJoueurs = new Joueur[]{j1, j2, j3, j4};
+        this.listeJoueurs = new Joueur[]{j1, j2, j3, j4};
 
-        this.plateauPanel = new PlateauPanel(listeJoueurs);
+        this.plateauPanel = new PlateauPanel(j1);
         JPanel panCentre = new JPanel();
         panCentre.setLayout(new BoxLayout(panCentre, BoxLayout.Y_AXIS));
         panCentre.add(this.plateauPanel);
@@ -55,7 +59,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         //Parametres de la fenetre
         this.setTitle("Back to Catane");
         this.setSize(1300,1000);
-        this.setMinimumSize(new Dimension(700, 500));
+        this.setMinimumSize(new Dimension((int)this.plateauPanel.getMinimumSize().getWidth()  + 500, (int)this.plateauPanel.getMinimumSize().getWidth() + 200));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -72,7 +76,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             case "placer delorean" : this.plateauPanel.setPlacement(Placement.DELOREAN); break;
             case "placer convertisseur temporel": this.plateauPanel.setPlacement(Placement.CONVERTISSEUR_TEMPOREL);
             case "placer route": this.plateauPanel.setPlacement(Placement.ROUTE); break;
-            case "voir plateau": this.plateauPanel.setPlacement(Placement.VIDE); break;
+            case "voir plateau": break;
             case "vider plateau": break;
 
             default: System.out.println("Erreur bouton - Fenetre Principale");  break;

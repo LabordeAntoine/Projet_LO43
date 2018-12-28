@@ -1,11 +1,14 @@
 package com.modele.joueur;
 
 import com.modele.cartes.*;
+import com.modele.cartes.Robot;
 import com.modele.construction.*;
 import com.modele.ressources.ListeRessources;
 import com.modele.ressources.Ressources;
 
 
+import java.awt.Color;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,23 +16,26 @@ public class Joueur {
 
     private String nom;
     private int pointVictoire;
+    private Color couleur;
+
     private ListeRessources listeRessources = new ListeRessources();
     private ListeConstructions listeConstructions = new ListeConstructions();
-    private ArrayList<Cartes> c = new ArrayList<>();
+    private ArrayList<Cartes> listCartes = new ArrayList<>();
 
 
     /**
      * Constructeur de la classe joueur
      * @param n nom du joueur
      */
-    public Joueur(String n) {
+    public Joueur(String n, Color couleur) {
         this.nom = n;
         this.pointVictoire = 0;
+        this.couleur = couleur;
     }
 
     public String getName() { return this.nom; }
 
-
+    public Color getCouleur() { return couleur; }
     //POINTS DE VICTOIRE
 
     /**
@@ -66,9 +72,9 @@ public class Joueur {
 
 
     //CONSTRUCTIONS
-    public Route creerRoute() throws RessourcesInsuffisantesException, NombreLimiteException { return this.listeConstructions.construireRoute(this.listeRessources); }
-    public ConvertisseurTemporel creerConvertisseurTemporel() throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireConvertisseursTemporels(this.listeRessources); }
-    public Delorean creerDelorean() throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireDelorean(this.listeRessources); }
+    public Route creerRoute(Point2D.Double position) throws RessourcesInsuffisantesException, NombreLimiteException { return this.listeConstructions.construireRoute(this.listeRessources, position); }
+    public ConvertisseurTemporel creerConvertisseurTemporel(Point2D.Double position) throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireConvertisseursTemporels(this.listeRessources, position); }
+    public Delorean creerDelorean(Point2D.Double position) throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireDelorean(this.listeRessources, position); }
 
     public ListeConstructions getListeConstructions() { return listeConstructions; }
 
@@ -138,19 +144,19 @@ public class Joueur {
 
         switch (resultat) {
             case 1:
-                this.c.add(new ProgresConstructionRouteGratuite());
+                this.listCartes.add(new ProgresConstructionRouteGratuite());
                 break;
 
             case 2:
-                this.c.add(new ProgresVolerDesRessources());
+                this.listCartes.add(new ProgresVolerDesRessources());
                 break;
 
             case 3:
-                this.c.add(new Robot());
+                this.listCartes.add(new Robot());
                 break;
 
             case 4:
-                this.c.add(new PointDeVictoire());
+                this.listCartes.add(new PointDeVictoire());
                 break;
 
             default:
@@ -165,10 +171,10 @@ public class Joueur {
      */
     public void jouerCarte() throws RessourcesInsuffisantesException, NombreLimiteException {
 
-        if(c.size()>0) {
+        if(listCartes.size()>0) {
 
             System.out.println("Quelle carte jouer?");
-            ArrayList<Cartes> temp = this.c;
+            ArrayList<Cartes> temp = this.listCartes;
 
             int cmp = 0;
 
@@ -181,14 +187,14 @@ public class Joueur {
             Scanner sc = new Scanner(System.in);
             int rep = sc.nextInt();
 
-            while (rep < 0 || rep > c.size() - 1) {
+            while (rep < 0 || rep > listCartes.size() - 1) {
                 System.out.println(">> ERREUR : Veuillez rentrer un des numero propose !");
                 rep = sc.nextInt();
             }
 
             if (rep >= 0) {
-                this.c.get(rep).action(this);
-                this.c.remove(rep);
+                this.listCartes.get(rep).action(this);
+                this.listCartes.remove(rep);
             } else
                 System.out.println("PB");
 

@@ -1,9 +1,12 @@
-package com.graphique.fenetre_principale;
+package com.graphique.fenetre_principale.plateau;
 
 
+import com.modele.construction.Construction;
+import com.modele.construction.ListeConstructions;
 import com.modele.construction.NombreLimiteException;
 import com.modele.construction.RessourcesInsuffisantesException;
 import com.modele.joueur.Joueur;
+import com.modele.ressources.ListeRessources;
 import com.modele.ressources.Ressources;
 
 import javax.imageio.ImageIO;
@@ -26,8 +29,8 @@ public class PlateauPanel extends JPanel implements MouseListener {
     private ArrayList<Ellipse2D.Double> listeEllipseBoutons = new ArrayList<>();
     private ArrayList<Line2D.Double> listeArreteBoutons =  new ArrayList<>();
 
-    private ArrayList<Ellipse2D.Double> listeDeloreanes = new ArrayList<>();
-    private ArrayList<Ellipse2D.Double> listeConvertisseursTemporels = new ArrayList<>();
+    private ArrayList<Point2D.Double> listeDeloreanes = new ArrayList<>();
+    private ArrayList<Point2D.Double> listeConvertisseursTemporels = new ArrayList<>();
     private ArrayList<Line2D.Double> listeRoutes =  new ArrayList<>();
 
     private Joueur joueurActif;
@@ -35,21 +38,44 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
 
 
-    public PlateauPanel(Joueur[] listeJoueurs) {
-        this.setPreferredSize(new Dimension(800,700));
-        this.setBackground(Color.gray);
-        System.out.println("" + (int)getSize().getWidth()/2 + (int)getSize().getHeight()/2);
-        addMouseListener(this);
-        initialiserListeHexagones(new Point2D.Double(400,350), 77, 3);
+    public PlateauPanel(Joueur joueur) throws PlateauException{
 
-        this.joueurActif = listeJoueurs[0];
-        this.joueurActif.ajouterRessources(Ressources.BLE, 50);
-        this.joueurActif.ajouterRessources(Ressources.BOIS, 50);
-        this.joueurActif.ajouterRessources(Ressources.FER, 50);
-        this.joueurActif.ajouterRessources(Ressources.ARGILE, 50);
+        int rayon = 50;
+        int tours = 4;
+        if (tours > 10){
+            throw new PlateauException("Plateau trop grand. (" + tours + ")");
+        }
+
+
+        //Parametres de taille
+        this.setMinimumSize(new Dimension(2* rayon * ((tours*2)-2) + 20, 2* rayon * ((tours*2)-1) - rayon));
+        this.setMaximumSize(this.getMinimumSize());
+        this.setPreferredSize(this.getMinimumSize());
+
+
+        //On initialise
+        initialiserListeHexagones(new Point2D.Double(this.getMinimumSize().getWidth() /2,this.getMinimumSize().getHeight()/2), rayon, tours);
+        this.joueurActif = joueur;
         this.placement = Placement.VIDE;
 
+
+        //Listener
+        addMouseListener(this);
+
     }
+
+    public void setJoueurActif(Joueur joueurActif) { this.joueurActif = joueurActif; }
+
+    public void setPlacement(Placement placement) { this.placement = placement; repaint(); }
+
+    private Point2D.Double ellipseToPoint(Ellipse2D e){ return new Point2D.Double(e.getCenterX(), e.getCenterY()); }
+
+    private Point2D.Double lineToPoint(Line2D.Double l){ return CalculPoint.split(new Point2D.Double(l.getX1(), l.getY1()), new Point2D.Double(l.getX2(), l.getY2()), 2)[0]; }
+
+
+
+
+
 
     /**
      * Initialise la liste d'Hexagone, les boutons pour placer les constructions et les routes
@@ -59,10 +85,13 @@ public class PlateauPanel extends JPanel implements MouseListener {
      */
     private void initialiserListeHexagones(Point2D.Double centre, int rayon, int tours) {
 
+        //On initialise l'hexagone du centre
         Hexagone h1 =  new Hexagone(centre,rayon);
         listeHexagones.add(h1);
 
-        ArrayList<Point2D.Double> listePositionsHexagones = new ArrayList<>();
+
+        //On initialise l'hexagone TEMP, qui nous donnera les coordonnees pour placer les autres hexagones autours
+        ArrayList<Point2D.Double> listePositionsHexagones = new ArrayList<>(); //On cree une liste pour toutes les coordoonees
 
         for(int i = 1; i < tours; i++){
             int rayonTemp = rayon * 2;
@@ -76,68 +105,99 @@ public class PlateauPanel extends JPanel implements MouseListener {
         }
 
 
+        //On initialise tous les hexagones avec les points stockés dans la liste "listePositionsHexagones" qu'on a cree precedemment
         for (Point2D.Double p : listePositionsHexagones){
             this.listeHexagones.add(new Hexagone(p,rayon)); //Pour chaque point dans la listeHexagoneTemp on cree un nouvel hexagone
         }
 
 
-        //Ellipses
+        //On initialise les boutons ou on pourra cliquer dessus pour placer les constructions
         for(Hexagone h : listeHexagones){
             for(int i = 0; i<6 ; i++) {
                 Ellipse2D.Double e = new Ellipse2D.Double(h.getX(i)-15, h.getY(i)-15, 30 ,30);
-                if (testDoublon(e))
+                if (!testDoublon(e))
                     this.listeEllipseBoutons.add(e);
             }
         }
 
 
+        //On initialise les boutons ou on pourra cliquer dessus pour placer les routes
         for(Hexagone h : listeHexagones){
             for(int i = 0; i<5 ; i++) {
                 Line2D.Double l = new Line2D.Double(h.getX(i),h.getY(i),h.getX(i+1),h.getY(i+1));
-                if(testDoublon(l))
+                if(!testDoublon(l))
                     listeArreteBoutons.add(l);
             }
             Line2D.Double l = new Line2D.Double(h.getX(5),h.getY(5),h.getX(0),h.getY(0));
-            if(testDoublon(l))
+            if(!testDoublon(l))
                 listeArreteBoutons.add(l);
         }
     }
 
-    private boolean testDoublon(Line2D d){
+    /**
+     * Sert a tester si un bouton a deja été placé
+     * @param ellipse2D Ellipse a teste
+     * @return Vrai si il y a un bouton deja placé
+     */
+    private boolean testDoublon(Ellipse2D.Double ellipse2D){
+        for(Ellipse2D.Double e : this.listeEllipseBoutons)
+            if(ellipse2D.intersects(e.getX(), e.getY(), e.getWidth(), e.getHeight()))
+                return true;
+        return false;
+    }
+
+    /**
+     * Sert a tester si un bouton a deja été placé
+     * @param line2D Ligne a tester
+     * @return Vrai si il y a un bouton deja placé
+     */
+    private boolean testDoublon(Line2D line2D){
         int marge = 4;
-        Ellipse2D.Double ellipse1 = new Ellipse2D.Double(d.getX1() - (marge/2), d.getY1() - (marge/2), marge, marge);
-        Ellipse2D.Double ellipse2 = new Ellipse2D.Double(d.getX2() - (marge/2), d.getY2() - (marge/2), marge, marge);
+        Ellipse2D.Double ellipse1 = new Ellipse2D.Double(line2D.getX1() - (marge/2), line2D.getY1() - (marge/2), marge, marge);
+        Ellipse2D.Double ellipse2 = new Ellipse2D.Double(line2D.getX2() - (marge/2), line2D.getY2() - (marge/2), marge, marge);
         for (Line2D l : this.listeArreteBoutons){
             if (ellipse1.contains(l.getX1(), l.getY1()) && ellipse2.contains(l.getX2(), l.getY2()) || ellipse2.contains(l.getX1(), l.getY1()) && ellipse1.contains(l.getX2(), l.getY2())){
-                return false;
+                return true;
             }
         }
-        return true;
-    }
-
-    private boolean testDoublon(Ellipse2D.Double ell){
-        for(Ellipse2D.Double e : this.listeEllipseBoutons)
-            if(ell.intersects(e.getX(), e.getY(), e.getWidth(), e.getHeight()))
-                return false;
-        return true;
+        return false;
     }
 
 
-    public void setJoueurActif(Joueur joueurActif) { this.joueurActif = joueurActif; }
 
-    void setPlacement(Placement placement) { this.placement = placement; repaint(); }
 
+
+
+
+
+
+
+
+
+
+
+    /**
+     * PaintComponenent va dessiner notre plateau
+     * @param g2
+     */
     public void paintComponent(Graphics g2){
         super.paintComponent(g2);
         Graphics2D g = (Graphics2D)g2;
+
+
+        //Anti-aliasing
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+
+        //Fond
+        setBackground(Color.DARK_GRAY);
+
 
         //On dessine tous les hexagones
         dessinerHexagones(g);
 
 
-        //On dessine les boutons
-
+        //On dessine les boutons si ils sont demandés, pour ca on verifie l'etat de la variable "placement"
         switch (this.placement){
             case ROUTE: dessinerBoutonsRoutes(g); break;
             case DELOREAN: dessinerBoutonsVilles(g); break;
@@ -146,20 +206,11 @@ public class PlateauPanel extends JPanel implements MouseListener {
             default: System.out.println("Erreur boutons"); break;
         }
 
+
         //On dessine toutes les constructions
         dessinerRoutes(g);
         dessinerDeloreanes(g);
-        g.setColor(Color.RED);
-
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -170,12 +221,15 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
             //Dessine les hexagones
             g.setColor(Color.CYAN);
-            g.drawPolygon(h.getX(),h.getY(),6);
+            g.drawPolygon(h.getX(),h.getY(),h.npoints);
 
             //Dessine les nombres
-
+            int taillePolice = 20;
+            String stylePolice = "Arial";
+            Font font = new Font(stylePolice, Font.PLAIN, taillePolice);
+            g.setFont(font);
             g.setColor(Color.CYAN);
-            g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre()),(int)Math.round(h.getYCentre()));
+            g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre() - taillePolice/5),(int)Math.round(h.getYCentre()) + taillePolice/5);
 
             //Dessine les images du fond
             /*try {
@@ -189,11 +243,18 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
     private void dessinerBoutonsVilles(Graphics2D g){
-        g.setColor(Color.red);
+
+        Stroke strokeDefaut = g.getStroke();
+        g.setStroke(new BasicStroke(5));
+
         for (Ellipse2D.Double e : this.listeEllipseBoutons){
+            g.setColor(Color.red);
             g.fill(e);
+            g.setColor(new Color(121, 0, 38));
+            g.draw(e);
         }
 
+        g.setStroke(strokeDefaut);
     }
 
     private void dessinerBoutonsRoutes(Graphics2D g){
@@ -215,10 +276,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
             g.drawLine((int)Math.round(l.getX1()), (int)Math.round(l.getY1()), (int)Math.round(l.getX2()), (int)Math.round(l.getY2()));
 
             g.setStroke(new BasicStroke(5,
-                    BasicStroke.CAP_ROUND,    // End cap
+                    BasicStroke.CAP_ROUND,     // End cap
                     BasicStroke.JOIN_MITER,    // Join style
                     10.0f,            // Miter limit
-                    test, // Dash pattern
+                    test,                      // Dash pattern
                     0.0f));
 
             g.setColor(Color.BLACK);
@@ -228,10 +289,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
     private void dessinerDeloreanes(Graphics2D g){
-        for(Ellipse2D.Double ell : this.listeDeloreanes){
+        for(Point2D.Double p : this.listeDeloreanes){
             try {
                 Image img = ImageIO.read(new File("Delorean.png"));
-                g.drawImage(img, (int)Math.round(ell.getX())-15, (int)Math.round(ell.getY())-15, 70,70, this);
+                g.drawImage(img, (int)Math.round(p.getX())-15, (int)Math.round(p.getY())-15, 70,70, this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -260,21 +321,24 @@ public class PlateauPanel extends JPanel implements MouseListener {
             for(int i = 0; i < this.listeEllipseBoutons.size(); i++){
                 if(this.listeEllipseBoutons.get(i).contains(e.getX(), e.getY())){
                     try {
-                        for (Hexagone h : this.listeHexagones){
-                            if (h.intersects(this.listeEllipseBoutons.get(i).getX(), this.listeEllipseBoutons.get(i).getY(), this.listeEllipseBoutons.get(i).getHeight(), this.listeEllipseBoutons.get(i).getWidth()))
-                                System.out.println("touche l'hexagone " + h.getNombre());
-                        }
-                        this.listeDeloreanes.add(this.listeEllipseBoutons.get(i));
+
+                        this.joueurActif.creerDelorean(this.ellipseToPoint(this.listeEllipseBoutons.get(i)));
+                        this.listeDeloreanes.add(ellipseToPoint(this.listeEllipseBoutons.get(i)));
                         this.listeEllipseBoutons.remove(i);
                         System.out.println("Delorean Placé");
+                        i = this.listeEllipseBoutons.size(); //Evite de devoir chercher jusqu'a la fin
+
                     } catch (Exception e1) {
                         System.out.println(e1.getMessage());
                     }
 
                     repaint();
+
+
                 }
             }
         }
+
 
         if(this.placement == Placement.ROUTE){
             int HIT_BOX_SIZE = 10;
@@ -283,29 +347,22 @@ public class PlateauPanel extends JPanel implements MouseListener {
             int boxY = e.getY() - HIT_BOX_SIZE / 2;
 
             for(int i = 0; i < this.listeArreteBoutons.size(); i++){
+
                 if(this.listeArreteBoutons.get(i).intersects(boxX, boxY, HIT_BOX_SIZE, HIT_BOX_SIZE)){
-
                     try {
-                        this.joueurActif.creerRoute();
 
-                        Line2D.Double tempLine = this.listeArreteBoutons.get(i);
-                        Point2D.Double tempPoint = CalculPoint.split(new Point2D.Double(tempLine.getX1(), tempLine.getY1()), new Point2D.Double(tempLine.getX2(), tempLine.getY2()), 2)[0];
-                        int marge = 5;
-                        for (Hexagone h : this.listeHexagones){
-                            if (h.intersects(tempPoint.getX() - marge/2, tempPoint.getY() - marge/2, marge, marge))
-                                System.out.println("touche l'hexagone " + h.getNombre());
-                        }
+                        this.joueurActif.creerRoute(this.lineToPoint(this.listeArreteBoutons.get(i)));
                         this.listeRoutes.add(this.listeArreteBoutons.get(i));
                         this.listeArreteBoutons.remove(i);
                         System.out.println("Route Placé");
+                        i = this.listeArreteBoutons.size(); //Evite de pouvoir cliquer sur deux routes en meme temps
 
                     } catch (RessourcesInsuffisantesException | NombreLimiteException e1) {
                         System.out.println(e1.getMessage());
                     }
-                    repaint();
-
                 }
             }
+            repaint();
         }
 
     }
@@ -320,4 +377,19 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     }
 
+
+    public ListeRessources genererRessources(ListeConstructions listeConstructions){
+        ListeRessources listeRessources = new ListeRessources();
+        int marge = 5;
+        for (Construction construction : listeConstructions){
+            Point2D.Double position = construction.getPosition();
+            for (Hexagone h : this.listeHexagones){
+                if (h.intersects(position.getX() - marge/2, position.getY() - marge/2, marge, marge)){
+                    System.out.println("touche l'hexagone " + h.getNombre());
+                    listeRessources.ajouterRessources(h.getRessources());
+                }
+            }
+        }
+        return listeRessources;
+    }
 }

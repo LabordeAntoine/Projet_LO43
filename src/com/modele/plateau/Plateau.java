@@ -14,7 +14,7 @@ public class Plateau {
     private int positionBiff;
 
     /**
-     * Constructeur de la classe com.graphique.fenetre_principale.PlateauPanel
+     * Constructeur de la classe com.graphique.fenetre_principale.plateau.PlateauPanel
      * @param annee Annee du plateau de jeu
      */
     public Plateau(int annee) {

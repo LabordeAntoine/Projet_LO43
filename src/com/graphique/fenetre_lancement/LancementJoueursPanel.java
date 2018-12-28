@@ -1,6 +1,7 @@
 package com.graphique.fenetre_lancement;
 
 import com.graphique.fenetre_principale.FenetrePrincipale;
+import com.graphique.fenetre_principale.plateau.PlateauException;
 import com.modele.joueur.Joueur;
 
 import javax.swing.*;
@@ -102,12 +103,16 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (verifText()) {
-            new FenetrePrincipale(
-                    new Joueur(this.listeTextField[0].getText()),
-                    new Joueur(this.listeTextField[1].getText()),
-                    new Joueur(this.listeTextField[2].getText()),
-                    new Joueur(this.listeTextField[3].getText())
-            );
+            try {
+                new FenetrePrincipale(
+                        new Joueur(this.listeTextField[0].getText(), Color.RED),
+                        new Joueur(this.listeTextField[1].getText(), Color.BLUE),
+                        new Joueur(this.listeTextField[2].getText(), Color.GREEN),
+                        new Joueur(this.listeTextField[3].getText(), Color.MAGENTA)
+                );
+            } catch (PlateauException e1) {
+                e1.printStackTrace();
+            }
         }
         else{
             JOptionPane.showMessageDialog(null,"Les espaces et caractères spéciaux ne sont pas acceptés et les noms ne peuvent pas être vide","Attention",JOptionPane.WARNING_MESSAGE);

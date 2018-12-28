@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class JoueurIndividuelPanel extends JPanel {
 
-    public JoueurIndividuelPanel(Joueur j, Color couleur, int nb){
+    public JoueurIndividuelPanel(Joueur j, int nb){
         EmptyBorder marge = new EmptyBorder(10,10,10,10);
 
         this.setLayout(new GridLayout(2,1));
@@ -23,7 +23,7 @@ public class JoueurIndividuelPanel extends JPanel {
         lab.setText("Joueur n°" + nb+" :");
         JLabel label = new JLabel();
         label.setText(j.getName());
-        label.setForeground(couleur);
+        label.setForeground(j.getCouleur());
         JTextArea ressource = new JTextArea();
         ressource.setBorder(marge);
         ressource.setEditable(false);

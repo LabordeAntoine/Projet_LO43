@@ -2,6 +2,7 @@ package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class ListeConstructions extends ArrayList<Construction> {
@@ -31,12 +32,12 @@ public class ListeConstructions extends ArrayList<Construction> {
      * Permet de construire une route
      * @param lr Liste de ressources du joueur
      */
-    public Route construireRoute(ListeRessources lr) throws RessourcesInsuffisantesException, NombreLimiteException {
+    public Route construireRoute(ListeRessources lr, Point2D.Double position) throws RessourcesInsuffisantesException, NombreLimiteException {
         final int max = 15;
 
         if (this.nombreDeRoutes < max){
             Route route;
-            route = new Route(lr); // Throws RessourcesInsuffisantesException
+            route = new Route(lr, position); // Throws RessourcesInsuffisantesException
             add(route);
             this.nombreDeRoutes++;
             return route;
@@ -49,12 +50,12 @@ public class ListeConstructions extends ArrayList<Construction> {
      * Permet de construire une Delorean
      * @param lr Liste de ressources du joueur
      */
-    public Delorean construireDelorean(ListeRessources lr) throws RessourcesInsuffisantesException, NombreLimiteException {
+    public Delorean construireDelorean(ListeRessources lr, Point2D.Double position) throws RessourcesInsuffisantesException, NombreLimiteException {
         int max = 5;
 
         if (this.nombreDeDelorean < max){
             Delorean delorean;
-            delorean = new Delorean(lr);
+            delorean = new Delorean(lr, position);
             add(delorean);
             this.nombreDeDelorean++;
             return delorean;
@@ -69,12 +70,12 @@ public class ListeConstructions extends ArrayList<Construction> {
      * Permet de construire un convertisseur temporel
      * @param lr Liste de ressources du joueur
      */
-    public ConvertisseurTemporel construireConvertisseursTemporels(ListeRessources lr) throws RessourcesInsuffisantesException, NombreLimiteException {
+    public ConvertisseurTemporel construireConvertisseursTemporels(ListeRessources lr, Point2D.Double position) throws RessourcesInsuffisantesException, NombreLimiteException {
         int max = 5;
 
         if (this.nombreDeConvertisseursTemporels < max){
             ConvertisseurTemporel convertisseurTemporel;
-            convertisseurTemporel = new ConvertisseurTemporel(lr);
+            convertisseurTemporel = new ConvertisseurTemporel(lr, position);
             add(convertisseurTemporel);
             this.nombreDeConvertisseursTemporels++;
             return convertisseurTemporel;
@@ -86,17 +87,17 @@ public class ListeConstructions extends ArrayList<Construction> {
 
     /**
      *
-     * @return
+     * @return toString de toute la liste
      */
     public String toString(){
 
-        String resultat = "";
+        StringBuilder resultat = new StringBuilder();
 
         for (Construction c : this){
-            resultat += c.getClass().getSimpleName() + "\n";
+            resultat.append(c.getClass().getSimpleName()).append("\n");
         }
 
-        return resultat;
+        return resultat.toString();
     }
 
 }

@@ -14,7 +14,6 @@ public class GameController {
     public GameController() {
         this.tableauJoueurs = new Joueur[nombreDeJoueurs];
         for (int i = 0; i < tableauJoueurs.length; i++)
-            tableauJoueurs[i] = new Joueur("test");
 
         this.tableauPlateaux = new Plateau[nombreDePlateaux];
         for (int i = 0; i < tableauPlateaux.length; i++){
