@@ -68,6 +68,7 @@ public class Joueur {
     public void afficherRessource(){ System.out.println(this.getName()); this.listeRessources.afficherRessource(); }
     public String toStringRessources(){ return this.listeRessources.toString(); }
 
+    public ListeRessources getListeRessources() { return listeRessources; }
 
 
 

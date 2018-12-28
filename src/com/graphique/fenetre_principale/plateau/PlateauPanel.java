@@ -40,8 +40,8 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     public PlateauPanel(Joueur joueur) throws PlateauException{
 
-        int rayon = 50;
-        int tours = 4;
+        int rayon = 70;
+        int tours = 3;
         if (tours > 10){
             throw new PlateauException("Plateau trop grand. (" + tours + ")");
         }
@@ -56,6 +56,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
         //On initialise
         initialiserListeHexagones(new Point2D.Double(this.getMinimumSize().getWidth() /2,this.getMinimumSize().getHeight()/2), rayon, tours);
         this.joueurActif = joueur;
+        this.joueurActif.ajouterRessources(Ressources.BLE, 50);
+        this.joueurActif.ajouterRessources(Ressources.ARGILE, 50);
+        this.joueurActif.ajouterRessources(Ressources.FER, 50);
+        this.joueurActif.ajouterRessources(Ressources.BOIS, 50);
         this.placement = Placement.VIDE;
 
 
@@ -197,6 +201,12 @@ public class PlateauPanel extends JPanel implements MouseListener {
         dessinerHexagones(g);
 
 
+        //On dessine toutes les constructions
+        dessinerRoutes(g);
+        dessinerDeloreanes(g);
+        dessinerConvertisseurTemporel(g);
+
+
         //On dessine les boutons si ils sont demandés, pour ca on verifie l'etat de la variable "placement"
         switch (this.placement){
             case ROUTE: dessinerBoutonsRoutes(g); break;
@@ -205,11 +215,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
             case VIDE: break;
             default: System.out.println("Erreur boutons"); break;
         }
-
-
-        //On dessine toutes les constructions
-        dessinerRoutes(g);
-        dessinerDeloreanes(g);
     }
 
 
@@ -271,17 +276,19 @@ public class PlateauPanel extends JPanel implements MouseListener {
         Stroke strokeDefaut = g.getStroke();
 
         for(Line2D.Double l : this.listeRoutes){
-            g.setStroke(new BasicStroke(15));
+            g.setStroke(new BasicStroke(20,
+                BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_MITER));
             g.setColor(new Color(79, 63, 13));
             g.drawLine((int)Math.round(l.getX1()), (int)Math.round(l.getY1()), (int)Math.round(l.getX2()), (int)Math.round(l.getY2()));
 
-            g.setStroke(new BasicStroke(5,
+
+            g.setStroke(new BasicStroke(7,
                     BasicStroke.CAP_ROUND,     // End cap
                     BasicStroke.JOIN_MITER,    // Join style
                     10.0f,            // Miter limit
                     test,                      // Dash pattern
                     0.0f));
-
             g.setColor(Color.BLACK);
             g.drawLine((int)Math.round(l.getX1()), (int)Math.round(l.getY1()), (int)Math.round(l.getX2()), (int)Math.round(l.getY2()));
             g.setStroke(strokeDefaut);
@@ -289,10 +296,27 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
     private void dessinerDeloreanes(Graphics2D g){
+        int width = 70;
+        int height = 40;
+
         for(Point2D.Double p : this.listeDeloreanes){
             try {
                 Image img = ImageIO.read(new File("Delorean.png"));
-                g.drawImage(img, (int)Math.round(p.getX())-15, (int)Math.round(p.getY())-15, 70,70, this);
+                g.drawImage(img, (int)Math.round(p.getX()) - width/2, (int)Math.round(p.getY()) - height/2, width,height, this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void dessinerConvertisseurTemporel(Graphics2D g){
+        int width = 50;
+        int height = 70;
+
+        for(Point2D.Double p : this.listeConvertisseursTemporels){
+            try {
+                Image img = ImageIO.read(new File("ConvertisseurTemporel.png"));
+                g.drawImage(img, (int)Math.round(p.getX()) - width/2, (int)Math.round(p.getY()) - height/2, width,height, this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -301,6 +325,24 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
 
 
+
+
+
+    public ListeRessources genererRessources(Joueur joueur){ return genererRessources(joueur.getListeConstructions()); }
+    public ListeRessources genererRessources(ListeConstructions listeConstructions){
+        ListeRessources listeRessources = new ListeRessources();
+        int marge = 5;
+        for (Construction construction : listeConstructions){
+            Point2D.Double position = construction.getPosition();
+            for (Hexagone h : this.listeHexagones){
+                if (h.intersects(position.getX() - marge/2, position.getY() - marge/2, marge, marge)){
+                    System.out.println("touche l'hexagone " + h.getNombre());
+                    listeRessources.ajouterRessources(h.getRessources());
+                }
+            }
+        }
+        return listeRessources;
+    }
 
 
 
@@ -317,54 +359,84 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(this.placement == Placement.DELOREAN){
-            for(int i = 0; i < this.listeEllipseBoutons.size(); i++){
-                if(this.listeEllipseBoutons.get(i).contains(e.getX(), e.getY())){
+
+        int position;
+
+        switch (this.placement){
+
+            case DELOREAN:
+                position = getEllipsePosition(e);
+                if (position != -1) {
                     try {
 
-                        this.joueurActif.creerDelorean(this.ellipseToPoint(this.listeEllipseBoutons.get(i)));
-                        this.listeDeloreanes.add(ellipseToPoint(this.listeEllipseBoutons.get(i)));
-                        this.listeEllipseBoutons.remove(i);
+                        this.joueurActif.creerDelorean(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
+                        this.listeDeloreanes.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
+                        this.listeEllipseBoutons.remove(position);
                         System.out.println("Delorean Placé");
-                        i = this.listeEllipseBoutons.size(); //Evite de devoir chercher jusqu'a la fin
 
                     } catch (Exception e1) {
                         System.out.println(e1.getMessage());
                     }
-
-                    repaint();
-
-
                 }
-            }
-        }
+                break;
 
-
-        if(this.placement == Placement.ROUTE){
-            int HIT_BOX_SIZE = 10;
-
-            int boxX = e.getX() - HIT_BOX_SIZE / 2;
-            int boxY = e.getY() - HIT_BOX_SIZE / 2;
-
-            for(int i = 0; i < this.listeArreteBoutons.size(); i++){
-
-                if(this.listeArreteBoutons.get(i).intersects(boxX, boxY, HIT_BOX_SIZE, HIT_BOX_SIZE)){
+            case CONVERTISSEUR_TEMPOREL:
+                position = getEllipsePosition(e);
+                if (position != -1) {
                     try {
 
-                        this.joueurActif.creerRoute(this.lineToPoint(this.listeArreteBoutons.get(i)));
-                        this.listeRoutes.add(this.listeArreteBoutons.get(i));
-                        this.listeArreteBoutons.remove(i);
+                        this.joueurActif.creerConvertisseurTemporel(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
+                        this.listeConvertisseursTemporels.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
+                        this.listeEllipseBoutons.remove(position);
+                        System.out.println("Convertisseur Temporel Placé");
+
+                    } catch (Exception e1) {
+                        System.out.println(e1.getMessage());
+                    }
+                }
+                break;
+
+            case ROUTE:
+                position = getRoutePosition(e);
+                if (position != -1) {
+                    try {
+
+                        this.joueurActif.creerRoute(this.lineToPoint(this.listeArreteBoutons.get(position)));
+                        this.listeRoutes.add(this.listeArreteBoutons.get(position));
+                        this.listeArreteBoutons.remove(position);
                         System.out.println("Route Placé");
-                        i = this.listeArreteBoutons.size(); //Evite de pouvoir cliquer sur deux routes en meme temps
 
                     } catch (RessourcesInsuffisantesException | NombreLimiteException e1) {
                         System.out.println(e1.getMessage());
                     }
                 }
-            }
-            repaint();
-        }
 
+            case VIDE: break;
+            default: System.out.println("public void mouseReleased(MouseEvent e)"); break;
+        }
+        repaint();
+    }
+
+    private int getEllipsePosition(MouseEvent e) {
+        int i;
+        for (i = 0; i < this.listeEllipseBoutons.size(); i++) {
+            if (this.listeEllipseBoutons.get(i).contains(e.getX(), e.getY()))
+                return i;
+        }
+        return -1;
+    }
+    private int getRoutePosition(MouseEvent e){
+        int HIT_BOX_SIZE = 10;
+
+        int boxX = e.getX() - HIT_BOX_SIZE / 2;
+        int boxY = e.getY() - HIT_BOX_SIZE / 2;
+
+        for(int i = 0; i < this.listeArreteBoutons.size(); i++){
+
+            if(this.listeArreteBoutons.get(i).intersects(boxX, boxY, HIT_BOX_SIZE, HIT_BOX_SIZE))
+                return i;
+        }
+        return  -1;
     }
 
     @Override
@@ -377,19 +449,4 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     }
 
-
-    public ListeRessources genererRessources(ListeConstructions listeConstructions){
-        ListeRessources listeRessources = new ListeRessources();
-        int marge = 5;
-        for (Construction construction : listeConstructions){
-            Point2D.Double position = construction.getPosition();
-            for (Hexagone h : this.listeHexagones){
-                if (h.intersects(position.getX() - marge/2, position.getY() - marge/2, marge, marge)){
-                    System.out.println("touche l'hexagone " + h.getNombre());
-                    listeRessources.ajouterRessources(h.getRessources());
-                }
-            }
-        }
-        return listeRessources;
-    }
 }

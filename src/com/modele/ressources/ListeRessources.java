@@ -155,7 +155,7 @@ public class ListeRessources extends ArrayList<ListeRessources.Paire_RessourceNo
     public String toString() {
         StringBuilder temp = new StringBuilder();
         for(Paire_RessourceNombre cr : this)
-            temp.append(cr.toString()).append("\n");
+            temp.append(cr.toString());
         return temp.toString();
     }
 

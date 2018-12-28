@@ -25,9 +25,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
      */
     public FenetrePrincipale(Joueur j1, Joueur j2, Joueur j3, Joueur j4) throws PlateauException {
 
-        //Permet a "componentResized" de ne pas etre appele trop de fois
-        Toolkit.getDefaultToolkit().setDynamicLayout( false );
-
         //Layout
         this.setLayout(new BorderLayout());
 
@@ -58,7 +55,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
         //Parametres de la fenetre
         this.setTitle("Back to Catane");
-        this.setSize(1300,1000);
         this.setMinimumSize(new Dimension((int)this.plateauPanel.getMinimumSize().getWidth()  + 500, (int)this.plateauPanel.getMinimumSize().getWidth() + 200));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +70,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
         switch (buttonName){
             case "placer delorean" : this.plateauPanel.setPlacement(Placement.DELOREAN); break;
-            case "placer convertisseur temporel": this.plateauPanel.setPlacement(Placement.CONVERTISSEUR_TEMPOREL);
+            case "placer convertisseur temporel": this.plateauPanel.setPlacement(Placement.CONVERTISSEUR_TEMPOREL); break;
             case "placer route": this.plateauPanel.setPlacement(Placement.ROUTE); break;
             case "voir plateau": break;
             case "vider plateau": break;

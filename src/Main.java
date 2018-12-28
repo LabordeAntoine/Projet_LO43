@@ -23,18 +23,12 @@ public class Main {
         Joueur j2 = new Joueur("Ewan", Color.MAGENTA);
         Joueur j3 = new Joueur("Yosef", Color.MAGENTA);
         Joueur j4 = new Joueur("TEST", Color.MAGENTA);
+        System.out.println(j1.getListeRessources().toString());
 
         try {
             new FenetrePrincipale(j1,j2,j3,j4);
         } catch (PlateauException e) {
             e.printStackTrace();
-        }
-
-        HashMap<Point2D.Double, String> test = new HashMap<>();
-        test.put(new Point2D.Double(20, 20), "value");
-        test.put(new Point2D.Double(20, 20), "other value");
-        for (Map.Entry<Point2D.Double, String> e : test.entrySet()){
-            System.out.println(e.getKey());
         }
 
         System.out.println(" ------------------------------");
