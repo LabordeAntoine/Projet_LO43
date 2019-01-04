@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JoueurIndividuelPanel extends JPanel {
 
@@ -29,8 +31,30 @@ public class JoueurIndividuelPanel extends JPanel {
         ressource.setEditable(false);
         ressource.setText(j.toStringRessources());
 
+        JList cartes = new JList(j.getListCartes());
+        cartes.getFixedCellWidth();
+        cartes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        DefaultListModel model = new DefaultListModel();
+
+        cartes.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getClickCount() == 2 && j.getListCartes().length != 0) {
+                    // Double-click detected
+                    int index = list.locationToIndex(evt.getPoint());
+                    j.jouerCarte(cartes.getSelectedIndex());
+                    cartes.setListData(j.getListCartes());
+                } else if (evt.getClickCount() == 3) {
+
+                    // Triple-click detected
+                    int index = list.locationToIndex(evt.getPoint());
+                }
+            }
+        });
+
         this.add(lab);
         this.add(label);
         this.add(ressource);
+        this.add(cartes);
     }
 }

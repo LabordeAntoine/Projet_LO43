@@ -14,7 +14,7 @@ public class ProgresConstructionRouteGratuite implements Cartes {
      * Action realise par la carte ProgresConstructionRouteGratuite
      * @param j Le joueur concerne
      */
-    public void action(Joueur j) throws RessourcesInsuffisantesException, NombreLimiteException {
+    public void action(Joueur j) {
         //Ajouter au joueur les ressources nécessaire pour compenser la creation de la route
         //j.creerRoute();
         System.out.println("Joue ConstructionRouteGratuite");

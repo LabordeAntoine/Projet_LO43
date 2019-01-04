@@ -23,6 +23,9 @@ public class Main {
         Joueur j2 = new Joueur("Ewan", Color.MAGENTA);
         Joueur j3 = new Joueur("Yosef", Color.MAGENTA);
         Joueur j4 = new Joueur("TEST", Color.MAGENTA);
+        j4.piocherCarte();
+        j4.piocherCarte();
+        j1.piocherCarte();
         System.out.println(j1.getListeRessources().toString());
 
         try {
