@@ -28,6 +28,13 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         //Layout
         this.setLayout(new BorderLayout());
 
+        this.plateauPanel = new PlateauPanel(j1);
+        JPanel panCentre = new JPanel();
+        panCentre.setLayout(new BoxLayout(panCentre, BoxLayout.Y_AXIS));
+        panCentre.add(this.plateauPanel);
+        GestionPlateauPanel gestionPlateauPanel = new GestionPlateauPanel();
+        panCentre.add(gestionPlateauPanel);
+
         JPanel panDroite = new JPanel(new GridLayout(2,1));
         panDroite.add(new JoueurIndividuelPanel(j1,1));
         panDroite.add(new JoueurIndividuelPanel(j2,2));
@@ -37,13 +44,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         panGauche.add(new JoueurIndividuelPanel(j4,4));
 
         this.listeJoueurs = new Joueur[]{j1, j2, j3, j4};
-
-        this.plateauPanel = new PlateauPanel(j1);
-        JPanel panCentre = new JPanel();
-        panCentre.setLayout(new BoxLayout(panCentre, BoxLayout.Y_AXIS));
-        panCentre.add(this.plateauPanel);
-        GestionPlateauPanel gestionPlateauPanel = new GestionPlateauPanel();
-        panCentre.add(gestionPlateauPanel);
 
         this.getContentPane().add(panDroite,BorderLayout.EAST);
         this.getContentPane().add(panCentre, BorderLayout.CENTER);

@@ -159,8 +159,6 @@ public class ListeRessources extends ArrayList<ListeRessources.Paire_RessourceNo
         return temp.toString();
     }
 
-
-
     //Classe de deux elements, <RESSOURCE, NOMBRE>
     protected class Paire_RessourceNombre {
         private Ressources r;
@@ -232,7 +230,7 @@ public class ListeRessources extends ArrayList<ListeRessources.Paire_RessourceNo
          * Permet d'afficher les ressources
          */
         void afficher() { System.out.println("Ressource : " + this.r + " " +this.nombre); }
-        public String toString() { return "" + this.r + " "+ this.nombre + "\n"; }
+        public String toString() { return "" + this.r + " : "+ this.nombre + "\n"; }
 
         /**
          *

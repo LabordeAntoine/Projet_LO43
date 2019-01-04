@@ -52,7 +52,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         this.setMaximumSize(this.getMinimumSize());
         this.setPreferredSize(this.getMinimumSize());
 
-
         //On initialise
         initialiserListeHexagones(new Point2D.Double(this.getMinimumSize().getWidth() /2,this.getMinimumSize().getHeight()/2), rayon, tours);
         this.joueurActif = joueur;
@@ -61,7 +60,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         this.joueurActif.ajouterRessources(Ressources.FER, 50);
         this.joueurActif.ajouterRessources(Ressources.BOIS, 50);
         this.placement = Placement.VIDE;
-
 
         //Listener
         addMouseListener(this);
@@ -76,11 +74,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     private Point2D.Double lineToPoint(Line2D.Double l){ return CalculPoint.split(new Point2D.Double(l.getX1(), l.getY1()), new Point2D.Double(l.getX2(), l.getY2()), 2)[0]; }
 
-
-
-
-
-
     /**
      * Initialise la liste d'Hexagone, les boutons pour placer les constructions et les routes
      * @param centre Centre des hexagones et donc du plateau
@@ -92,7 +85,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         //On initialise l'hexagone du centre
         Hexagone h1 =  new Hexagone(centre,rayon);
         listeHexagones.add(h1);
-
 
         //On initialise l'hexagone TEMP, qui nous donnera les coordonnees pour placer les autres hexagones autours
         ArrayList<Point2D.Double> listePositionsHexagones = new ArrayList<>(); //On cree une liste pour toutes les coordoonees
@@ -108,12 +100,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
             listePositionsHexagones.addAll(Arrays.asList(CalculPoint.split(hexagoneTemp.getPoints()[5], hexagoneTemp.getPoints()[0], i))); //On partage le dernier coté
         }
 
-
         //On initialise tous les hexagones avec les points stockés dans la liste "listePositionsHexagones" qu'on a cree precedemment
         for (Point2D.Double p : listePositionsHexagones){
             this.listeHexagones.add(new Hexagone(p,rayon)); //Pour chaque point dans la listeHexagoneTemp on cree un nouvel hexagone
         }
-
 
         //On initialise les boutons ou on pourra cliquer dessus pour placer les constructions
         for(Hexagone h : listeHexagones){
@@ -123,7 +113,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
                     this.listeEllipseBoutons.add(e);
             }
         }
-
 
         //On initialise les boutons ou on pourra cliquer dessus pour placer les routes
         for(Hexagone h : listeHexagones){
@@ -167,19 +156,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * PaintComponenent va dessiner notre plateau
      * @param g2
@@ -188,24 +164,19 @@ public class PlateauPanel extends JPanel implements MouseListener {
         super.paintComponent(g2);
         Graphics2D g = (Graphics2D)g2;
 
-
         //Anti-aliasing
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 
         //Fond
         setBackground(Color.DARK_GRAY);
 
-
         //On dessine tous les hexagones
         dessinerHexagones(g);
-
 
         //On dessine toutes les constructions
         dessinerRoutes(g);
         dessinerDeloreanes(g);
         dessinerConvertisseurTemporel(g);
-
 
         //On dessine les boutons si ils sont demandés, pour ca on verifie l'etat de la variable "placement"
         switch (this.placement){
@@ -216,9 +187,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
             default: System.out.println("Erreur boutons"); break;
         }
     }
-
-
-
 
     private void dessinerHexagones(Graphics2D g){
 
@@ -282,7 +250,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
             g.setColor(new Color(79, 63, 13));
             g.drawLine((int)Math.round(l.getX1()), (int)Math.round(l.getY1()), (int)Math.round(l.getX2()), (int)Math.round(l.getY2()));
 
-
             g.setStroke(new BasicStroke(7,
                     BasicStroke.CAP_ROUND,     // End cap
                     BasicStroke.JOIN_MITER,    // Join style
@@ -324,10 +291,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
 
-
-
-
-
     public ListeRessources genererRessources(Joueur joueur){ return genererRessources(joueur.getListeConstructions()); }
     public ListeRessources genererRessources(ListeConstructions listeConstructions){
         ListeRessources listeRessources = new ListeRessources();
@@ -344,18 +307,11 @@ public class PlateauPanel extends JPanel implements MouseListener {
         return listeRessources;
     }
 
-
-
+    @Override
+    public void mouseClicked(MouseEvent e) { }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) { }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -368,7 +324,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
                 position = getEllipsePosition(e);
                 if (position != -1) {
                     try {
-
                         this.joueurActif.creerDelorean(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeDeloreanes.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeEllipseBoutons.remove(position);
@@ -384,7 +339,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
                 position = getEllipsePosition(e);
                 if (position != -1) {
                     try {
-
                         this.joueurActif.creerConvertisseurTemporel(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeConvertisseursTemporels.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeEllipseBoutons.remove(position);
@@ -400,7 +354,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
                 position = getRoutePosition(e);
                 if (position != -1) {
                     try {
-
                         this.joueurActif.creerRoute(this.lineToPoint(this.listeArreteBoutons.get(position)));
                         this.listeRoutes.add(this.listeArreteBoutons.get(position));
                         this.listeArreteBoutons.remove(position);
@@ -440,13 +393,9 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) { }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) { }
 
 }
