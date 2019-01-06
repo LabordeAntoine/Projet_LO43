@@ -6,27 +6,31 @@ import com.modele.joueur.Joueur;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
 
-        //new FenetreLancement();
-        //FenetreLancementOld F1 = new FenetreLancementOld();
-        //F1.setVisible(true);
-        //F.setVisible(true);
-        //FenetreJoueurs F2 = new FenetreJoueurs();
-        System.setProperty("awt.useSystemAAFontSettings","on");
-        System.setProperty("swing.aatext", "true");
+        /*FenetreLancement f = new FenetreLancement();
+        f.setVisible(true);*/
+
+        ArrayList<Joueur> listeJoueur = new ArrayList<>();
         Joueur j1 = new Joueur("Antoine ", Color.MAGENTA);
         Joueur j2 = new Joueur("Ewan", Color.MAGENTA);
         Joueur j3 = new Joueur("Yosef", Color.MAGENTA);
         Joueur j4 = new Joueur("TEST", Color.MAGENTA);
+        listeJoueur.add(j1);
+        listeJoueur.add(j2);
+        listeJoueur.add(j3);
+        listeJoueur.add(j4);
+
+
         System.out.println(j1.getListeRessources().toString());
 
         try {
-            new FenetrePrincipale(j1,j2,j3,j4);
+            new FenetrePrincipale(listeJoueur);
         } catch (PlateauException e) {
             e.printStackTrace();
         }

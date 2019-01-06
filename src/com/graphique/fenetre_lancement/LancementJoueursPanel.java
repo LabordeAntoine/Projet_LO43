@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
     private JButton retourBouton = new JButton("Retour");
     private JTextField[] listeTextField = new JTextField[4];
 
+    private ArrayList<Joueur> listeJoueur = new ArrayList<>();
     /**
      * Panel ou les joueurs entrent leurs noms
      */
@@ -104,12 +106,11 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (verifText()) {
             try {
-                new FenetrePrincipale(
-                        new Joueur(this.listeTextField[0].getText(), Color.RED),
-                        new Joueur(this.listeTextField[1].getText(), Color.BLUE),
-                        new Joueur(this.listeTextField[2].getText(), Color.GREEN),
-                        new Joueur(this.listeTextField[3].getText(), Color.MAGENTA)
-                );
+                this.listeJoueur.add( new Joueur(this.listeTextField[0].getText(), Color.RED));
+                this.listeJoueur.add(new Joueur(this.listeTextField[1].getText(), Color.BLUE));
+                this.listeJoueur.add(new Joueur(this.listeTextField[2].getText(), Color.GREEN));
+                this.listeJoueur.add( new Joueur(this.listeTextField[3].getText(), Color.MAGENTA));
+                new FenetrePrincipale(this.listeJoueur);
             } catch (PlateauException e1) {
                 e1.printStackTrace();
             }

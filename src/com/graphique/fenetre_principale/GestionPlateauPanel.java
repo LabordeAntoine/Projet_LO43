@@ -74,7 +74,7 @@ public class GestionPlateauPanel extends JPanel {
 
     int lancerDe() {
         Random r = new Random();
-        int n = r.nextInt(6)+1;
+        int n = r.nextInt(12)+1;
         return n;
     }
 

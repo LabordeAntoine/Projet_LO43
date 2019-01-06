@@ -8,27 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class FenetrePrincipale extends JFrame implements ActionListener {
 
     private PlateauPanel plateauPanel;
-    private Joueur [] listeJoueurs;
 
     /**
      * C'est la classe de la fenetre principale du jeu
      * ici on trouve le plateau, les boutons et les panels des joueurs
-     * @param j1
-     * @param j2
-     * @param j3
-     * @param j4
      */
-    public FenetrePrincipale(Joueur j1, Joueur j2, Joueur j3, Joueur j4) throws PlateauException {
+    public FenetrePrincipale(ArrayList<Joueur> j ) throws PlateauException {
 
         //Layout
         this.setLayout(new BorderLayout());
 
-        this.plateauPanel = new PlateauPanel(j1);
+        this.plateauPanel = new PlateauPanel(j.get(0));
         JPanel panCentre = new JPanel();
         panCentre.setLayout(new BoxLayout(panCentre, BoxLayout.Y_AXIS));
         panCentre.add(this.plateauPanel);
@@ -36,14 +32,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         panCentre.add(gestionPlateauPanel);
 
         JPanel panDroite = new JPanel(new GridLayout(2,1));
-        panDroite.add(new JoueurIndividuelPanel(j1,1));
-        panDroite.add(new JoueurIndividuelPanel(j2,2));
+        panDroite.add(new JoueurIndividuelPanel(j.get(0),1));
+        panDroite.add(new JoueurIndividuelPanel(j.get(1),2));
 
         JPanel panGauche = new JPanel(new GridLayout(2,1));
-        panGauche.add(new JoueurIndividuelPanel(j3,3));
-        panGauche.add(new JoueurIndividuelPanel(j4,4));
-
-        this.listeJoueurs = new Joueur[]{j1, j2, j3, j4};
+        panGauche.add(new JoueurIndividuelPanel(j.get(2),3));
+        panGauche.add(new JoueurIndividuelPanel(j.get(3),4));
 
         this.getContentPane().add(panDroite,BorderLayout.EAST);
         this.getContentPane().add(panCentre, BorderLayout.CENTER);
@@ -62,7 +56,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         this.setVisible(true);
 
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {

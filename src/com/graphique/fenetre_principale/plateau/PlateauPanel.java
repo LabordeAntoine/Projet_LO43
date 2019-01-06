@@ -293,6 +293,8 @@ public class PlateauPanel extends JPanel implements MouseListener {
             try {
                 Image img = ImageIO.read(new File("ConvertisseurTemporel.png"));
                 g.drawImage(img, (int)Math.round(p.getX()) - width/2, (int)Math.round(p.getY()) - height/2, width,height, this);
+                g.setColor(joueurActif.getCouleur());
+                g.fillOval((int)Math.round(p.getX())-10,(int)Math.round(p.getY())-10,20,20);
             } catch (IOException e) {
                 e.printStackTrace();
             }
