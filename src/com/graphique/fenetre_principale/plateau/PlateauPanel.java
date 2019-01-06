@@ -170,6 +170,8 @@ public class PlateauPanel extends JPanel implements MouseListener {
         //Fond
         setBackground(Color.DARK_GRAY);
 
+        dessinerRessources(g);
+
         //On dessine tous les hexagones
         dessinerHexagones(g);
 
@@ -177,6 +179,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
         dessinerRoutes(g);
         dessinerDeloreanes(g);
         dessinerConvertisseurTemporel(g);
+
 
         //On dessine les boutons si ils sont demandés, pour ca on verifie l'etat de la variable "placement"
         switch (this.placement){
@@ -204,15 +207,21 @@ public class PlateauPanel extends JPanel implements MouseListener {
             g.setColor(Color.CYAN);
             g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre() - taillePolice/5),(int)Math.round(h.getYCentre()) + taillePolice/5);
 
-            //Dessine les images du fond
-            /*try {
-                Image img = ImageIO.read(new File(""+h.getRessources()+".jpg"));
+        }
+    }
+
+    private void dessinerRessources(Graphics2D g){
+
+        //Dessine les images du fond
+        for(Hexagone h : listeHexagones){
+            try {
+                Image img = ImageIO.read(new File("Image_Ressources/"+h.getRessources()+".jpg"));
                 g.drawImage(img, (int)h.getXCentre()-40, (int)h.getYCentre()-40, 70,70, this);
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
-
+            }
         }
+
     }
 
     private void dessinerBoutonsVilles(Graphics2D g){

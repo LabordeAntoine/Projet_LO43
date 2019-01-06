@@ -8,6 +8,7 @@ public class Case {
 
     private int numero;
     private Ressources ressource;
+    private boolean caseActive = false;
 
     /**
      * Constructeur de la classe Case
@@ -41,7 +42,12 @@ public class Case {
         return Ressources.values()[n - 1];
     } //Fait partie du constructeur
 
-
+    /**
+     * Permet d'activer la case lorsque le numéro de la case est sorti aux Dés
+     */
+    public void activerCase(){
+        this.caseActive = true;
+    }
     /**
      * Permet d'obtenir un numero de case
      * @return numero
