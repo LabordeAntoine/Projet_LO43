@@ -87,7 +87,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
     int lancerDe() {
         Random r = new Random();
         int n = r.nextInt(12)+1;
-        this.de.setText("" + n);
+        this.de.setText("Résultat Dé : " + n);
         return n;
     }
 
@@ -111,6 +111,6 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
     }
     
     public void setLabel(int n) {
-        this.de.setText(""+ resultatDe);
+        this.de.setText("Resultat dé : "+ resultatDe);
     }
 }

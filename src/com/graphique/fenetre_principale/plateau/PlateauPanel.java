@@ -160,16 +160,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         return false;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * PaintComponenent va dessiner notre plateau
      * @param g2

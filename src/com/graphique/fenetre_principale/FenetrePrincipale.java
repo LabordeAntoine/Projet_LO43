@@ -113,7 +113,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
             
             case "voir plateau": this.plateauPanel.setPlacement(Placement.VIDE);break;
 
-            case "Faire du commerce": Commerce c = new Commerce(); break;
+            case "Faire du commerce": Commerce c = new Commerce(this.joueurActif); break;
             
             case "fin de tour": 
             	this.listeJoueurNext();

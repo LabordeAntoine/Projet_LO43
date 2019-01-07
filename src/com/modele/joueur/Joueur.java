@@ -141,7 +141,7 @@ public class Joueur {
     public void actualiserPV(){
         this.pointVictoire = this.listeConstructions.size();
     }
-    
+
     //CARTES
 
     public String[] getListCartes(){
