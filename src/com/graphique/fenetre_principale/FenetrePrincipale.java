@@ -147,7 +147,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     
     private void conditionsJeu() {
     	for (Joueur j : this.listeJoueurs) {
-    		j.actualiserPV();
+    		//j.actualiserPV();
     		if (j.getPointVictoire() >= 10) {
                 this.dispose();
     		}

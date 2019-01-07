@@ -13,6 +13,9 @@ import java.awt.event.MouseEvent;
 
 public class JoueurIndividuelPanel extends JPanel {
 
+    private JTextArea ressources;
+    private Joueur joueur;
+
     public JoueurIndividuelPanel(Joueur j, int nb){
         EmptyBorder marge = new EmptyBorder(10,10,10,10);
 
@@ -26,10 +29,11 @@ public class JoueurIndividuelPanel extends JPanel {
         JLabel label = new JLabel();
         label.setText(j.getName());
         label.setForeground(j.getCouleur());
-        JTextArea ressource = new JTextArea();
-        ressource.setBorder(marge);
-        ressource.setEditable(false);
-        ressource.setText(j.toStringRessources() + "\n" + j.toStringConstructions() + "\n" + "Points de V : " + j.getPointVictoire());
+        this.joueur = j;
+        this.ressources = new JTextArea();
+        ressources.setBorder(marge);
+        ressources.setEditable(false);
+        ressources.setText(j.toStringRessources() + "\n" + j.toStringConstructions() + "\n" + "Points de V : " + j.getPointVictoire());
 
         JList cartes = new JList(j.getListCartes());
         cartes.getFixedCellWidth();
@@ -54,7 +58,11 @@ public class JoueurIndividuelPanel extends JPanel {
         
         this.add(nom);
         this.add(label);
-        this.add(ressource);
+        this.add(ressources);
         this.add(cartes);
+    }
+
+    public void rafraichir(){
+        this.ressources.setText(this.joueur.getListeRessources().toString());
     }
 }
