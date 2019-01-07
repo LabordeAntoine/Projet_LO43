@@ -31,6 +31,13 @@ public class Joueur {
         this.nom = n;
         this.pointVictoire = 0;
         this.couleur = couleur;
+
+        this.ajouterRessources(Ressources.BLE, 5);
+        this.ajouterRessources(Ressources.ARGILE, 5);
+        this.ajouterRessources(Ressources.FER, 5);
+        this.ajouterRessources(Ressources.BOIS, 5);
+        this.ajouterRessources(Ressources.PLUTONIUM, 5);
+        this.ajouterRessources(Ressources.MINERAI, 5);
     }
 
     public String getName() { return this.nom; }
@@ -129,6 +136,12 @@ public class Joueur {
             System.out.println("Exception \"echangeBanque(ListeRessources lrDonnee, ListeRessources lrRecevoir)\", pas assez de ressources");
         }
 
+    }
+
+    public void actualiserPV(){
+        for (Construction c : this.listeConstructions){
+            this.pointVictoire++;
+        }
     }
 
 

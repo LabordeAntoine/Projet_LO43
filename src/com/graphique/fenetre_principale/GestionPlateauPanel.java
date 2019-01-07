@@ -86,32 +86,22 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         return n;
     }
 
-    public int resultatLancerDe(){ return resultatDe; }
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-        /*String buttonName = e.getActionCommand();
-
-        switch (buttonName){
-            case "placer delorean" :
-            	break;
-            case "placer route" :
-            	break;
-            case "placer convertisseur temporel" :
-            	break;
-
-
-            case "fin de tour" : break;
-            default: System.out.println("Erreur bouton - Panel Gestion Boutons");  break;
-        }*/
+        String buttonName = e.getActionCommand();
+        if(buttonName.equals("lancer de")){
+            this.setBoutons(true);
+        }
         
 		
 	}
-    public void reinitialiser() {
-    	this.placerDeloreanBouton.setEnabled(true);
-    	this.placerRouteBouton.setEnabled(true);
-    	this.placerConvertisseurTemporelBouton.setEnabled(true);
+    void setBoutons(boolean b) {
+    	this.placerDeloreanBouton.setEnabled(b);
+    	this.placerRouteBouton.setEnabled(b);
+    	this.placerConvertisseurTemporelBouton.setEnabled(b);
+    	this.finDeTour.setEnabled(b);
+    	this.deBouton.setEnabled(!b);
     }
     
     public void setLabel(int n) {

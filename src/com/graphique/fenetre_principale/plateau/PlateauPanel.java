@@ -1,6 +1,7 @@
 package com.graphique.fenetre_principale.plateau;
 
 
+import com.graphique.fenetre_principale.JoueurIndividuelPanel;
 import com.modele.construction.Construction;
 import com.modele.construction.ListeConstructions;
 import com.modele.construction.NombreLimiteException;
@@ -47,7 +48,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
 
         //Parametres de taille
-        this.setMinimumSize(new Dimension(2* rayon * ((tours*2)-2) + 20,  rayon * ((tours*2)-1) - rayon)); //Devrait etre *2
+        this.setMinimumSize(new Dimension(2* rayon * ((tours*2)-2) + 20,  2*rayon * ((tours*2)-1) - rayon));
         this.setMaximumSize(this.getMinimumSize());
         this.setPreferredSize(this.getMinimumSize());
         
@@ -58,10 +59,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         
         initialiserListeHexagones(new Point2D.Double(this.getMinimumSize().getWidth() /2,this.getMinimumSize().getHeight()/2), rayon, tours);
         this.joueurActif = joueur;
-        this.joueurActif.ajouterRessources(Ressources.BLE, 50);
-        this.joueurActif.ajouterRessources(Ressources.ARGILE, 50);
-        this.joueurActif.ajouterRessources(Ressources.FER, 50);
-        this.joueurActif.ajouterRessources(Ressources.BOIS, 50);
         this.placement = Placement.VIDE;
         this.annee = 1985;
         
@@ -380,10 +377,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
                         this.joueurActif.creerDelorean(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeDeloreanes.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeEllipseBoutons.remove(position);
-                        this.placement = Placement.VIDE;
-
                     } catch (Exception e1) {
                     	this.labelInformations.setText(e1.getMessage());
+                    } finally {
+                        this.placement = Placement.VIDE;
                     }
                 }
                 break;
@@ -395,14 +392,12 @@ public class PlateauPanel extends JPanel implements MouseListener {
                         this.joueurActif.creerConvertisseurTemporel(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeConvertisseursTemporels.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeEllipseBoutons.remove(position);
-                        System.out.println("Convertisseur Temporel Placé");
-                        this.placement = Placement.VIDE;
                         this.chanagementPlateau();
                         this.changerAnnee();
-                        repaint();
-
                     } catch (Exception e1) {
                     	this.labelInformations.setText(e1.getMessage());
+                    } finally {
+                        this.placement = Placement.VIDE;
                     }
                 }
                 break;
@@ -414,11 +409,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
                         this.joueurActif.creerRoute(this.lineToPoint(this.listeArreteBoutons.get(position)));
                         this.listeRoutes.add(this.listeArreteBoutons.get(position));
                         this.listeArreteBoutons.remove(position);
-                        System.out.println("Route Placé");
-                        this.placement = Placement.VIDE;
-
                     } catch (RessourcesInsuffisantesException | NombreLimiteException e1) {
                     	this.labelInformations.setText(e1.getMessage());
+                    } finally {
+                        this.placement = Placement.VIDE;
                     }
                 }
 
@@ -426,6 +420,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
             default: System.out.println("public void mouseReleased(MouseEvent e)"); break;
         }
         repaint();
+
     }
 
     private int getEllipsePosition(MouseEvent e) {

@@ -8,25 +8,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 
-public class FenetrePrincipale extends JFrame implements ActionListener {
+public class FenetrePrincipale extends JFrame implements ActionListener , MouseListener {
 
+    //Composants
     private PlateauPanel plateauPanel;
+
     private GestionPlateauPanel gestionPlateauPanel;
+
+    private JoueurIndividuelPanel joueurIndividuelPanel1;
+    private JoueurIndividuelPanel joueurIndividuelPanel2;
+    private JoueurIndividuelPanel joueurIndividuelPanel3;
+    private JoueurIndividuelPanel joueurIndividuelPanel4;
+
+    private JLabel labelInformation;
+
+
+    //Deroulement du jeu
     private ArrayList<Joueur> listeJoueurs;
     private Joueur joueurActif;
     private int joueurActuel;
     private int resultatDe;
-    
-    private JoueurIndividuelPanel Joueur1;
-    private JoueurIndividuelPanel Joueur2;
-    private JoueurIndividuelPanel Joueur3;
-    private JoueurIndividuelPanel Joueur4;
-    
-    private JLabel labelInformation;
-    
+
+
     
 
     /**
@@ -39,6 +47,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
         this.labelInformation = new JLabel("Information : ");
         this.plateauPanel = new PlateauPanel(j.get(0), this.labelInformation);
+
         JPanel panCentre = new JPanel();
         panCentre.setLayout(new BoxLayout(panCentre, BoxLayout.Y_AXIS));
         panCentre.add(this.plateauPanel);
@@ -52,12 +61,13 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         this.labelInformation.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel panDroite = new JPanel(new GridLayout(2,1));
-        panDroite.add(this.Joueur1 = new JoueurIndividuelPanel(j.get(0),1));
-        panDroite.add(this.Joueur2 = new JoueurIndividuelPanel(j.get(1),2));
+        panDroite.add(this.joueurIndividuelPanel1 = new JoueurIndividuelPanel(j.get(0),1));
+        panDroite.add(this.joueurIndividuelPanel2 = new JoueurIndividuelPanel(j.get(1),2));
 
         JPanel panGauche = new JPanel(new GridLayout(2,1));
-        panGauche.add(this.Joueur3 = new JoueurIndividuelPanel(j.get(2),3));
-        panGauche.add(this.Joueur4 = new JoueurIndividuelPanel(j.get(3),4));
+        panGauche.add(this.joueurIndividuelPanel3 = new JoueurIndividuelPanel(j.get(2),3));
+        panGauche.add(this.joueurIndividuelPanel4 = new JoueurIndividuelPanel(j.get(3),4));
+
 
         this.getContentPane().add(panDroite,BorderLayout.EAST);
         this.getContentPane().add(panCentre, BorderLayout.CENTER);
@@ -65,6 +75,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
         //Gestion des boutons
         gestionPlateauPanel.addPublicButtonListener(this);
+
+        plateauPanel.addMouseListener(this);
 
 
         //Parametres de la fenetre
@@ -81,15 +93,15 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     	this.listeJoueurs = j;
     	this.joueurActif = this.listeJoueurs.get(this.joueurActuel);
     	System.out.println("joueur actif " + this.joueurActif.getName());
-    	
-    	
-    	
-    	
-    	
+
+
+        this.gestionPlateauPanel.setBoutons(false);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         String buttonName = e.getActionCommand();
 
         switch (buttonName){
@@ -104,7 +116,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             case "fin de tour": 
             	this.listeJoueurNext(); 
 	        	System.out.println("joueur actif " + this.joueurActif.getName());
-	        	this.gestionPlateauPanel.reinitialiser();
+	        	this.gestionPlateauPanel.setBoutons(false);
 	        	this.plateauPanel.setPlacement(Placement.VIDE);
 	        	this.conditionsJeu();
 	        	break;
@@ -116,14 +128,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
             default: System.out.println("Erreur bouton - Fenetre Principale");  break;
         }
-        
-        
-        this.Joueur1.rafraichir();
-        this.Joueur2.rafraichir();
-        this.Joueur3.rafraichir();
-        this.Joueur4.rafraichir();
-        
-        
     }
     
     void listeJoueurNext() {
@@ -147,15 +151,40 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     
     private void conditionsJeu() {
     	for (Joueur j : this.listeJoueurs) {
-    		//j.actualiserPV();
+    		j.actualiserPV();
     		if (j.getPointVictoire() >= 10) {
+                JOptionPane.showMessageDialog(null, "" + j.getName() + "a gagné la partie!!");
                 this.dispose();
     		}
     	}
     }
-    
-    private void initialisationGraphique(ArrayList<Joueur> j) throws PlateauException{
 
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        this.joueurIndividuelPanel1.rafraichir();
+        this.joueurIndividuelPanel2.rafraichir();
+        this.joueurIndividuelPanel3.rafraichir();
+        this.joueurIndividuelPanel4.rafraichir();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }

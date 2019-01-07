@@ -1,13 +1,10 @@
 package com.graphique.fenetre_principale;
 
-import com.modele.ressources.Ressources;
 import com.modele.joueur.Joueur;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,8 +15,8 @@ public class JoueurIndividuelPanel extends JPanel {
 
     public JoueurIndividuelPanel(Joueur j, int nb){
         EmptyBorder marge = new EmptyBorder(10,10,10,10);
-
-        this.setLayout(new GridLayout(2,1));
+        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        this.setLayout(boxLayout);
         this.setSize(new Dimension(60,20));
         this.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.black));
         this.setBounds(0,0,600,400);
@@ -33,13 +30,13 @@ public class JoueurIndividuelPanel extends JPanel {
         this.ressources = new JTextArea();
         ressources.setBorder(marge);
         ressources.setEditable(false);
-        ressources.setText(j.toStringRessources() + "\n" + j.toStringConstructions() + "\n" + "Points de V : " + j.getPointVictoire());
-
+        rafraichir();
         JList cartes = new JList(j.getListCartes());
         cartes.getFixedCellWidth();
         cartes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         DefaultListModel model = new DefaultListModel();
 
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         cartes.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList)evt.getSource();
@@ -49,7 +46,6 @@ public class JoueurIndividuelPanel extends JPanel {
                     j.jouerCarte(cartes.getSelectedIndex());
                     cartes.setListData(j.getListCartes());
                 } else if (evt.getClickCount() == 3) {
-
                     // Triple-click detected
                     int index = list.locationToIndex(evt.getPoint());
                 }
@@ -60,9 +56,12 @@ public class JoueurIndividuelPanel extends JPanel {
         this.add(label);
         this.add(ressources);
         this.add(cartes);
+        //SwingUtilities.invokeLater(() -> this.ressources.setText(this.joueur.getListeRessources().toString() + "\n" + this.joueur.toStringConstructions() + "\n" + "Points de V : " + this.joueur.getPointVictoire()));
+
     }
 
     public void rafraichir(){
-        this.ressources.setText(this.joueur.getListeRessources().toString());
+        this.ressources.setText(this.joueur.toStringRessources() + "\n" + this.joueur.toStringConstructions() + "\n" + "Points de V : " + this.joueur.getPointVictoire());
     }
+
 }
