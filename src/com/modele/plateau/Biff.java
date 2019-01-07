@@ -60,7 +60,7 @@ public class Biff {
     /**
      * Permet de voler une ressource à un joueur
      */
-    private void volerUneRessource(){
+    public void volerUneRessource(){
         int joueurVolee = 2; //Il faut recuperer le Joueur qui se fait voler
         Ressources ressourcesAVoler = Ressources.BLE; //Il faut recuperer la ressource a voler
         if (this.tableauJoueurs[joueurVolee].assezDeRessources(ressourcesAVoler)){

@@ -31,12 +31,6 @@ public class Joueur {
         this.nom = n;
         this.pointVictoire = 0;
         this.couleur = couleur;
-        this.ajouterRessources(Ressources.ARGILE, 5);
-        this.ajouterRessources(Ressources.BOIS, 5);
-        this.ajouterRessources(Ressources.BLE, 5);
-        this.ajouterRessources(Ressources.FER, 5);
-        this.ajouterRessources(Ressources.PLUTONIUM, 5);
-        this.ajouterRessources(Ressources.MINERAI, 5);
     }
 
     public String getName() { return this.nom; }
@@ -86,15 +80,9 @@ public class Joueur {
     public ListeConstructions getListeConstructions() { return listeConstructions; }
 
     public int getNombreDeRoutes(){ return this.listeConstructions.getNombreDeRoutes(); }
-    public String toStringConstructions(){ return this.listeConstructions.toString(); }
+    public String toStringConstructions(){ return this.listeConstructions.toString(0) + this.listeConstructions.toString(1) + this.listeConstructions.toString(2); }
 
 
-
-    public void actualiserPV() {
-    	for (Construction c : this.listeConstructions) {
-    		this.pointVictoire++;
-    	}
-    }
 
     //COMMERCE
     /**
@@ -146,6 +134,20 @@ public class Joueur {
 
     //CARTES
 
+    public String[] getListCartes(){
+        String[] Listetemp = new String[this.listCartes.size()];
+
+        for (int i = 0; i < this.listCartes.size(); i++) {
+
+            Listetemp[i] = this.listCartes.get(i).getClass().getSimpleName();
+        }
+
+        String[] Listetemp2 = Listetemp;
+
+        return Listetemp;
+
+    }
+    
     /**
      * Permet au joueur de piocher une carte
      */
@@ -181,19 +183,19 @@ public class Joueur {
     /**
      * Permet au joueur de jouer une de ses cartes
      */
-    public void jouerCarte(int index) throws RessourcesInsuffisantesException, NombreLimiteException {
+    public void jouerCarte(int index) {
 
         if(listCartes.size()>0) {
-        	if (index>=0) {
-        		this.listCartes.get(index).action(this);
-        		this.listCartes.remove(index);
-        	} else {
-        		System.out.println("PB");
-        	}
-        } else {
-    		System.out.println(">> Erreur : Vous n'avez pas de cartes");
-        	
+            if (index >= 0) {
+                this.listCartes.get(index).action(this);
+                this.listCartes.remove(index);
+            } else
+                System.out.println("PB");
+
         }
+        else
+            System.out.println(">> ERREUR : Vous n'avez pas de carte");
+
     }
 
     /**
@@ -203,20 +205,6 @@ public class Joueur {
     protected int resultatAleatoire() {
 
         return 1 + (int) (Math.random() * (5 - 1));
-    }
-    
-    public String[] getListCartes(){
-        String[] Listetemp = new String[this.listCartes.size()];
-
-        for (int i = 0; i < this.listCartes.size(); i++) {
-
-            Listetemp[i] = this.listCartes.get(i).getClass().getSimpleName();
-        }
-
-        String[] Listetemp2 = Listetemp;
-
-        return Listetemp;
-
     }
 
     public void appelerBiff(){
