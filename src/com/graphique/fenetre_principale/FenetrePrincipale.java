@@ -114,8 +114,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
             case "voir plateau": this.plateauPanel.setPlacement(Placement.VIDE);break;
             
             case "fin de tour": 
-            	this.listeJoueurNext(); 
-	        	System.out.println("joueur actif " + this.joueurActif.getName());
+            	this.listeJoueurNext();
 	        	this.gestionPlateauPanel.setBoutons(false);
 	        	this.plateauPanel.setPlacement(Placement.VIDE);
 	        	this.conditionsJeu();
@@ -128,6 +127,11 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
 
             default: System.out.println("Erreur bouton - Fenetre Principale");  break;
         }
+
+        this.joueurIndividuelPanel1.rafraichir();
+        this.joueurIndividuelPanel2.rafraichir();
+        this.joueurIndividuelPanel3.rafraichir();
+        this.joueurIndividuelPanel4.rafraichir();
     }
     
     void listeJoueurNext() {
@@ -136,6 +140,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
     	} else {
     		this.joueurActuel = 0;
     	}
+
     	for (Joueur joueur : this.listeJoueurs) {
     		this.plateauPanel.genererRessources(joueur, this.resultatDe);
     	}

@@ -43,7 +43,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     public PlateauPanel(Joueur joueur, JLabel labelInformations) throws PlateauException{
 
-        int rayon = 70;
+        int rayon = 60;
         int tours = 3;
 
 

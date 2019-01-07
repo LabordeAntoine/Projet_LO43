@@ -139,9 +139,7 @@ public class Joueur {
     }
 
     public void actualiserPV(){
-        for (Construction c : this.listeConstructions){
-            this.pointVictoire++;
-        }
+        this.pointVictoire = this.listeConstructions.size();
     }
 
 
