@@ -18,7 +18,7 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
     private JButton retourBouton = new JButton("Retour");
     private JTextField[] listeTextField = new JTextField[4];
 
-    private ArrayList<Joueur> listeJoueur = new ArrayList<>();
+    private ArrayList<Joueur> listeJoueur = new ArrayList();
     /**
      * Panel ou les joueurs entrent leurs noms
      */
@@ -27,6 +27,7 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
         //Parametres du panel
         setLayout(new GridLayout(6, 2, 10, 10));
         setBorder(new EmptyBorder(70, 200 , 70, 200));
+        
 
 
         //On initialise les JLabel

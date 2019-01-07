@@ -14,7 +14,7 @@ public class Case {
      * Constructeur de la classe Case
      */
     public Case() {
-        this.numero = nombreRandom(1, 5);
+        this.numero = nombreRandom(1, 12);
         this.ressource = ressourceRandom();
         System.out.println("numero" + numero + "Ressources " + ressource);
     }

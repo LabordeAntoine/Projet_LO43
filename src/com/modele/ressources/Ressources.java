@@ -4,8 +4,7 @@ public enum Ressources {
     BLE,
     BOIS,
     FER,
-    LAINE,
     MINERAI,
-    ARGILE;
-
+    ARGILE,
+	PLUTONIUM;
 }

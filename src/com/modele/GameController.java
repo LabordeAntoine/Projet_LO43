@@ -1,5 +1,8 @@
 package com.modele;
 
+import java.util.ArrayList;
+
+import com.graphique.fenetre_lancement.FenetreLancement;
 import com.modele.joueur.Joueur;
 import com.modele.plateau.Plateau;
 
@@ -8,17 +11,12 @@ public class GameController {
     private final int nombreDePlateaux = 3;
 
 
-    private Joueur[] tableauJoueurs;
+    private ArrayList<Joueur> tableauJoueurs = new ArrayList();
     private Plateau[] tableauPlateaux;
 
     public GameController() {
-        this.tableauJoueurs = new Joueur[nombreDeJoueurs];
-        for (int i = 0; i < tableauJoueurs.length; i++)
-
-        this.tableauPlateaux = new Plateau[nombreDePlateaux];
-        for (int i = 0; i < tableauPlateaux.length; i++){
-            tableauPlateaux[i] = new Plateau(1985);
-        }
+        //FenetreLancement fenetreLancement = new FenetreLancement(tableauJoueurs);
+        
         demarrerPartie();
     }
 
@@ -27,7 +25,7 @@ public class GameController {
     }
 
     private void activerBiff(){
-        tableauPlateaux[0].activerBiff(tableauJoueurs[0], tableauJoueurs);
+        //tableauPlateaux[0].activerBiff(tableauJoueurs[0], tableauJoueurs);
     }
 
     public String toString(){

@@ -13,8 +13,8 @@ public class Delorean extends Construction {
      * @throws RessourcesInsuffisantesException
      */
     Delorean(ListeRessources lr, Point2D.Double position) throws RessourcesInsuffisantesException {
-        super.prix.ajouterRessources(Ressources.ARGILE, 3);
-        super.prix.ajouterRessources(Ressources.FER, 2);
+        super.prix.ajouterRessources(Ressources.MINERAI, 6);
+        super.prix.ajouterRessources(Ressources.FER, 4);
         super.creer(lr, position);
     }
 

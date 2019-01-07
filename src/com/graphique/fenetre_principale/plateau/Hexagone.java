@@ -104,6 +104,10 @@ public class Hexagone extends Polygon {
             listePoints[i] = new Point2D.Double(this.x[i], this.y[i]);
         return listePoints;
     }
+    
+    public void resetCase() {
+    	this.uneCase = new Case();
+    }
 
     double getX(int index){ return this.x[index]; }
     double getY(int index){ return this.y[index]; }

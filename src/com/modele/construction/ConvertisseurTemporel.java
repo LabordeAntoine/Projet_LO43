@@ -13,8 +13,9 @@ public class ConvertisseurTemporel extends Construction {
      * @throws RessourcesInsuffisantesException
      */
     ConvertisseurTemporel(ListeRessources lr, Point2D.Double position) throws RessourcesInsuffisantesException {
-        super.prix.ajouterRessources(Ressources.BOIS, 3);
-        super.prix.ajouterRessources(Ressources.FER, 2);
+        super.prix.ajouterRessources(Ressources.ARGILE, 6);
+        super.prix.ajouterRessources(Ressources.FER, 4);
+        super.prix.ajouterRessources(Ressources.PLUTONIUM, 4);
         super.creer(lr, position);
     }
 

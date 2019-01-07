@@ -1,6 +1,7 @@
 import com.graphique.fenetre_lancement.FenetreLancement;
 import com.graphique.fenetre_principale.FenetrePrincipale;
 import com.graphique.fenetre_principale.plateau.PlateauException;
+import com.modele.GameController;
 import com.modele.joueur.Joueur;
 
 import java.awt.*;
@@ -13,22 +14,22 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
 
-        /*FenetreLancement f = new FenetreLancement();
-        f.setVisible(true);*/
+        //FenetreLancement f = new FenetreLancement();
+        //f.setVisible(true);
 
-        ArrayList<Joueur> listeJoueur = new ArrayList<>();
+
+        //new GameController();
+        //System.out.println(j1.getListeRessources().toString());
+    	ArrayList<Joueur> listeJoueur = new ArrayList<>();
         Joueur j1 = new Joueur("Antoine ", Color.MAGENTA);
-        Joueur j2 = new Joueur("Ewan", Color.MAGENTA);
-        Joueur j3 = new Joueur("Yosef", Color.MAGENTA);
-        Joueur j4 = new Joueur("TEST", Color.MAGENTA);
+        Joueur j2 = new Joueur("Ewan", Color.BLUE);
+        Joueur j3 = new Joueur("Yosef", Color.RED);
+        Joueur j4 = new Joueur("TEST", Color.GREEN);
         listeJoueur.add(j1);
         listeJoueur.add(j2);
         listeJoueur.add(j3);
         listeJoueur.add(j4);
-
-
-        System.out.println(j1.getListeRessources().toString());
-
+        
         try {
             new FenetrePrincipale(listeJoueur);
         } catch (PlateauException e) {

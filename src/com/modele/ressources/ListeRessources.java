@@ -12,7 +12,7 @@ public class ListeRessources extends ArrayList<ListeRessources.Paire_RessourceNo
         add(new Paire_RessourceNombre(Ressources.BOIS));
         add(new Paire_RessourceNombre(Ressources.FER));
         add(new Paire_RessourceNombre(Ressources.MINERAI));
-        add(new Paire_RessourceNombre(Ressources.LAINE));
+        add(new Paire_RessourceNombre(Ressources.PLUTONIUM));
         add(new Paire_RessourceNombre(Ressources.ARGILE));
     }
 

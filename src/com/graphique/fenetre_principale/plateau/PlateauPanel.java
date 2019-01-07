@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class PlateauPanel extends JPanel implements MouseListener {
 
@@ -35,24 +36,26 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     private Joueur joueurActif;
     private Placement placement;
+    private int annee;
+    
+    private JLabel labelInformations;
 
-
-
-    public PlateauPanel(Joueur joueur) throws PlateauException{
+    public PlateauPanel(Joueur joueur, JLabel labelInformations) throws PlateauException{
 
         int rayon = 70;
         int tours = 3;
-        if (tours > 10){
-            throw new PlateauException("Plateau trop grand. (" + tours + ")");
-        }
 
 
         //Parametres de taille
-        this.setMinimumSize(new Dimension(2* rayon * ((tours*2)-2) + 20, 2* rayon * ((tours*2)-1) - rayon));
+        this.setMinimumSize(new Dimension(2* rayon * ((tours*2)-2) + 20,  rayon * ((tours*2)-1) - rayon)); //Devrait etre *2
         this.setMaximumSize(this.getMinimumSize());
         this.setPreferredSize(this.getMinimumSize());
+        
+        this.setBackground(Color.DARK_GRAY);
 
         //On initialise
+    
+        
         initialiserListeHexagones(new Point2D.Double(this.getMinimumSize().getWidth() /2,this.getMinimumSize().getHeight()/2), rayon, tours);
         this.joueurActif = joueur;
         this.joueurActif.ajouterRessources(Ressources.BLE, 50);
@@ -60,7 +63,11 @@ public class PlateauPanel extends JPanel implements MouseListener {
         this.joueurActif.ajouterRessources(Ressources.FER, 50);
         this.joueurActif.ajouterRessources(Ressources.BOIS, 50);
         this.placement = Placement.VIDE;
+        this.annee = 1985;
+        
 
+        this.labelInformations = labelInformations;
+        
         //Listener
         addMouseListener(this);
 
@@ -156,6 +163,16 @@ public class PlateauPanel extends JPanel implements MouseListener {
         return false;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * PaintComponenent va dessiner notre plateau
      * @param g2
@@ -168,7 +185,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Fond
-        setBackground(Color.DARK_GRAY);
+        //setBackground(Color.DARK_GRAY);
 
         dessinerRessources(g);
 
@@ -179,7 +196,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
         dessinerRoutes(g);
         dessinerDeloreanes(g);
         dessinerConvertisseurTemporel(g);
-
+        g.drawString(""+this.annee, 10, 50);
 
         //On dessine les boutons si ils sont demandés, pour ca on verifie l'etat de la variable "placement"
         switch (this.placement){
@@ -196,7 +213,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
         for(Hexagone h : listeHexagones){
 
             //Dessine les hexagones
-            g.setColor(Color.CYAN);
+            g.setColor(Color.YELLOW);
             g.drawPolygon(h.getX(),h.getY(),h.npoints);
 
             //Dessine les nombres
@@ -204,8 +221,8 @@ public class PlateauPanel extends JPanel implements MouseListener {
             String stylePolice = "Arial";
             Font font = new Font(stylePolice, Font.PLAIN, taillePolice);
             g.setFont(font);
-            g.setColor(Color.CYAN);
-            g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre() - taillePolice/5),(int)Math.round(h.getYCentre()) + taillePolice/5);
+            g.setColor(Color.RED);
+            g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre() - 5 - taillePolice/5),(int)Math.round(h.getYCentre() - 45) + taillePolice/5);
 
         }
     }
@@ -216,7 +233,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
         for(Hexagone h : listeHexagones){
             try {
                 Image img = ImageIO.read(new File("Image_Ressources/"+h.getRessources()+".jpg"));
-                g.drawImage(img, (int)h.getXCentre()-40, (int)h.getYCentre()-40, 70,70, this);
+                g.drawImage(img, (int)h.getXCentre()-35, (int)h.getYCentre()-35, 70,70, this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -293,8 +310,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
             try {
                 Image img = ImageIO.read(new File("ConvertisseurTemporel.png"));
                 g.drawImage(img, (int)Math.round(p.getX()) - width/2, (int)Math.round(p.getY()) - height/2, width,height, this);
-                g.setColor(joueurActif.getCouleur());
-                g.fillOval((int)Math.round(p.getX())-10,(int)Math.round(p.getY())-10,20,20);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -302,8 +317,9 @@ public class PlateauPanel extends JPanel implements MouseListener {
     }
 
 
-    public ListeRessources genererRessources(Joueur joueur, int resultatDe){ return genererRessources(joueur.getListeConstructions(), resultatDe); }
-    public ListeRessources genererRessources(ListeConstructions listeConstructions, int resultatDe){
+    public void genererRessources(Joueur joueur, int resultatDe){ joueur.ajouterRessources(this.listeDeRessourcesAProximite(joueur.getListeConstructions(), resultatDe));}
+    
+    public ListeRessources listeDeRessourcesAProximite(ListeConstructions listeConstructions, int resultatDe){
         ListeRessources listeRessources = new ListeRessources();
         int marge = 5;
         for (Construction construction : listeConstructions){
@@ -318,6 +334,32 @@ public class PlateauPanel extends JPanel implements MouseListener {
         return listeRessources;
     }
 
+    
+
+    
+    void chanagementPlateau() {
+    	for (Hexagone hexagone : this.listeHexagones) {
+    		hexagone.resetCase();
+    		while (hexagone.getRessources() == Ressources.MINERAI) {
+    			hexagone.resetCase();
+    		}
+    	}
+    }
+    
+    void changerAnnee() {
+    	switch(this.annee) {
+    	case 2015 : this.annee = 1885;break;
+    	case 1885 : this.annee = 1955;break;
+    	case 1955 : this.annee = 1985; break;
+    	case 1985 : this.annee = 2015; break;
+    	default: this.annee = 1985; break;
+    	}
+        
+    }
+    
+    
+    
+    
     @Override
     public void mouseClicked(MouseEvent e) { }
 
@@ -338,10 +380,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
                         this.joueurActif.creerDelorean(this.ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeDeloreanes.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeEllipseBoutons.remove(position);
-                        System.out.println("Delorean Placé");
+                        this.placement = Placement.VIDE;
 
                     } catch (Exception e1) {
-                        System.out.println(e1.getMessage());
+                    	this.labelInformations.setText(e1.getMessage());
                     }
                 }
                 break;
@@ -354,9 +396,13 @@ public class PlateauPanel extends JPanel implements MouseListener {
                         this.listeConvertisseursTemporels.add(ellipseToPoint(this.listeEllipseBoutons.get(position)));
                         this.listeEllipseBoutons.remove(position);
                         System.out.println("Convertisseur Temporel Placé");
+                        this.placement = Placement.VIDE;
+                        this.chanagementPlateau();
+                        this.changerAnnee();
+                        repaint();
 
                     } catch (Exception e1) {
-                        System.out.println(e1.getMessage());
+                    	this.labelInformations.setText(e1.getMessage());
                     }
                 }
                 break;
@@ -369,9 +415,10 @@ public class PlateauPanel extends JPanel implements MouseListener {
                         this.listeRoutes.add(this.listeArreteBoutons.get(position));
                         this.listeArreteBoutons.remove(position);
                         System.out.println("Route Placé");
+                        this.placement = Placement.VIDE;
 
                     } catch (RessourcesInsuffisantesException | NombreLimiteException e1) {
-                        System.out.println(e1.getMessage());
+                    	this.labelInformations.setText(e1.getMessage());
                     }
                 }
 
@@ -408,5 +455,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) { }
+
 
 }
