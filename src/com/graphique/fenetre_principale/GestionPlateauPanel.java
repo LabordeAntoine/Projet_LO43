@@ -17,6 +17,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
     private JButton placerRouteBouton;
     private JButton voirPlateauBouton;
     private JButton deBouton;
+    private JButton faireCommerce;
     private JButton finDeTour;
     private int resultatDe;
     JLabel de = new JLabel();
@@ -40,6 +41,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         this.placerRouteBouton = new JButton("Placer Route");
         this.voirPlateauBouton = new JButton("Voir Plateau");
         this.deBouton = new JButton("Lancer le De");
+        this.faireCommerce = new JButton("Faire du commerce");
         this.finDeTour = new JButton("Fin de tour");
        
 
@@ -53,6 +55,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         this.add(this.voirPlateauBouton);
         //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.deBouton);
+        this.add(this.faireCommerce);
         //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.de);
         //this.add(Box.createRigidArea(new Dimension(5,5)));
@@ -63,6 +66,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         this.placerDeloreanBouton.setActionCommand("placer delorean");
         this.placerRouteBouton.setActionCommand("placer route");
         this.voirPlateauBouton.setActionCommand("voir plateau");
+        this.faireCommerce.setActionCommand("Faire du commerce");
         this.deBouton.setActionCommand("lancer de");
         this.finDeTour.setActionCommand("fin de tour");
         
@@ -75,6 +79,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         this.placerRouteBouton.addActionListener(a);
         this.placerDeloreanBouton.addActionListener(a);
         this.placerConvertisseurTemporelBouton.addActionListener(a);
+        this.faireCommerce.addActionListener(a);
         this.deBouton.addActionListener(a);
         this.finDeTour.addActionListener(a);
     }
@@ -102,6 +107,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
     	this.placerConvertisseurTemporelBouton.setEnabled(b);
     	this.finDeTour.setEnabled(b);
     	this.deBouton.setEnabled(!b);
+    	this.faireCommerce.setEnabled(b);
     }
     
     public void setLabel(int n) {
