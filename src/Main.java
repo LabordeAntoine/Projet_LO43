@@ -25,7 +25,10 @@ public class Main {
         listeJoueur.add(j2);
         listeJoueur.add(j3);
         listeJoueur.add(j4);
-
+        
+        j4.piocherCarte();
+        j4.piocherCarte();
+        j1.piocherCarte();
 
         System.out.println(j1.getListeRessources().toString());
 

@@ -9,6 +9,6 @@ public interface Cartes  {
      * Action realisees par les cartes
      * @param j Le joueur concerne
      */
-    void action(Joueur j) throws RessourcesInsuffisantesException, NombreLimiteException;
+    void action(Joueur j);
 
 }

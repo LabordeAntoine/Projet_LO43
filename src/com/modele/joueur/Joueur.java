@@ -80,8 +80,7 @@ public class Joueur {
     public ListeConstructions getListeConstructions() { return listeConstructions; }
 
     public int getNombreDeRoutes(){ return this.listeConstructions.getNombreDeRoutes(); }
-    public String toStringConstructions(){ return this.listeConstructions.toString(); }
-
+    public String toStringConstructions(){ return this.listeConstructions.toString(0) + this.listeConstructions.toString(1) + this.listeConstructions.toString(2); }
 
 
 
@@ -135,6 +134,20 @@ public class Joueur {
 
     //CARTES
 
+    public String[] getListCartes(){
+        String[] Listetemp = new String[this.listCartes.size()];
+
+        for (int i = 0; i < this.listCartes.size(); i++) {
+
+            Listetemp[i] = this.listCartes.get(i).getClass().getSimpleName();
+        }
+
+        String[] Listetemp2 = Listetemp;
+
+        return Listetemp;
+
+    }
+    
     /**
      * Permet au joueur de piocher une carte
      */
@@ -170,32 +183,12 @@ public class Joueur {
     /**
      * Permet au joueur de jouer une de ses cartes
      */
-    public void jouerCarte() throws RessourcesInsuffisantesException, NombreLimiteException {
+    public void jouerCarte(int index) {
 
         if(listCartes.size()>0) {
-
-            System.out.println("Quelle carte jouer?");
-            ArrayList<Cartes> temp = this.listCartes;
-
-            int cmp = 0;
-
-            for (int i = 0; i < temp.size(); i++) {
-                System.out.println("Tapez " + cmp + " pour jouer la carte " + temp.get(cmp).getClass().getSimpleName());
-                cmp++;
-            }
-
-
-            Scanner sc = new Scanner(System.in);
-            int rep = sc.nextInt();
-
-            while (rep < 0 || rep > listCartes.size() - 1) {
-                System.out.println(">> ERREUR : Veuillez rentrer un des numero propose !");
-                rep = sc.nextInt();
-            }
-
-            if (rep >= 0) {
-                this.listCartes.get(rep).action(this);
-                this.listCartes.remove(rep);
+            if (index >= 0) {
+                this.listCartes.get(index).action(this);
+                this.listCartes.remove(index);
             } else
                 System.out.println("PB");
 

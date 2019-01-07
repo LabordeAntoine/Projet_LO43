@@ -49,7 +49,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 
         //Parametres de la fenetre
         this.setTitle("Back to Catane");
-        this.setMinimumSize(new Dimension((int)this.plateauPanel.getMinimumSize().getWidth()  + 500, (int)this.plateauPanel.getMinimumSize().getWidth() + 200));
+        this.setMinimumSize(new Dimension((int)this.plateauPanel.getMinimumSize().getWidth()  + 550, (int)this.plateauPanel.getMinimumSize().getWidth() + 220));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();

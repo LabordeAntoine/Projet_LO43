@@ -103,4 +103,13 @@ public class ListeConstructions extends ArrayList<Construction> {
         return resultat.toString();
     }
 
+    public String toString(int i) { 
+    	if (i == 0) {
+    		return "" + "Convertisseurs : "+ this.nombreDeConvertisseursTemporels + "\n"; }
+    	else if(i == 1) {
+    		return "" + "Delorean : "+ this.nombreDeDelorean + "\n"; }
+    	else {return "" + "Routes : "+ this.nombreDeRoutes + "\n"; }
+    }	
+    
+    
 }
