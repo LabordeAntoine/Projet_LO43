@@ -1,10 +1,14 @@
 package com.graphique.fenetre_principale;
 
 import com.modele.joueur.Joueur;
+import com.modele.ressources.ListeRessources;
+import com.modele.ressources.Ressources;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -45,17 +49,36 @@ public class JoueurIndividuelPanel extends JPanel {
                     int index = list.locationToIndex(evt.getPoint());
                     j.jouerCarte(cartes.getSelectedIndex());
                     cartes.setListData(j.getListCartes());
+                    rafraichir();
                 } else if (evt.getClickCount() == 3) {
                     // Triple-click detected
                     int index = list.locationToIndex(evt.getPoint());
                 }
             }
         });
-        
+
+        JButton piocherCarte = new JButton("Piocher Cartes");
+        piocherCarte.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                ListeRessources prix = new ListeRessources();
+
+                prix.ajouterRessources(Ressources.BLE, 3);
+                prix.ajouterRessources(Ressources.BOIS, 2);
+                if(j.getListeRessources().assezDeRessources(prix)) {
+                    j.piocherCarte();
+                    cartes.setListData(j.getListCartes());
+                    rafraichir();
+                }
+                else
+                {JOptionPane.showMessageDialog(null,"Vous n'avez pas assez de ressources","Attention",JOptionPane.WARNING_MESSAGE);}
+            }
+        });
+
         this.add(nom);
         this.add(label);
         this.add(ressources);
         this.add(cartes);
+        this.add(piocherCarte);
         //SwingUtilities.invokeLater(() -> this.ressources.setText(this.joueur.getListeRessources().toString() + "\n" + this.joueur.toStringConstructions() + "\n" + "Points de V : " + this.joueur.getPointVictoire()));
 
     }

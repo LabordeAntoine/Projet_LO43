@@ -188,6 +188,9 @@ public class Joueur {
 
         }
 
+        this.supprimerRessources(Ressources.BOIS,2);
+        this.supprimerRessources(Ressources.BLE,3);
+
     }
 
     /**
