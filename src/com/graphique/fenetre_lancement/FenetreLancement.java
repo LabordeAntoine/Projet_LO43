@@ -39,7 +39,7 @@ public class FenetreLancement extends JFrame implements ActionListener {
 
 
         //Parametres fenetres
-        this.setTitle("Back To Catane");
+        this.setTitle("Back To Catan");
         this.setSize(700, 400);
         this.setLocationRelativeTo(null);
         this.setResizable(false);

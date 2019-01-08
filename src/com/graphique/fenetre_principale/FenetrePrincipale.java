@@ -80,7 +80,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
 
 
         //Parametres de la fenetre
-        this.setTitle("Back to Catane");
+        this.setTitle("Back to Catan");
         this.setMinimumSize(new Dimension((int)this.plateauPanel.getMinimumSize().getWidth()  + 550, (int)this.plateauPanel.getMinimumSize().getWidth() + 220));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
