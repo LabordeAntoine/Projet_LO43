@@ -18,10 +18,10 @@ public class Commerce extends JFrame {
 
     private void RessourcesDispoEchange(Joueur j){
         JPanel panRessourceJ = new JPanel();
-        JLabel labRessourceJ = new JLabel();
+        JTextArea textRessource = new JTextArea();
 
-        labRessourceJ.setText(j.toStringRessources());
-        panRessourceJ.add(labRessourceJ);
+        textRessource.setText(j.toStringRessources());
+        panRessourceJ.add(textRessource);
         this.add(panRessourceJ);
     }
 }
