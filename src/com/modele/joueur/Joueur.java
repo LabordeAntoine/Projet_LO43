@@ -101,7 +101,7 @@ public class Joueur {
     public void echangeJoueur(ListeRessources lr, Joueur j2,  ListeRessources lrj2){
 
         if (this == j2) {
-            System.out.println("Impossible d'echanger avec soi meme");
+            System.out.println("Impossible d'echanger avec soi-meme");
             return;
         }
 
