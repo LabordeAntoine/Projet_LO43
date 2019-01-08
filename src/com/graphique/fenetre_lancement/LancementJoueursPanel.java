@@ -89,12 +89,13 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
      */
     public boolean verifText(){
         Pattern patt1 = Pattern.compile("^[^,:;=?@#|'<>.*^()%!&&[^ ]]");
+        boolean test = true;
         for(JTextField t : this.listeTextField){
             Matcher m = patt1.matcher(t.getText());
-            if (m.find() || !t.getText().isEmpty())
-                return true;
+            if (t.getText().isEmpty() || !m.find())
+                test = false;
         }
-        return false;
+        return test;
 
     }
 

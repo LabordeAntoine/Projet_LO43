@@ -209,7 +209,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
             Font font = new Font(stylePolice, Font.PLAIN, taillePolice);
             g.setFont(font);
             g.setColor(Color.RED);
-            g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre() - 5 - taillePolice/5),(int)Math.round(h.getYCentre() - 45) + taillePolice/5);
+            g.drawString(""+h.getNombre(),(int)Math.round(h.getXCentre() - taillePolice/5),(int)Math.round(h.getYCentre() - 40) + taillePolice/5);
 
         }
     }

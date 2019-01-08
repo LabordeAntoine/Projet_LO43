@@ -14,13 +14,13 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
 
-        //FenetreLancement f = new FenetreLancement();
-        //f.setVisible(true);
+        FenetreLancement f = new FenetreLancement();
+        f.setVisible(true);
 
 
         //new GameController();
         //System.out.println(j1.getListeRessources().toString());
-    	ArrayList<Joueur> listeJoueur = new ArrayList<>();
+    	/*ArrayList<Joueur> listeJoueur = new ArrayList<>();
         Joueur j1 = new Joueur("Antoine ", Color.MAGENTA);
         Joueur j2 = new Joueur("Ewan", Color.BLUE);
         Joueur j3 = new Joueur("Yosef", Color.RED);
@@ -36,7 +36,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println(" ------------------------------");
+        System.out.println(" ------------------------------");*/
 
         /*GameController gc = new GameController();
         System.out.println(gc.toString());*/

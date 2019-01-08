@@ -32,12 +32,12 @@ public class Joueur {
         this.pointVictoire = 0;
         this.couleur = couleur;
 
-        this.ajouterRessources(Ressources.BLE, 5);
-        this.ajouterRessources(Ressources.ARGILE, 5);
-        this.ajouterRessources(Ressources.FER, 5);
-        this.ajouterRessources(Ressources.BOIS, 5);
-        this.ajouterRessources(Ressources.PLUTONIUM, 5);
-        this.ajouterRessources(Ressources.MINERAI, 5);
+        this.ajouterRessources(Ressources.BLE, 10);
+        this.ajouterRessources(Ressources.ARGILE, 10);
+        this.ajouterRessources(Ressources.FER, 10);
+        this.ajouterRessources(Ressources.BOIS, 10);
+        this.ajouterRessources(Ressources.PLUTONIUM, 10);
+        this.ajouterRessources(Ressources.MINERAI, 10);
     }
 
     public String getName() { return this.nom; }
@@ -164,24 +164,24 @@ public class Joueur {
     public void piocherCarte() {
 
         int resultat;
-        resultat = resultatAleatoire();
+        resultat = resultatAleatoire(1,3);
 
         switch (resultat) {
             case 1:
-                this.listCartes.add(new ProgresConstructionRouteGratuite());
+                this.listCartes.add(new GagnerFer());
                 break;
 
             case 2:
-                this.listCartes.add(new ProgresVolerDesRessources());
+                this.listCartes.add(new GagnerPlutonium());
                 break;
 
             case 3:
-                this.listCartes.add(new Robot());
-                break;
-
-            case 4:
                 this.listCartes.add(new PointDeVictoire());
                 break;
+
+            /*case 4:
+                this.listCartes.add(new Robot());
+                break;*/
 
             default:
                 System.out.println("PROBLEME");
@@ -215,9 +215,9 @@ public class Joueur {
      * Permet de generer un nombre aleatoire entre 1 et 4
      * @return Le resultat du tirage aleatoire
      */
-    protected int resultatAleatoire() {
+    protected int resultatAleatoire(int min, int max) {
 
-        return 1 + (int) (Math.random() * (5 - 1));
+        return 1 + (int) (Math.random() * ((max+1) - min));
     }
 
     public void appelerBiff(){
