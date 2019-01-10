@@ -1,3 +1,8 @@
+/**
+ * Carte GagnerPlutonium permet de gagner des ressouces de Plutonium
+ */
+
+
 package com.modele.cartes;
 
 import com.modele.joueur.Joueur;

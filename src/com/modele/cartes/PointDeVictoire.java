@@ -1,3 +1,8 @@
+/**
+ * Carte PointDeVictoire permet de gagner des points de victoires
+ */
+
+
 package com.modele.cartes;
 import com.modele.joueur.Joueur;
 

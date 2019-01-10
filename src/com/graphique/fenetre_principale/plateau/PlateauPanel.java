@@ -1,7 +1,10 @@
+/**
+ * Gestion du Panel contenant le plateau avec les différents boutons
+ * Dessine les hexagones, ainsi que les routes, les deloreanes, ...
+ */
+
 package com.graphique.fenetre_principale.plateau;
 
-
-import com.graphique.fenetre_principale.JoueurIndividuelPanel;
 import com.modele.construction.Construction;
 import com.modele.construction.ListeConstructions;
 import com.modele.construction.NombreLimiteException;

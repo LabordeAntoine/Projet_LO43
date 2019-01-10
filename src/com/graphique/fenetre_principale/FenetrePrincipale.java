@@ -1,3 +1,8 @@
+/**
+ * Fenêtre principale de notre programme contenant les différents panel (plateau, panel des joueurs)
+ * gestion des boutons permettant de réaliser les actions utiles au jeu
+ */
+
 package com.graphique.fenetre_principale;
 
 import com.graphique.fenetre_principale.plateau.Placement;

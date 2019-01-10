@@ -1,3 +1,7 @@
+/**
+ * Classe abstraite permettant de gérer les constructions
+ */
+
 package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;

@@ -1,3 +1,7 @@
+/**
+ * Carte GagnerFer permet de gagner des ressouces de Fer
+ */
+
 package com.modele.cartes;
 import com.modele.joueur.*;
 import com.modele.ressources.Ressources;

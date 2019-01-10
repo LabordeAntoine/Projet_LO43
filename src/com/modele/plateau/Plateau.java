@@ -1,3 +1,7 @@
+/**
+ * Classe représentant le plateau de notre jeu
+ */
+
 package com.modele.plateau;
 
 import com.modele.joueur.Joueur;

@@ -1,3 +1,7 @@
+/**
+ * Contient les fonctions permmettant de réaliser les calculs pour tracer notre plateau d'hexagone
+ */
+
 package com.graphique.fenetre_principale.plateau;
 
 import java.awt.geom.Point2D;

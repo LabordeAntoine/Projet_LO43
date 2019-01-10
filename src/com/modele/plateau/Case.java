@@ -1,3 +1,7 @@
+/**
+ * Classe permettant de gérer une case de notre plateau
+ */
+
 package com.modele.plateau;
 
 import com.modele.ressources.Ressources;

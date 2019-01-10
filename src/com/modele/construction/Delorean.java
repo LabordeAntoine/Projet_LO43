@@ -1,3 +1,7 @@
+/**
+ * class pour gérer création Delorean
+ */
+
 package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;

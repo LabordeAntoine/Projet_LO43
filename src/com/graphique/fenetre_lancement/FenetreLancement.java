@@ -1,5 +1,9 @@
-package com.graphique.fenetre_lancement;
+/**
+ * Fichier permettant de gérer la fenêtre de lancement de notre application
+ * Avec gestion des boutons
+ */
 
+package com.graphique.fenetre_lancement;
 
 import javax.swing.*;
 import java.awt.*;

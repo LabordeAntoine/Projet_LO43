@@ -1,3 +1,7 @@
+/**
+ * class pour gérer création convertisseur temporel
+ */
+
 package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;

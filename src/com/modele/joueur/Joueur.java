@@ -1,3 +1,7 @@
+/**
+ * Classe joueur avec les actions qu'il peut réaliser
+ */
+
 package com.modele.joueur;
 
 import com.modele.cartes.*;

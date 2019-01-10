@@ -1,3 +1,7 @@
+/**
+ * Panel pour le placement des boutons
+ */
+
 package com.graphique.fenetre_principale;
 
 import javax.swing.*;

@@ -1,3 +1,7 @@
+/**
+ * Fichier gérant le panel de la fenêtre de lancement
+ */
+
 package com.graphique.fenetre_lancement;
 
 import javax.imageio.ImageIO;

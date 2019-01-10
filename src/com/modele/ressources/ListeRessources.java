@@ -1,3 +1,7 @@
+/**
+ * Classe permettant de gérer une liste de ressources
+ */
+
 package com.modele.ressources;
 
 import java.util.ArrayList;

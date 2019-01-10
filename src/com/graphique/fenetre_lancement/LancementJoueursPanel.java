@@ -1,3 +1,7 @@
+/**
+ * Fichier contenant les fonctions permettant de gérer l'inscription des joueurs à notre application
+ */
+
 package com.graphique.fenetre_lancement;
 
 import com.graphique.fenetre_principale.FenetrePrincipale;

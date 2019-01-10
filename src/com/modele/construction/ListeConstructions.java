@@ -1,3 +1,7 @@
+/**
+ * Classe permettant de gérer une liste de construction
+ */
+
 package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;

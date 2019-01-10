@@ -1,3 +1,7 @@
+/**
+ * Permet la création de nos hexagones
+ */
+
 package com.graphique.fenetre_principale.plateau;
 
 import com.modele.plateau.Case;

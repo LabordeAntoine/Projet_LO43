@@ -1,3 +1,7 @@
+/**
+ * Gestion de la Frame pour le commerce (echange de ressources entre joueur et banque)
+ */
+
 package com.graphique.fenetre_principale;
 
 import com.modele.joueur.Joueur;

@@ -1,3 +1,7 @@
+/**
+ * Interface pour gérer nos cartes
+ */
+
 package com.modele.cartes;
 
 import com.modele.joueur.Joueur;
