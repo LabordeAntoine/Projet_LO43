@@ -1,9 +1,6 @@
 package com.graphique.fenetre_principale;
 
 import javax.swing.*;
-
-import com.graphique.fenetre_principale.plateau.Placement;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +18,7 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
     private JButton finDeTour;
     private int resultatDe;
     JLabel de = new JLabel();
-    
-    private boolean aPlaceDelorean;
+
     /**
      * C'est la panel ou se trouvent tout les boutons pour gerer PlateauPanel
      */
@@ -31,10 +27,8 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         //On cree un layout
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.X_AXIS);
         GridLayout gridLayout = new GridLayout(5, 2);
-        //this.add(Box.createRigidArea(new Dimension(0,5)));
         this.setLayout(gridLayout);
 
-        
         //On cree les boutons
         this.placerConvertisseurTemporelBouton = new JButton("Placer Convertisseur Temporel");
         this.placerDeloreanBouton = new JButton("Placer Delorean");
@@ -47,18 +41,12 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
 
         //On ajoute tout les boutons dans le panel avec un espace entre eux
         this.add(this.placerConvertisseurTemporelBouton);
-        //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.placerDeloreanBouton);
-        //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.placerRouteBouton);
-        //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.voirPlateauBouton);
-        //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.deBouton);
         this.add(this.faireCommerce);
-        //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.de);
-        //this.add(Box.createRigidArea(new Dimension(5,5)));
         this.add(this.finDeTour);
 
         //On donne un ID a chaque bouton
@@ -69,7 +57,6 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         this.faireCommerce.setActionCommand("Faire du commerce");
         this.deBouton.setActionCommand("lancer de");
         this.finDeTour.setActionCommand("fin de tour");
-        
 
         this.addPublicButtonListener(this);
     }
@@ -98,8 +85,6 @@ public class GestionPlateauPanel extends JPanel implements ActionListener{
         if(buttonName.equals("lancer de")){
             this.setBoutons(true);
         }
-        
-		
 	}
     void setBoutons(boolean b) {
     	this.placerDeloreanBouton.setEnabled(b);

@@ -18,23 +18,29 @@ public class JoueurIndividuelPanel extends JPanel {
     private Joueur joueur;
 
     public JoueurIndividuelPanel(Joueur j, int nb){
+
         EmptyBorder marge = new EmptyBorder(10,10,10,10);
+
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(boxLayout);
         this.setSize(new Dimension(60,20));
         this.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.black));
         this.setBounds(0,0,600,400);
         this.setPreferredSize(new Dimension(250,250));
+
         JLabel nom = new JLabel ();
         nom.setText("Joueur n°" + nb+" :");
+
         JLabel label = new JLabel();
         label.setText(j.getName());
         label.setForeground(j.getCouleur());
+
         this.joueur = j;
         this.ressources = new JTextArea();
         ressources.setBorder(marge);
         ressources.setEditable(false);
         rafraichir();
+
         JList cartes = new JList(j.getListCartes());
         cartes.getFixedCellWidth();
         cartes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -79,8 +85,6 @@ public class JoueurIndividuelPanel extends JPanel {
         this.add(ressources);
         this.add(cartes);
         this.add(piocherCarte);
-        //SwingUtilities.invokeLater(() -> this.ressources.setText(this.joueur.getListeRessources().toString() + "\n" + this.joueur.toStringConstructions() + "\n" + "Points de V : " + this.joueur.getPointVictoire()));
-
     }
 
     public void rafraichir(){

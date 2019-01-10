@@ -1,11 +1,9 @@
 package com.modele.plateau;
 
-
 import com.modele.joueur.Joueur;
 import com.modele.ressources.ListeRessources;
 import com.modele.ressources.Ressources;
 
-import java.util.ArrayList;
 
 public class Biff {
 

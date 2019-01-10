@@ -1,7 +1,6 @@
 package com.graphique.fenetre_principale;
 
 import com.modele.joueur.Joueur;
-
 import javax.swing.*;
 
 public class Commerce extends JFrame {

@@ -1,16 +1,13 @@
 package com.modele.joueur;
 
 import com.modele.cartes.*;
-import com.modele.cartes.Robot;
 import com.modele.construction.*;
 import com.modele.ressources.ListeRessources;
 import com.modele.ressources.Ressources;
-
-
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Joueur {
 
@@ -77,8 +74,6 @@ public class Joueur {
 
     public ListeRessources getListeRessources() { return listeRessources; }
 
-
-
     //CONSTRUCTIONS
     public Route creerRoute(Point2D.Double position) throws RessourcesInsuffisantesException, NombreLimiteException { return this.listeConstructions.construireRoute(this.listeRessources, position); }
     public ConvertisseurTemporel creerConvertisseurTemporel(Point2D.Double position) throws NombreLimiteException, RessourcesInsuffisantesException { return this.listeConstructions.construireConvertisseursTemporels(this.listeRessources, position); }
@@ -88,8 +83,6 @@ public class Joueur {
 
     public int getNombreDeRoutes(){ return this.listeConstructions.getNombreDeRoutes(); }
     public String toStringConstructions(){ return this.listeConstructions.toString(0) + this.listeConstructions.toString(1) + this.listeConstructions.toString(2); }
-
-
 
     //COMMERCE
     /**

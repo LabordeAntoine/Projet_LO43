@@ -2,7 +2,6 @@ package com.modele;
 
 import java.util.ArrayList;
 
-import com.graphique.fenetre_lancement.FenetreLancement;
 import com.modele.joueur.Joueur;
 import com.modele.plateau.Plateau;
 

@@ -1,7 +1,6 @@
 package com.modele.plateau;
 
 import com.modele.ressources.Ressources;
-
 import java.util.Random;
 
 public class Case {

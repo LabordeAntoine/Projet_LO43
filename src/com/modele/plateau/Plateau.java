@@ -1,11 +1,9 @@
 package com.modele.plateau;
 
 import com.modele.joueur.Joueur;
-
 import java.util.Random;
 
 public class Plateau {
-
 
     public int annee;
     private Case[] tableauCases;

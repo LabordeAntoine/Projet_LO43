@@ -1,6 +1,5 @@
 package com.modele.cartes;
-import com.modele.construction.NombreLimiteException;
-import com.modele.construction.RessourcesInsuffisantesException;
+
 import com.modele.joueur.Joueur;
 import com.modele.ressources.Ressources;
 

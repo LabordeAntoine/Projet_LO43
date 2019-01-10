@@ -27,8 +27,6 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
         //Parametres du panel
         setLayout(new GridLayout(6, 2, 10, 10));
         setBorder(new EmptyBorder(70, 200 , 70, 200));
-        
-
 
         //On initialise les JLabel
         JLabel[] listeLabel =  new JLabel[]{
@@ -38,14 +36,12 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
                 creerLabel("Joueur Rose :", Color.MAGENTA)
         };
 
-
         //On initialise tout les JTextField, et on ajoute tout les JTextField et tout les JLabels dans la GridLayout
         for (int i = 0; i < 4; i++){
             this.add(listeLabel[i]);
             listeTextField[i] = new JTextField();
             this.add(listeTextField[i]);
         }
-
 
         //On ajoute tout les boutons
         this.retourBouton.setActionCommand("retour");
@@ -57,7 +53,6 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
         validerBouton.addActionListener(this);
     }
 
-
     /**
      * On ajouter les boutons a l'interface ActinListener
      * @param a
@@ -65,7 +60,6 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
     void addPublicButtonListener(ActionListener a){
         this.retourBouton.addActionListener(a);
     }
-
 
     /**
      * Helper Method
@@ -82,7 +76,6 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
         return Temp;
     }
 
-
     /**
      * Verifie le Texte
      * @return
@@ -96,9 +89,7 @@ public class LancementJoueursPanel extends JPanel implements ActionListener{
                 test = false;
         }
         return test;
-
     }
-
 
     /**
      * Cette methode sert a definir le comportement du bouton "Valider", il est pas obliger de passer par "FenetreLancement", donc on le laisse ici

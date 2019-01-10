@@ -1,14 +1,12 @@
 package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;
-
 import java.awt.geom.Point2D;
 
 public abstract class Construction {
 
     ListeRessources prix = new ListeRessources();
     Point2D.Double position;
-
 
     /**
      * Creer une construction a partir des ressources du joueur
@@ -24,7 +22,6 @@ public abstract class Construction {
             throw new RessourcesInsuffisantesException("Pas assez de ressources pour creer " + this.getClass().getSimpleName());
     }
 
-    
     public Point2D.Double getPosition() {
         return position;
     }

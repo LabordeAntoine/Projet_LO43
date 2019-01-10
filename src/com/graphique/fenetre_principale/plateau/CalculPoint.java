@@ -1,6 +1,5 @@
 package com.graphique.fenetre_principale.plateau;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class CalculPoint {

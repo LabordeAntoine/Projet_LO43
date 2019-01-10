@@ -321,9 +321,6 @@ public class PlateauPanel extends JPanel implements MouseListener {
         return listeRessources;
     }
 
-    
-
-    
     void chanagementPlateau() {
     	for (Hexagone hexagone : this.listeHexagones) {
     		hexagone.resetCase();
@@ -343,10 +340,7 @@ public class PlateauPanel extends JPanel implements MouseListener {
     	}
         
     }
-    
-    
-    
-    
+
     @Override
     public void mouseClicked(MouseEvent e) { }
 

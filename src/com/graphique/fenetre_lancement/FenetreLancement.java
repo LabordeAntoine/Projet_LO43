@@ -2,14 +2,10 @@ package com.graphique.fenetre_lancement;
 
 
 import javax.swing.*;
-
-import com.modele.joueur.Joueur;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 
 public class FenetreLancement extends JFrame implements ActionListener {
 

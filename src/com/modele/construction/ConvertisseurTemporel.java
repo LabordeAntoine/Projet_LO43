@@ -2,7 +2,6 @@ package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;
 import com.modele.ressources.Ressources;
-
 import java.awt.geom.Point2D;
 
 public class ConvertisseurTemporel extends Construction {

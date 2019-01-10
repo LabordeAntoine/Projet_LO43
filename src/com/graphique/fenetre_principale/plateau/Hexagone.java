@@ -2,8 +2,6 @@ package com.graphique.fenetre_principale.plateau;
 
 import com.modele.plateau.Case;
 import com.modele.ressources.Ressources;
-
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -68,9 +66,6 @@ public class Hexagone extends Polygon {
             cY[i] = ((centre.getY() + rayon * Math.sin(2*i*Math.PI/6+angle)));
         return cY;
     }
-
-
-    //int
 
     /**
      * Transforme toutes les coordonnées de double en int

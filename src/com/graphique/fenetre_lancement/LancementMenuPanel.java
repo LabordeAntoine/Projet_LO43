@@ -15,7 +15,6 @@ public class LancementMenuPanel extends JPanel {
     private JButton jouerBouton = new JButton("Jouer");
     private JButton reglesBouton = new JButton("Regles");
 
-
     /**
      * Genere le premier panel qui apparait quand on ouvre FenetreLancement
      */

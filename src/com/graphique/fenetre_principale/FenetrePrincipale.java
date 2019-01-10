@@ -1,9 +1,9 @@
 package com.graphique.fenetre_principale;
+
 import com.graphique.fenetre_principale.plateau.Placement;
 import com.graphique.fenetre_principale.plateau.PlateauException;
 import com.graphique.fenetre_principale.plateau.PlateauPanel;
 import com.modele.joueur.Joueur;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,25 +17,18 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
 
     //Composants
     private PlateauPanel plateauPanel;
-
     private GestionPlateauPanel gestionPlateauPanel;
-
     private JoueurIndividuelPanel joueurIndividuelPanel1;
     private JoueurIndividuelPanel joueurIndividuelPanel2;
     private JoueurIndividuelPanel joueurIndividuelPanel3;
     private JoueurIndividuelPanel joueurIndividuelPanel4;
-
     private JLabel labelInformation;
-
 
     //Deroulement du jeu
     private ArrayList<Joueur> listeJoueurs;
     private Joueur joueurActif;
     private int joueurActuel;
     private int resultatDe;
-
-
-    
 
     /**
      * C'est la classe de la fenetre principale du jeu
@@ -87,13 +80,9 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
         this.pack();
         this.setVisible(true);
 
-
-
-    	
     	this.listeJoueurs = j;
     	this.joueurActif = this.listeJoueurs.get(this.joueurActuel);
     	System.out.println("joueur actif " + this.joueurActif.getName());
-
 
         this.gestionPlateauPanel.setBoutons(false);
 
@@ -152,8 +141,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
 
 
         this.labelInformation.setText("C'est le tour de " + this.joueurActif.getName());
-    	
-    	
     }
     
     private void conditionsJeu() {
@@ -168,14 +155,10 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
 
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
+    public void mouseClicked(MouseEvent e) { }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) { }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -186,12 +169,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener , MouseL
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) { }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) { }
 }

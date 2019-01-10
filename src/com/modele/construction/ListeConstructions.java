@@ -1,7 +1,6 @@
 package com.modele.construction;
 
 import com.modele.ressources.ListeRessources;
-
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -62,9 +61,7 @@ public class ListeConstructions extends ArrayList<Construction> {
         } else {
             throw new NombreLimiteException("Delorean", max);
         }
-
     }
-
 
     /**
      * Permet de construire un convertisseur temporel
@@ -82,7 +79,6 @@ public class ListeConstructions extends ArrayList<Construction> {
         } else {
             throw new NombreLimiteException("Convetisseur Temporel", max);
         }
-
     }
 
     /**
