@@ -9,22 +9,28 @@ import javax.swing.*;
 
 public class Commerce extends JFrame {
 
+
     public Commerce(Joueur j){
         this.setTitle("Commerce");
         this.setSize(300, 300);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        RessourcesDispoEchange(j);
         this.setVisible(true);
 
-        RessourcesDispoEchange(j);
     }
 
     private void RessourcesDispoEchange(Joueur j){
         JPanel panRessourceJ = new JPanel();
-        JLabel labRessourceJ = new JLabel();
+        JTextArea textRessource = new JTextArea("test");
+        textRessource.setEditable(false);
+        textRessource.setText(j.toStringRessources());
 
-        labRessourceJ.setText(j.toStringRessources());
-        panRessourceJ.add(labRessourceJ);
+        panRessourceJ.add(textRessource);
+        JButton echangerBanque = new JButton("Echanger (ne fait rien)");
+        panRessourceJ.add(echangerBanque);
         this.add(panRessourceJ);
+
     }
+
 }
